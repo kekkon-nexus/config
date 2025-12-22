@@ -1,7 +1,4 @@
 {
 	"$schema": "https://www.schemastore.org/tsconfig",
-	"extends": [
-		"@kekkon-nexus/config/tsconfig",
-		"@kekkon-nexus/config/tsconfig/strict"
-	]
+	"extends": ["@kekkon-nexus/config/ts", "@kekkon-nexus/config/ts/strict"]
 }
