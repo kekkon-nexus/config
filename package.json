@@ -1,11 +1,23 @@
 {
 	"name": "@kekkon-nexus/config",
+	"type": "module",
 	"version": "1.0.0",
+	"repository": "kekkon-nexus/config",
+	"bugs": "https://github.com/kekkon-nexus/config/issues",
+	"license": "MIT",
+	"contributors": [
+		"Ryan Suhartanto <suhartanto@kekkon.nexus>",
+		"Yuuki Rika <yvvki@kekkon.nexus>"
+	],
 	"exports": {
 		"./biome": "./src/biome.json",
 		"./biome/*": "./src/biome.*.json",
 		"./ts": "./src/tsconfig.json",
 		"./ts/*": "./src/tsconfig.*.json"
+	},
+	"scripts": {
+		"format": "biome format",
+		"lint": "biome lint"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.10",
