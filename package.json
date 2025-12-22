@@ -4,8 +4,8 @@
 	"exports": {
 		"./biome": "./src/biome.json",
 		"./biome/*": "./src/biome.*.json",
-		"./tsconfig": "./src/tsconfig.json",
-		"./tsconfig/*": "./src/tsconfig.*.json"
+		"./ts": "./src/tsconfig.json",
+		"./ts/*": "./src/tsconfig.*.json"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.10",
