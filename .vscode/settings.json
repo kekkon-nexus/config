@@ -6,5 +6,12 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll.biome": "explicit"
 	},
-	"editor.formatOnSave": true
+	"editor.formatOnSave": true,
+
+	"json.schemas": [
+		{
+			"fileMatch": ["biome.json", "biome.*.json"],
+			"url": "./node_modules/@biomejs/biome/configuration_schema.json"
+		}
+	]
 }

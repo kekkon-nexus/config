@@ -1,41 +1,8 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
 	"root": true,
-	"files": {
-		"ignoreUnknown": true
-	},
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true
-	},
-	"linter": {
-		"rules": {
-			"recommended": true
-		}
-	},
-	"assist": {
-		"enabled": true,
-		"actions": {
-			"recommended": true,
-			"source": {
-				"organizeImports": {
-					"level": "on",
-					"options": {
-						"groups": [
-							[":BUN:", ":NODE:"],
-							":BLANK_LINE:",
-							[":PACKAGE:", ":PACKAGE_WITH_PROTOCOL:", ":URL:"],
-							":BLANK_LINE:",
-							[":ALIAS:", ":PATH:"]
-						]
-					}
-				}
-			}
-		}
-	},
-	"formatter": {
-		"enabled": true,
-		"useEditorconfig": true
-	}
+	"extends": [
+		"@kekkon-nexus/config/biome",
+		"@kekkon-nexus/config/biome/imports"
+	]
 }

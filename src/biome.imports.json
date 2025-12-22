@@ -1,0 +1,21 @@
+{
+	"root": false,
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": {
+					"level": "on",
+					"options": {
+						"groups": [
+							[":BUN:", ":NODE:"],
+							":BLANK_LINE:",
+							[":PACKAGE:", ":PACKAGE_WITH_PROTOCOL:", ":URL:"],
+							":BLANK_LINE:",
+							[":ALIAS:", ":PATH:"]
+						]
+					}
+				}
+			}
+		}
+	}
+}
