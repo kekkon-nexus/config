@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		// Only support TypeScript
+		"allowJs": false,
+
+		// Make sure to declare arbitrary imports
+		"noUncheckedSideEffectImports": true,
+
+		// Best practices
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true
+	}
+}

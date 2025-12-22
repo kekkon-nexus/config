@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		// Environment
+		"composite": true,
+		"target": "esnext",
+		"module": "nodenext",
+
+		// Strictness
+		"strict": true,
+		"noImplicitOverride": true,
+		"noUncheckedIndexedAccess": true,
+
+		// Resolution
+		"verbatimModuleSyntax": true,
+		"rewriteRelativeImportExtensions": true
+	}
+}
