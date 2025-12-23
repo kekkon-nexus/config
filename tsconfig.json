@@ -1,4 +1,9 @@
 {
 	"$schema": "https://www.schemastore.org/tsconfig",
-	"extends": ["@kekkon-nexus/config/ts", "@kekkon-nexus/config/ts/strict"]
+	"extends": ["@kekkon-nexus/config/ts", "@kekkon-nexus/config/ts/strict"],
+	"compilerOptions": {
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	}
 }
