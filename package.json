@@ -10,6 +10,7 @@
 		"Yuuki Rika <yvvki@kekkon.nexus>"
 	],
 	"exports": {
+		"./package.json": "./package.json",
 		"./biome": "./config/biome.json",
 		"./biome/*": "./config/biome.*.json",
 		"./commitlint": "./config/commitlint.ts",

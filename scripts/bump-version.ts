@@ -1,4 +1,4 @@
-import pkg from "./package.json" with { type: "json" };
+import pkg from "@kekkon-nexus/config/package.json" with { type: "json" };
 
 const [major, minor, patch = 0] = pkg.version.split(".").map(Number);
 const prev = Number(minor);
