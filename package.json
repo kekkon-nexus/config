@@ -16,6 +16,7 @@
 		"./ts/*": "./src/tsconfig.*.json"
 	},
 	"scripts": {
+		"prepare": "husky",
 		"format": "biome format",
 		"lint": "biome lint",
 		"bump": "bun run bump-version.ts"
@@ -27,6 +28,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.3.10",
 		"@types/bun": "latest",
+		"husky": "^9.1.7",
 		"typescript": "^5.9.3"
 	}
 }
