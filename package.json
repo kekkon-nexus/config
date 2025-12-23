@@ -10,11 +10,11 @@
 		"Yuuki Rika <yvvki@kekkon.nexus>"
 	],
 	"exports": {
-		"./biome": "./src/biome.json",
-		"./biome/*": "./src/biome.*.json",
-		"./commitlint": "./src/commitlint.ts",
-		"./ts": "./src/tsconfig.json",
-		"./ts/*": "./src/tsconfig.*.json"
+		"./biome": "./config/biome.json",
+		"./biome/*": "./config/biome.*.json",
+		"./commitlint": "./config/commitlint.ts",
+		"./ts": "./config/tsconfig.json",
+		"./ts/*": "./config/tsconfig.*.json"
 	},
 	"scripts": {
 		"prepare": "husky",
