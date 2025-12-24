@@ -21,7 +21,7 @@
 		"prepare": "husky",
 		"format": "biome format",
 		"lint": "biome lint",
-		"bump": "bun run bump-version.ts"
+		"bump": "bun run scripts/bump-version.ts"
 	},
 	"peerDependencies": {
 		"@biomejs/biome": "~2.3.10",
