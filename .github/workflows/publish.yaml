@@ -1,0 +1,18 @@
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  publish:
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: latest
+          registry-url: https://registry.npmjs.org/
+      - run: npm publish
