@@ -15,4 +15,5 @@ jobs:
         with:
           node-version: latest
           registry-url: https://registry.npmjs.org/
+      - run: npm install -g husky # workaround
       - run: npm publish
