@@ -11,9 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v6
         with:
-          bun-version: latest
+          node-version: latest
           registry-url: https://registry.npmjs.org/
-      - run: bun install --frozen-lockfile
-      - run: bun publish
+      - run: npm publish
