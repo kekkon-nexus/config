@@ -30,10 +30,14 @@
 		"@commitlint/format": "^20",
 		"@commitlint/types": "^20",
 		"conventional-changelog-conventionalcommits": "^9.1",
+		"husky": "^9",
 		"typescript": "^5.7"
 	},
 	"peerDependenciesMeta": {
 		"@commitlint/types": {
+			"optional": true
+		},
+		"husky": {
 			"optional": true
 		}
 	},
