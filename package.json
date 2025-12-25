@@ -1,7 +1,7 @@
 {
 	"name": "@kekkon-nexus/config",
 	"type": "module",
-	"version": "1.251224.3",
+	"version": "1.251225.0",
 	"repository": "kekkon-nexus/config",
 	"bugs": "https://github.com/kekkon-nexus/config/issues",
 	"license": "MIT",
