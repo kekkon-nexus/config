@@ -36,6 +36,12 @@
 		"typescript": "^6"
 	},
 	"peerDependenciesMeta": {
+		"@biomejs/biome": {
+			"optional": true
+		},
+		"@commitlint/cli": {
+			"optional": true
+		},
 		"husky": {
 			"optional": true
 		}
