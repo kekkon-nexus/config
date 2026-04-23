@@ -1,4 +1,5 @@
 {
+	"$schema": "https://www.schemastore.org/tsconfig",
 	"compilerOptions": {
 		// Environment
 		"composite": true,

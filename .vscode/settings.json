@@ -8,15 +8,5 @@
 	},
 	"editor.formatOnSave": true,
 
-	"js/ts.tsdk.path": "node_modules/typescript/lib",
-	"json.schemas": [
-		{
-			"fileMatch": ["biome.json", "biome.*.json"],
-			"url": "./node_modules/@biomejs/biome/configuration_schema.json"
-		},
-		{
-			"fileMatch": ["tsconfig.json", "tsconfig.*.json"],
-			"url": "https://www.schemastore.org/tsconfig"
-		}
-	]
+	"js/ts.tsdk.path": "node_modules/typescript/lib"
 }
