@@ -2,11 +2,11 @@
 	"compilerOptions": {
 		// Environment
 		"composite": true,
+		"module": "preserve",
 		"target": "esnext",
-		"module": "nodenext",
+		"types": ["bun"],
 
 		// Strictness
-		"strict": true,
 		"noImplicitOverride": true,
 		"noUncheckedIndexedAccess": true,
 

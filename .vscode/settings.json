@@ -8,6 +8,7 @@
 	},
 	"editor.formatOnSave": true,
 
+	"js/ts.tsdk.path": "node_modules/typescript/lib",
 	"json.schemas": [
 		{
 			"fileMatch": ["biome.json", "biome.*.json"],
