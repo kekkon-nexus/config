@@ -1,1 +1,6 @@
-export { default } from "@kekkon-nexus/config/commitlint";
+export default {
+	extends: [
+		"@kekkon-nexus/config/commitlint",
+		"@kekkon-nexus/config/commitlint/gitmoji",
+	],
+};

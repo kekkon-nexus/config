@@ -14,6 +14,7 @@
 		"./biome": "./config/biome.json",
 		"./biome/*": "./config/biome.*.json",
 		"./commitlint": "./config/commitlint.ts",
+		"./commitlint/*": "./config/commitlint.*.ts",
 		"./ts": "./config/tsconfig.json",
 		"./ts/*": "./config/tsconfig.*.json"
 	},
@@ -23,20 +24,18 @@
 		"lint": "biome lint",
 		"bump": "bun run scripts/bump-version.ts"
 	},
+	"dependencies": {
+		"@commitlint/config-conventional": "^20.5",
+		"@commitlint/format": "^20",
+		"commitlint-config-gitmoji": "^2.3"
+	},
 	"peerDependencies": {
 		"@biomejs/biome": "~2.4",
 		"@commitlint/cli": "^20",
-		"@commitlint/config-conventional": "^20",
-		"@commitlint/format": "^20",
-		"@commitlint/types": "^20",
-		"conventional-changelog-conventionalcommits": "^9.3",
 		"husky": "^9",
 		"typescript": "^6"
 	},
 	"peerDependenciesMeta": {
-		"@commitlint/types": {
-			"optional": true
-		},
 		"husky": {
 			"optional": true
 		}
@@ -44,11 +43,8 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.4.12",
 		"@commitlint/cli": "^20.5.0",
-		"@commitlint/config-conventional": "^20.5.0",
-		"@commitlint/format": "^20.5.0",
 		"@commitlint/types": "^20.5.0",
 		"@types/bun": "latest",
-		"conventional-changelog-conventionalcommits": "^9.3.1",
 		"husky": "^9.1.7",
 		"typescript": "^6.0.3"
 	}
