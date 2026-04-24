@@ -13,8 +13,16 @@
 		"./package.json": "./package.json",
 		"./commitlint": "./config/commitlint.ts",
 		"./commitlint/*": "./config/commitlint.*.ts",
-		"./oxfmt": "./config/oxfmt.ts",
-		"./oxlint": "./config/oxlint.ts",
+		"./oxfmt": {
+			"bun": "./config/oxfmt.ts",
+			"default": "./dist/oxfmt.js",
+			"types": "./dist/oxfmt.d.ts"
+		},
+		"./oxlint": {
+			"bun": "./config/oxlint.ts",
+			"default": "./dist/oxlint.js",
+			"types": "./dist/oxlint.d.ts"
+		},
 		"./ts": "./config/tsconfig.json",
 		"./ts/*": "./config/tsconfig.*.json"
 	},
@@ -22,7 +30,9 @@
 		"prepare": "husky",
 		"fmt": "oxfmt",
 		"lint": "oxlint",
-		"bump": "bun run scripts/bump-version.ts"
+		"build": "tsc -p tsconfig.build.json",
+		"bump": "bun run scripts/bump-version.ts",
+		"prepublishOnly": "bun run build"
 	},
 	"dependencies": {
 		"@commitlint/config-conventional": "^20.5",

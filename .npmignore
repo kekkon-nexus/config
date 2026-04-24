@@ -1,0 +1,5 @@
+bun.lock
+tsconfig.build.*
+
+/.github/
+/.husky/_/
