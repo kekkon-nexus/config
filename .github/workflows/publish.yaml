@@ -24,6 +24,6 @@ jobs:
       - run: bun install -g husky # workaround
       - run: bun install --frozen-lockfile
 
-      - run: bun publish --provenance
+      - run: bun publish --provenance --auth-type legacy
         env:
           NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
