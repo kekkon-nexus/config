@@ -20,8 +20,10 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-          registries: https://registry.npmjs.org/|${{ secrets.NPM_TOKEN }}
 
       - run: bun install -g husky # workaround
       - run: bun install --frozen-lockfile
+
       - run: bun publish --provenance
+        env:
+          BUN_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
