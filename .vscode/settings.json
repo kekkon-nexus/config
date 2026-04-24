@@ -2,10 +2,9 @@
 	"editor.insertSpaces": false,
 	"editor.tabSize": 2,
 
-	"editor.defaultFormatter": "biomejs.biome",
-	"editor.codeActionsOnSave": {
-		"source.fixAll.biome": "explicit"
-	},
+	"oxc.enable": true,
+
+	"editor.defaultFormatter": "oxc.oxc-vscode",
 	"editor.formatOnSave": true,
 
 	"js/ts.tsdk.path": "node_modules/typescript/lib"

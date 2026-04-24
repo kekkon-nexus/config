@@ -2,8 +2,9 @@ import type { UserConfig } from "@commitlint/types";
 
 const config: UserConfig = {
 	extends: ["@commitlint/config-conventional"],
-	formatter: "@commitlint/format",
+
 	defaultIgnores: true,
+	formatter: "@commitlint/format",
 	helpUrl: "https://conventionalcommits.org",
 };
 
