@@ -12,7 +12,7 @@ export function sortImports({
 } = {}): SortImportsConfig {
 	return {
 		internalPattern: ["~/", "@/", "#/"],
-		newlinesBetween: false,
+		newlinesBetween: true,
 
 		customGroups,
 
