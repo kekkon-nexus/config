@@ -11,8 +11,16 @@
 	"type": "module",
 	"exports": {
 		"./package.json": "./package.json",
-		"./commitlint": "./config/commitlint.ts",
-		"./commitlint/*": "./config/commitlint.*.ts",
+		"./commitlint": {
+			"bun": "./config/commitlint.ts",
+			"default": "./dist/commitlint.js",
+			"types": "./dist/commitlint.d.ts"
+		},
+		"./commitlint/*": {
+			"bun": "./config/commitlint.*.ts",
+			"default": "./dist/commitlint.*.js",
+			"types": "./dist/commitlint.*.d.ts"
+		},
 		"./oxfmt": {
 			"bun": "./config/oxfmt.ts",
 			"default": "./dist/oxfmt.js",

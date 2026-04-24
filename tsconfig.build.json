@@ -4,5 +4,10 @@
 		"rootDir": "config",
 		"outDir": "dist"
 	},
-	"include": ["./config/oxfmt.ts", "./config/oxlint.ts"]
+	"include": [
+		"./config/commitlint.*.ts",
+		"./config/commitlint.ts",
+		"./config/oxfmt.ts",
+		"./config/oxlint.ts"
+	]
 }
