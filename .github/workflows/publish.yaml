@@ -11,12 +11,16 @@ jobs:
     permissions:
       contents: read
       id-token: write
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: latest
-          registry-url: https://registry.npmjs.org/
-      - run: npm install -g husky # workaround
-      - run: npm publish
+          bun-version: latest
+          registries: https://registry.npmjs.org/|${{ secrets.NPM_TOKEN }}
+
+      - run: bun install --frozen-lockfile
+      - run: bun publish --provenance
