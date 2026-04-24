@@ -10,8 +10,11 @@ const next = yy * 10_000 + mm * 100 + dd;
 
 const version = [major, next, next === minor ? patch + 1 : 0].join(".");
 
-const proc = Bun.spawn(["bun", "pm", "version", version], {
-	stderr: "inherit",
-	stdout: "inherit",
-});
+const proc = Bun.spawn(
+	["bun", "pm", "version", version, "--message=:bookmark: build(release): %s"],
+	{
+		stderr: "inherit",
+		stdout: "inherit",
+	},
+);
 process.exit(await proc.exited);
