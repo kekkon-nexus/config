@@ -22,5 +22,6 @@ jobs:
           bun-version: latest
           registries: https://registry.npmjs.org/|${{ secrets.NPM_TOKEN }}
 
+      - run: bun install -g husky # workaround
       - run: bun install --frozen-lockfile
       - run: bun publish --provenance
