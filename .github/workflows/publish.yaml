@@ -20,6 +20,7 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
+          registries: https://registry.npmjs.org/|${{ env.NODE_AUTH_TOKEN }}
 
       - run: bun install -g husky # workaround
       - run: bun install --frozen-lockfile
