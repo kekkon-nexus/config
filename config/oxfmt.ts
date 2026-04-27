@@ -17,7 +17,6 @@ export function sortImports({
 		customGroups,
 
 		groups: [
-			["side_effect"],
 			["builtin", "type-builtin"],
 			...(groupsBeforeExternal ?? []),
 			["external", "type-external"],
@@ -31,7 +30,8 @@ export function sortImports({
 				"type-sibling",
 				"type-index",
 			],
-			["style", "side_effect_style"],
+			["side_effect"],
+			["side_effect_style", "style"],
 			"unknown",
 		],
 	};
