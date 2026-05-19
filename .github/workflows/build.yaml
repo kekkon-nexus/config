@@ -5,11 +5,7 @@ on:
   push:
 
 jobs:
-  publish:
-    permissions:
-      contents: read
-      id-token: write
-
+  build:
     runs-on: ubuntu-latest
 
     steps:
