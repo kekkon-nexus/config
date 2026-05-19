@@ -43,27 +43,28 @@
 		"prepublishOnly": "bun run build"
 	},
 	"dependencies": {
-		"@commitlint/config-conventional": "^20.5",
-		"@commitlint/format": "^20",
+		"@commitlint/config-conventional": "^21",
+		"@commitlint/format": "^21",
 		"commitlint-config-gitmoji": "^2.3",
-		"ultracite": "~7.6"
+		"ultracite": "~7.7"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^20.5.0",
-		"@commitlint/types": "^20.5.0",
+		"@commitlint/cli": "^21.0.1",
+		"@commitlint/types": "^21.0.1",
 		"@types/bun": "latest",
 		"husky": "^9.1.7",
 		"nano-staged": "^1.0.2",
-		"oxfmt": "^0.46.0",
-		"oxlint": "^1.61.0",
+		"oxfmt": "~0.50.0",
+		"oxlint": "^1.65.0",
 		"typescript": "^6.0.3"
 	},
 	"peerDependencies": {
-		"@commitlint/cli": "^20",
+		"@commitlint/cli": "^21",
 		"husky": "^9",
-		"oxfmt": "^0.46",
-		"oxlint": "^1.61",
-		"oxlint-tsgolint": "^0.21.1",
+		"nano-staged": "^1",
+		"oxfmt": "~0.50",
+		"oxlint": "^1.65",
+		"oxlint-tsgolint": "^0.23",
 		"typescript": "^6"
 	},
 	"peerDependenciesMeta": {
@@ -71,6 +72,9 @@
 			"optional": true
 		},
 		"husky": {
+			"optional": true
+		},
+		"nano-staged": {
 			"optional": true
 		},
 		"oxfmt": {
