@@ -45,8 +45,8 @@
 	"dependencies": {
 		"@commitlint/config-conventional": "^21",
 		"@commitlint/format": "^21",
-		"commitlint-config-gitmoji": "^2.3",
-		"ultracite": "~7.7"
+		"@standard-config/oxlint": "^1.9.0",
+		"commitlint-config-gitmoji": "^2.3"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^21.0.1",

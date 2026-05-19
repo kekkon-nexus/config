@@ -1,31 +1,5 @@
-import { defineConfig } from "oxlint";
-import core from "ultracite/oxlint/core";
+import { defineConfig } from "@standard-config/oxlint";
 
-const config = defineConfig({
-	extends: [core],
-	ignorePatterns: [],
-	options: {
-		reportUnusedDisableDirectives: "warn",
-		typeAware: true,
-		typeCheck: true,
-	},
-
-	rules: {
-		"func-style": [
-			"warn",
-			"declaration",
-			{
-				allowArrowFunctions: true,
-			},
-		],
-		"sort-keys": [
-			"warn",
-			"asc",
-			{
-				allowLineSeparatedGroups: true,
-			},
-		],
-	},
-});
+const config = defineConfig();
 
 export default config;

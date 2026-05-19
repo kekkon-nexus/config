@@ -7,6 +7,7 @@
       "dependencies": {
         "@commitlint/config-conventional": "^21",
         "@commitlint/format": "^21",
+        "@standard-config/oxlint": "^1.9.0",
         "commitlint-config-gitmoji": "^2.3",
         "ultracite": "~7.7",
       },
@@ -180,6 +181,8 @@
     "@simple-libs/child-process-utils": ["@simple-libs/child-process-utils@1.0.1", "", { "dependencies": { "@simple-libs/stream-utils": "^1.1.0", "@types/node": "^22.0.0" } }, "sha512-3nWd8irxvDI6v856wpPCHZ+08iQR0oHTZfzAZmnbsLzf+Sf1odraP6uKOHDZToXq3RPRV/LbqGVlSCogm9cJjg=="],
 
     "@simple-libs/stream-utils": ["@simple-libs/stream-utils@1.2.0", "", {}, "sha512-KxXvfapcixpz6rVEB6HPjOUZT22yN6v0vI0urQSk1L8MlEWPDFCZkhw2xmkyoTGYeFw7tWTZd7e3lVzRZRN/EA=="],
+
+    "@standard-config/oxlint": ["@standard-config/oxlint@1.9.0", "", { "peerDependencies": { "oxlint": "^1.60.0", "oxlint-tsgolint": "^0.18.0" }, "optionalPeers": ["oxlint-tsgolint"] }, "sha512-fU44P5wKWYGgrqLq9mOgrs8VPRE0AMLKLRYCAhzEXF1zyMC92ul9QS7YJETIqEDa6kWRsrp4i09SaH/vTDdymA=="],
 
     "@types/bun": ["@types/bun@1.3.13", "", { "dependencies": { "bun-types": "1.3.13" } }, "sha512-9fqXWk5YIHGGnUau9TEi+qdlTYDAnOj+xLCmSTwXfAIqXr2x4tytJb43E9uCvt09zJURKXwAtkoH4nLQfzeTXw=="],
 
