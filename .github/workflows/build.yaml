@@ -1,0 +1,34 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - v*
+
+jobs:
+  publish:
+    permissions:
+      contents: read
+      id-token: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          registry-url: https://registry.npmjs.org
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install -g husky # workaround
+      - run: bun install --frozen-lockfile
+
+      - run: bunx npm pack
+      - uses: actions/upload-artifact@7
+        with:
+          path: kekkon-nexus-config-*.tgz
