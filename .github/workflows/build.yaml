@@ -23,6 +23,6 @@ jobs:
       - run: bun install --frozen-lockfile
 
       - run: bunx npm pack
-      - uses: actions/upload-artifact@7
+      - uses: actions/upload-artifact@v7
         with:
           path: kekkon-nexus-config-*.tgz
