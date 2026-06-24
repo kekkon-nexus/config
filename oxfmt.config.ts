@@ -1,6 +1,8 @@
-import config from "@kekkon-nexus/config/oxfmt";
+import base from "@kekkon-nexus/config/oxfmt";
 import { defineConfig } from "oxfmt";
 
-export default defineConfig({
-	...config,
+const config: ReturnType<typeof defineConfig> = defineConfig({
+	...base,
 });
+
+export default config;

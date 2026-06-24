@@ -1,6 +1,8 @@
-import config from "@kekkon-nexus/config/oxlint";
+import base from "@kekkon-nexus/config/oxlint";
 import { defineConfig } from "oxlint";
 
-export default defineConfig({
-	...config,
+const config: ReturnType<typeof defineConfig> = defineConfig({
+	...base,
 });
+
+export default config;
