@@ -39,7 +39,7 @@
     },
   },
   "overrides": {
-    "@commitlint/types": "^21",
+    "@commitlint/types": "^21.2.0",
     "conventional-commits-parser": "^7",
     "meow": "^14",
     "resolve-from": "^5",
