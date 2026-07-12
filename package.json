@@ -45,27 +45,27 @@
 	"dependencies": {
 		"@commitlint/config-conventional": "^21.2",
 		"@commitlint/format": "^21.2",
-		"@standard-config/oxlint": "^2.3.0",
+		"@standard-config/oxlint": "^2.4.1",
 		"commitlint-config-gitmoji": "^2.3.1"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^21.2.0",
+		"@commitlint/cli": "^21.2.1",
 		"@commitlint/types": "^21.2.0",
 		"@types/bun": "latest",
 		"husky": "^9.1.7",
 		"nano-staged": "^1.0.2",
-		"oxfmt": ">=0.57.0<1",
-		"oxlint": "^1.72.0",
-		"typescript": "^6.0.3"
+		"oxfmt": ">=0.58.0<1",
+		"oxlint": "^1.73.0",
+		"typescript": "^7.0.2"
 	},
 	"peerDependencies": {
 		"@commitlint/cli": "^21.2",
 		"husky": "^9",
 		"nano-staged": "^1",
-		"oxfmt": ">=0.57<1",
-		"oxlint": "^1.72",
+		"oxfmt": ">=0.58<1",
+		"oxlint": "^1.73",
 		"oxlint-tsgolint": ">=0.24<1",
-		"typescript": "^6"
+		"typescript": "^7"
 	},
 	"peerDependenciesMeta": {
 		"@commitlint/cli": {
@@ -83,5 +83,11 @@
 		"oxlint": {
 			"optional": true
 		}
+	},
+	"overrides": {
+		"@commitlint/types": "^21",
+		"conventional-commits-parser": "^7",
+		"meow": "^14",
+		"resolve-from": "^5"
 	}
 }
