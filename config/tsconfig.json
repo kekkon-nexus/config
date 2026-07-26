@@ -3,6 +3,7 @@
 	"compilerOptions": {
 		// Environment
 		"composite": true,
+		"module": "esnext",
 
 		// Strictness
 		"noImplicitOverride": true,
