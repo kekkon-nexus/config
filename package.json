@@ -23,8 +23,8 @@
 		"fmt": "oxfmt",
 		"lint": "oxlint",
 		"build": "tsc -p tsconfig.build.json",
-		"bump": "bun run scripts/bump-version.ts",
-		"prepublishOnly": "bun run build"
+		"bump": "node scripts/bump-version.ts",
+		"prepublishOnly": "aube run build"
 	},
 	"dependencies": {
 		"@commitlint/config-conventional": "^21.2",
@@ -35,18 +35,19 @@
 	"devDependencies": {
 		"@commitlint/cli": "^21.2.1",
 		"@commitlint/types": "^21.2.0",
-		"@types/bun": "latest",
+		"@types/node": "^26.1.1",
 		"husky": "^9.1.7",
 		"nano-staged": "^1.0.2",
-		"oxfmt": ">=0.60.0<1",
+		"oxfmt": ">=0.60.0 <1",
 		"oxlint": "^1.75.0",
+		"oxlint-tsgolint": "^7.0.2001",
 		"typescript": "^7.0.2"
 	},
 	"peerDependencies": {
 		"@commitlint/cli": "^21.2",
 		"husky": "^9",
 		"nano-staged": "^1",
-		"oxfmt": ">=0.60<1",
+		"oxfmt": ">=0.60 <1",
 		"oxlint": "^1.75",
 		"oxlint-tsgolint": "^7",
 		"typescript": "^7"
@@ -65,6 +66,9 @@
 			"optional": true
 		},
 		"oxlint": {
+			"optional": true
+		},
+		"oxlint-tsgolint": {
 			"optional": true
 		}
 	},

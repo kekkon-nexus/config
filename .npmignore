@@ -1,4 +1,4 @@
-bun.lock
+aube-lock.yaml
 tsconfig.build.*
 
 /.github/
