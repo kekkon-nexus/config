@@ -22,9 +22,7 @@
 		"prepare": "husky",
 		"fmt": "oxfmt",
 		"lint": "oxlint",
-		"build": "tsc -p tsconfig.build.json",
-		"bump": "node scripts/bump-version.ts",
-		"prepublishOnly": "aube run build"
+		"bump": "node scripts/bump-version.ts"
 	},
 	"dependencies": {
 		"@commitlint/config-conventional": "catalog:",
