@@ -11,10 +11,22 @@
 	"type": "module",
 	"exports": {
 		"./package.json": "./package.json",
-		"./commitlint": "./config/commitlint.ts",
-		"./commitlint/*": "./config/commitlint.*.ts",
-		"./oxfmt": "./config/oxfmt.ts",
-		"./oxlint": "./config/oxlint.ts",
+		"./commitlint": {
+			"import": "./config/commitlint.ts",
+			"types": "./config/commitlint.ts"
+		},
+		"./commitlint/*": {
+			"import": "./config/commitlint.*.ts",
+			"types": "./config/commitlint.*.ts"
+		},
+		"./oxfmt": {
+			"import": "./config/oxfmt.ts",
+			"types": "./config/oxfmt.ts"
+		},
+		"./oxlint": {
+			"import": "./config/oxlint.ts",
+			"types": "./config/oxlint.ts"
+		},
 		"./ts": "./config/tsconfig.json",
 		"./ts/*": "./config/tsconfig.*.json"
 	},
