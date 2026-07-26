@@ -3,3 +3,4 @@ tsconfig.build.*
 
 /.github/
 /.husky/_/
+/scripts/
