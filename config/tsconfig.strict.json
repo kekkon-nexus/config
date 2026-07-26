@@ -1,9 +1,6 @@
 {
 	"$schema": "https://www.schemastore.org/tsconfig",
 	"compilerOptions": {
-		// Only support TypeScript
-		"allowJs": false,
-
 		// Best practices
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitReturns": true,

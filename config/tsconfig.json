@@ -3,9 +3,6 @@
 	"compilerOptions": {
 		// Environment
 		"composite": true,
-		"module": "preserve",
-		"target": "esnext",
-		"types": ["bun"],
 
 		// Strictness
 		"noImplicitOverride": true,
