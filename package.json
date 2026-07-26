@@ -11,26 +11,10 @@
 	"type": "module",
 	"exports": {
 		"./package.json": "./package.json",
-		"./commitlint": {
-			"bun": "./config/commitlint.ts",
-			"default": "./dist/commitlint.js",
-			"types": "./dist/commitlint.d.ts"
-		},
-		"./commitlint/*": {
-			"bun": "./config/commitlint.*.ts",
-			"default": "./dist/commitlint.*.js",
-			"types": "./dist/commitlint.*.d.ts"
-		},
-		"./oxfmt": {
-			"bun": "./config/oxfmt.ts",
-			"default": "./dist/oxfmt.js",
-			"types": "./dist/oxfmt.d.ts"
-		},
-		"./oxlint": {
-			"bun": "./config/oxlint.ts",
-			"default": "./dist/oxlint.js",
-			"types": "./dist/oxlint.d.ts"
-		},
+		"./commitlint": "./config/commitlint.ts",
+		"./commitlint/*": "./config/commitlint.*.ts",
+		"./oxfmt": "./config/oxfmt.ts",
+		"./oxlint": "./config/oxlint.ts",
 		"./ts": "./config/tsconfig.json",
 		"./ts/*": "./config/tsconfig.*.json"
 	},
@@ -89,5 +73,8 @@
 		"conventional-commits-parser": "^7",
 		"meow": "^14",
 		"resolve-from": "^5"
+	},
+	"engines": {
+		"node": ">=24.12"
 	}
 }
