@@ -1,0 +1,16 @@
+catalog:
+  "@commitlint/cli": ^21.2
+  "@commitlint/config-conventional": ^21.2
+  "@commitlint/format": ^21.2
+  "@commitlint/types": ^21.2
+  "@standard-config/oxlint": ^2.5.0
+  "@types/node": ^26.1.1
+  commitlint-config-gitmoji: ^2.3.1
+  husky: ^9
+  nano-staged: ^1
+  oxfmt: ">=0.60 <1"
+  oxlint: ^1.75
+  oxlint-tsgolint: ^7
+  typescript: ^7
+  vite: "npm:@voidzero-dev/vite-plus-core@^0.2.6"
+  vite-plus: ^0.2.6
