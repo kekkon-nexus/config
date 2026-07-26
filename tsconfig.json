@@ -3,5 +3,6 @@
 	"extends": ["@kekkon-nexus/config/ts", "@kekkon-nexus/config/ts/strict"],
 	"compilerOptions": {
 		"skipLibCheck": true
-	}
+	},
+	"exclude": ["./dist"]
 }
