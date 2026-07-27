@@ -1,6 +1,6 @@
 {
 	"name": "@kekkon-nexus/config",
-	"version": "2.260727.1",
+	"version": "2.260727.2",
 	"bugs": "https://github.com/kekkon-nexus/config/issues",
 	"license": "MIT",
 	"contributors": [
@@ -27,8 +27,8 @@
 			"import": "./dist/config/oxlint.js",
 			"types": "./dist/config/oxlint.d.ts"
 		},
-		"./ts": "./dist/config/tsconfig.json",
-		"./ts/*": "./dist/config/tsconfig.*.json"
+		"./ts": "./config/tsconfig.json",
+		"./ts/*": "./config/tsconfig.*.json"
 	},
 	"scripts": {
 		"prepare": "husky",
