@@ -12,20 +12,20 @@
 	"exports": {
 		"./package.json": "./package.json",
 		"./commitlint": {
-			"import": "./dist/config/commitlint.js",
-			"types": "./dist/config/commitlint.d.ts"
+			"types": "./dist/commitlint.d.ts",
+			"default": "./dist/commitlint.js"
 		},
 		"./commitlint/*": {
-			"import": "./dist/config/commitlint.*.js",
-			"types": "./dist/config/commitlint.*.d.ts"
+			"types": "./dist/commitlint.*.d.ts",
+			"default": "./dist/commitlint.*.js"
 		},
 		"./oxfmt": {
-			"import": "./dist/config/oxfmt.js",
-			"types": "./dist/config/oxfmt.d.ts"
+			"types": "./dist/oxfmt.d.ts",
+			"default": "./dist/oxfmt.js"
 		},
 		"./oxlint": {
-			"import": "./dist/config/oxlint.js",
-			"types": "./dist/config/oxlint.d.ts"
+			"types": "./dist/oxlint.d.ts",
+			"default": "./dist/oxlint.js"
 		},
 		"./ts": "./config/tsconfig.json",
 		"./ts/*": "./config/tsconfig.*.json"
@@ -34,6 +34,7 @@
 		"prepare": "vp config",
 		"fmt": "vp fmt",
 		"lint": "vp lint",
+		"prepack": "tsc -p tsconfig.build.json",
 		"bump": "node scripts/bump-version.ts"
 	},
 	"dependencies": {
