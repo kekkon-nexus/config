@@ -37,29 +37,28 @@
 		"bump": "node scripts/bump-version.ts"
 	},
 	"dependencies": {
-		"@commitlint/config-conventional": "catalog:",
-		"@commitlint/format": "catalog:",
-		"@standard-config/oxlint": "catalog:",
-		"commitlint-config-gitmoji": "catalog:"
+		"@commitlint/config-conventional": "^21.2",
+		"@commitlint/format": "^21.2",
+		"@standard-config/oxlint": "^2.5.0",
+		"commitlint-config-gitmoji": "^2.3.1"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "catalog:",
-		"@commitlint/types": "catalog:",
-		"@types/node": "catalog:",
-		"husky": "catalog:",
-		"nano-staged": "catalog:",
-		"oxfmt": "catalog:",
-		"oxlint": "catalog:",
-		"oxlint-tsgolint": "catalog:",
-		"typescript": "catalog:",
-		"vite-plus": "catalog:"
+		"@commitlint/cli": "^21.2.1",
+		"@commitlint/types": "^21.2.0",
+		"@types/node": "^26.1.1",
+		"husky": "^9.1.7",
+		"nano-staged": "^1.0.2",
+		"typescript": "^7.0.2",
+		"vite-plus": "^0.2.6"
 	},
 	"peerDependencies": {
-		"@commitlint/cli": "catalog:",
-		"husky": "catalog:",
-		"nano-staged": "catalog:",
-		"oxlint-tsgolint": "catalog:",
-		"typescript": "catalog:"
+		"@commitlint/cli": "^21.2",
+		"husky": "^9",
+		"nano-staged": "^1",
+		"oxfmt": ">=0.60 <1",
+		"oxlint": "^1.75",
+		"oxlint-tsgolint": "^7",
+		"typescript": "^7"
 	},
 	"peerDependenciesMeta": {
 		"@commitlint/cli": {
@@ -82,13 +81,14 @@
 		}
 	},
 	"overrides": {
-		"@commitlint/types": "catalog:",
+		"@commitlint/types": "^21.2.0",
 		"conventional-commits-parser": "^7",
 		"meow": "^14",
-		"oxfmt": "catalog:",
-		"oxlint": "catalog:",
+		"oxfmt": ">=0.60 <1",
+		"oxlint": "^1.75",
+		"oxlint-tsgolint": "^7",
 		"resolve-from": "^5",
-		"vite": "catalog:"
+		"vite": "npm:@voidzero-dev/vite-plus-core@^0.2.6"
 	},
 	"engines": {
 		"node": ">=24.12"
