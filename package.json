@@ -12,28 +12,29 @@
 	"exports": {
 		"./package.json": "./package.json",
 		"./commitlint": {
-			"import": "./config/commitlint.ts",
-			"types": "./config/commitlint.ts"
+			"import": "./dist/config/commitlint.js",
+			"types": "./dist/config/commitlint.d.ts"
 		},
 		"./commitlint/*": {
-			"import": "./config/commitlint.*.ts",
-			"types": "./config/commitlint.*.ts"
+			"import": "./dist/config/commitlint.*.js",
+			"types": "./dist/config/commitlint.*.d.ts"
 		},
 		"./oxfmt": {
-			"import": "./config/oxfmt.ts",
-			"types": "./config/oxfmt.ts"
+			"import": "./dist/config/oxfmt.js",
+			"types": "./dist/config/oxfmt.d.ts"
 		},
 		"./oxlint": {
-			"import": "./config/oxlint.ts",
-			"types": "./config/oxlint.ts"
+			"import": "./dist/config/oxlint.js",
+			"types": "./dist/config/oxlint.d.ts"
 		},
-		"./ts": "./config/tsconfig.json",
-		"./ts/*": "./config/tsconfig.*.json"
+		"./ts": "./dist/config/tsconfig.json",
+		"./ts/*": "./dist/config/tsconfig.*.json"
 	},
 	"scripts": {
 		"prepare": "husky",
 		"fmt": "oxfmt",
 		"lint": "oxlint",
+		"prepack": "tsc -p tsconfig.build.json",
 		"bump": "node scripts/bump-version.ts"
 	},
 	"dependencies": {

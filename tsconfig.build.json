@@ -1,0 +1,16 @@
+{
+	"$schema": "https://www.schemastore.org/tsconfig",
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noEmit": false,
+
+		"rootDir": "config",
+		"outDir": "dist"
+	},
+	"include": [
+		"./config/commitlint.*.ts",
+		"./config/commitlint.ts",
+		"./config/oxfmt.ts",
+		"./config/oxlint.ts"
+	]
+}
