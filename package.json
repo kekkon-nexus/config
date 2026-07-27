@@ -31,10 +31,9 @@
 		"./ts/*": "./config/tsconfig.*.json"
 	},
 	"scripts": {
-		"prepare": "husky",
-		"fmt": "oxfmt",
-		"lint": "oxlint",
-		"prepack": "tsc -p tsconfig.build.json",
+		"prepare": "vp config",
+		"fmt": "vp fmt",
+		"lint": "vp lint",
 		"bump": "node scripts/bump-version.ts"
 	},
 	"dependencies": {
