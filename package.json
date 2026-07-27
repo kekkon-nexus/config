@@ -57,8 +57,6 @@
 	},
 	"peerDependencies": {
 		"@commitlint/cli": "^21.2",
-		"husky": "^9",
-		"nano-staged": "^1",
 		"oxfmt": ">=0.60 <1",
 		"oxlint": "^1.75",
 		"oxlint-tsgolint": "^7",
@@ -66,12 +64,6 @@
 	},
 	"peerDependenciesMeta": {
 		"@commitlint/cli": {
-			"optional": true
-		},
-		"husky": {
-			"optional": true
-		},
-		"nano-staged": {
 			"optional": true
 		},
 		"oxfmt": {
