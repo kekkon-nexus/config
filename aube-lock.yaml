@@ -26,13 +26,10 @@ importers:
         version: 21.2.0
       '@standard-config/oxlint':
         specifier: ^2.5.0
-        version: 2.5.0(oxlint@1.75.0(vite-plus@0.2.6))
+        version: 2.5.0(oxlint@1.75.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.6))
       commitlint-config-gitmoji:
         specifier: ^2.3.1
         version: 2.3.1
-      oxlint:
-        specifier: ^1.75.0
-        version: 1.75.0(vite-plus@0.2.6)
     devDependencies:
       '@commitlint/cli':
         specifier: ^21.2.1
@@ -49,6 +46,15 @@ importers:
       nano-staged:
         specifier: ^1.0.2
         version: 1.0.2
+      oxfmt:
+        specifier: '>=0.60.0 <1'
+        version: 0.60.0(vite-plus@0.2.6)
+      oxlint:
+        specifier: ^1.75.0
+        version: 1.75.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.6)
+      oxlint-tsgolint:
+        specifier: ^7.0.2001
+        version: 7.0.2001
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1765,9 +1771,9 @@ snapshots:
 
   '@simple-libs/stream-utils@2.0.0': {}
 
-  '@standard-config/oxlint@2.5.0(oxlint@1.75.0(vite-plus@0.2.6))':
+  '@standard-config/oxlint@2.5.0(oxlint@1.75.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.6))':
     dependencies:
-      oxlint: 1.75.0(vite-plus@0.2.6)
+      oxlint: 1.75.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.6)
 
   '@standard-schema/spec@1.1.0': {}
 
@@ -2286,30 +2292,6 @@ snapshots:
   oxlint@1.75.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.6):
     dependencies:
       oxlint-tsgolint: 7.0.2001
-      vite-plus: 0.2.6
-    optionalDependencies:
-      '@oxlint/binding-android-arm-eabi': 1.75.0
-      '@oxlint/binding-android-arm64': 1.75.0
-      '@oxlint/binding-darwin-arm64': 1.75.0
-      '@oxlint/binding-darwin-x64': 1.75.0
-      '@oxlint/binding-freebsd-x64': 1.75.0
-      '@oxlint/binding-linux-arm-gnueabihf': 1.75.0
-      '@oxlint/binding-linux-arm-musleabihf': 1.75.0
-      '@oxlint/binding-linux-arm64-gnu': 1.75.0
-      '@oxlint/binding-linux-arm64-musl': 1.75.0
-      '@oxlint/binding-linux-ppc64-gnu': 1.75.0
-      '@oxlint/binding-linux-riscv64-gnu': 1.75.0
-      '@oxlint/binding-linux-riscv64-musl': 1.75.0
-      '@oxlint/binding-linux-s390x-gnu': 1.75.0
-      '@oxlint/binding-linux-x64-gnu': 1.75.0
-      '@oxlint/binding-linux-x64-musl': 1.75.0
-      '@oxlint/binding-openharmony-arm64': 1.75.0
-      '@oxlint/binding-win32-arm64-msvc': 1.75.0
-      '@oxlint/binding-win32-ia32-msvc': 1.75.0
-      '@oxlint/binding-win32-x64-msvc': 1.75.0
-
-  oxlint@1.75.0(vite-plus@0.2.6):
-    dependencies:
       vite-plus: 0.2.6
     optionalDependencies:
       '@oxlint/binding-android-arm-eabi': 1.75.0

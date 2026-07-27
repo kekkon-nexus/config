@@ -1,7 +1,5 @@
 {
-	"recommendations": [
-		"editorconfig.editorconfig",
-		"joshbolduc.commitlint",
-		"oxc.oxc-vscode"
-	]
+  "recommendations": [
+    "VoidZero.vite-plus-extension-pack"
+  ]
 }
