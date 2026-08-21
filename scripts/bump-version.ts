@@ -1,6 +1,3 @@
-import { spawn } from "node:child_process";
-import { once } from "node:events";
-
 import pkg from "@kekkon-nexus/config/package.json" with { type: "json" };
 
 const [major, minor, patch = 0] = pkg.version.split(".").map(Number);
@@ -13,13 +10,12 @@ const next = yy * 10_000 + mm * 100 + dd;
 
 const version = [major, next, next === minor ? patch + 1 : 0].join(".");
 
-const proc = spawn(
-	"npm",
-	["version", version, "--message=:bookmark: build(release): %s"],
+const proc = Bun.spawn(
+	["bun", "pm", "version", version, "--message=:bookmark: build(release): %s"],
 	{
-		stdio: "inherit",
+		stderr: "inherit",
+		stdout: "inherit",
 	},
 );
-const result = await once(proc, "close");
 // oxlint-disable-next-line unicorn/no-process-exit
-process.exit(result[0] as number);
+process.exit(await proc.exited);

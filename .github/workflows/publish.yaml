@@ -17,9 +17,11 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: jdx/mise-action@v4
-      - uses: jdx/aube-action@v1
+      - uses: actions/setup-node@v6
         with:
-          run-install: true
+          node-version: latest
+          registry-url: https://registry.npmjs.org
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
 
-      - run: aube publish --provenance
+      - run: bunx npm publish --provenance

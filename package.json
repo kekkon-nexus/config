@@ -35,7 +35,7 @@
 		"fmt": "vp fmt",
 		"lint": "vp lint",
 		"prepack": "tsc -p tsconfig.build.json",
-		"bump": "node scripts/bump-version.ts"
+		"bump": "bun run scripts/bump-version.ts"
 	},
 	"dependencies": {
 		"@commitlint/config-conventional": "^21.2",
@@ -46,7 +46,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^21.2.2",
 		"@commitlint/types": "^21.2.0",
-		"@types/node": "^26.1.2",
+		"@types/bun": "latest",
 		"oxfmt": ">=0.63.0 <1",
 		"oxlint": "^1.78.0",
 		"oxlint-tsgolint": "^7.0.2001",
