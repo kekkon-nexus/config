@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+
+env:
+  PACKAGE: kekkon-nexus-config-*.tgz
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: oven-sh/setup-bun@v2
+      - run: bun ci
+
+      - run: bun run pack
+      - uses: actions/upload-artifact@v7
+        with:
+          path: ${{ env.PACKAGE }}
+          archive: false
+
+  cd:
+    needs: [ci]
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    permissions:
+      id-token: write
+      attestations: write
+      artifact-metadata: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          skip-decompress: true
+      - uses: actions/attest@v4
+        with:
+          subject-path: ${{ env.PACKAGE }}
+
+      - run: npm install -g npm@latest
+      - run: npm publish ${{ env.PACKAGE }}

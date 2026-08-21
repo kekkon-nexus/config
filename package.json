@@ -30,11 +30,17 @@
 		"./ts": "./config/tsconfig.json",
 		"./ts/*": "./config/tsconfig.*.json"
 	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true,
+		"registry": "https://registry.npmjs.org/"
+	},
 	"scripts": {
 		"prepare": "vp config",
 		"fmt": "vp fmt",
 		"lint": "vp lint",
 		"prepack": "tsc -p tsconfig.build.json",
+		"pack": "bun pm pack",
 		"bump": "bun run scripts/bump-version.ts"
 	},
 	"dependencies": {
