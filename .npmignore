@@ -1,4 +1,3 @@
-bun.lock
 tsconfig.build.*
 
 /.github/
