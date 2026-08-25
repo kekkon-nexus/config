@@ -3,12 +3,11 @@
 	"editor.tabSize": 2,
 
 	"oxc.enable": true,
-	"oxc.fmt.configPath": "./vite.config.ts",
+	"editor.defaultFormatter": "oxc.oxc-vscode",
 
 	"editor.codeActionsOnSave": {
 		"source.fixAll.oxc": "explicit"
 	},
-	"editor.defaultFormatter": "oxc.oxc-vscode",
 	"editor.formatOnSave": true,
 	"editor.formatOnSaveMode": "file",
 
