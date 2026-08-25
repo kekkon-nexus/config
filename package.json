@@ -27,8 +27,8 @@
 			"types": "./dist/oxlint.d.ts",
 			"default": "./dist/oxlint.js"
 		},
-		"./ts": "./config/tsconfig.json",
-		"./ts/*": "./config/tsconfig.*.json"
+		"./ts": "./src/tsconfig.json",
+		"./ts/*": "./src/tsconfig.*.json"
 	},
 	"publishConfig": {
 		"access": "public",

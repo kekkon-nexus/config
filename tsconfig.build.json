@@ -4,13 +4,13 @@
 	"compilerOptions": {
 		"noEmit": false,
 
-		"rootDir": "config",
+		"rootDir": "src",
 		"outDir": "dist"
 	},
 	"include": [
-		"./config/commitlint.*.ts",
-		"./config/commitlint.ts",
-		"./config/oxfmt.ts",
-		"./config/oxlint.ts"
+		"./src/commitlint.*.ts",
+		"./src/commitlint.ts",
+		"./src/oxfmt.ts",
+		"./src/oxlint.ts"
 	]
 }
