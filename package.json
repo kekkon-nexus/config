@@ -83,11 +83,6 @@
 	"overrides": {
 		"@commitlint/types": "^21.2.0",
 		"conventional-commits-parser": "^7",
-		"meow": "^14",
-		"oxfmt": ">=0.63 <1",
-		"oxlint": "^1.78",
-		"oxlint-tsgolint": "^7",
-		"resolve-from": "^5",
 		"vite": "npm:@voidzero-dev/vite-plus-core@^0.2.9"
 	},
 	"engines": {
