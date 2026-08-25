@@ -44,24 +44,24 @@
 		"bump": "bun run scripts/bump-version.ts"
 	},
 	"dependencies": {
-		"@commitlint/config-conventional": "^21.2",
-		"@commitlint/format": "^21.2",
+		"@commitlint/config-conventional": "^21.2.2",
+		"@commitlint/format": "^21.2.2",
 		"commitlint-config-gitmoji": "^2.3.1"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^21.2.2",
 		"@commitlint/types": "^21.2.0",
 		"@types/bun": "latest",
-		"oxfmt": ">=0.63.0 <1",
-		"oxlint": "^1.78.0",
+		"oxfmt": "0.64.0",
+		"oxlint": "1.79.0",
 		"oxlint-tsgolint": "^7.0.2001",
 		"typescript": "^7.0.2",
-		"vite-plus": "^0.2.9"
+		"vite-plus": "0.3.0"
 	},
 	"peerDependencies": {
-		"@commitlint/cli": "^21.2",
-		"oxfmt": ">=0.63 <1",
-		"oxlint": "^1.78",
+		"@commitlint/cli": "^21.2.2",
+		"oxfmt": ">=0.64 <1",
+		"oxlint": "^1.79",
 		"oxlint-tsgolint": "^7",
 		"typescript": "^7"
 	},
