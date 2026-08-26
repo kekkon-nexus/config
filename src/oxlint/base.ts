@@ -410,6 +410,7 @@ export default defineConfig({
 		"promise/valid-params": "warn",
 
 		// react:recommended
+		// react:jsx-runtime
 		// react-hooks:recommended
 		// react-refresh:recommended
 		"react/button-has-type": "off",
@@ -466,7 +467,7 @@ export default defineConfig({
 		"react/only-export-components": "warn",
 		"react/prefer-es6-class": "off",
 		"react/prefer-function-component": "off",
-		"react/react-in-jsx-scope": "error",
+		"react/react-in-jsx-scope": "off",
 		"react/require-render-return": "error",
 		"react/rules-of-hooks": "error",
 		"react/self-closing-comp": "off",
