@@ -2,6 +2,8 @@
 	"editor.insertSpaces": false,
 	"editor.tabSize": 2,
 
+	"npm.scriptRunner": "vp",
+
 	"oxc.enable": true,
 	"editor.defaultFormatter": "oxc.oxc-vscode",
 
