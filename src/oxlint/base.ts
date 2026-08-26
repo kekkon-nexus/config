@@ -133,7 +133,7 @@ export default defineConfig({
 		"no-ternary": "off",
 		"no-this-before-super": "error",
 		"no-throw-literal": "off",
-		"no-unassigned-vars": "error", // differs: oxlint:correctness
+		"no-unassigned-vars": "error",
 		"no-undef": "error",
 		"no-undefined": "off",
 		"no-underscore-dangle": "off",
@@ -289,7 +289,7 @@ export default defineConfig({
 		"jest/require-top-level-describe": "off",
 		"jest/valid-describe-callback": "error",
 		"jest/valid-expect": "error",
-		"jest/valid-expect-in-promise": "off",
+		"jest/valid-expect-in-promise": "error",
 		"jest/valid-title": "error",
 
 		// jsdoc:recommended (warn)
