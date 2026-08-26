@@ -13,10 +13,12 @@
 		"./ts": "./src/ts/tsconfig.json",
 		"./ts/*": "./src/ts/tsconfig.*.json",
 		"./*": {
+			"dev": "./src/*.ts",
 			"types": "./dist/*.d.ts",
 			"default": "./dist/*.js"
 		},
 		"./*/": {
+			"dev": "./src/*/index.ts",
 			"types": "./dist/*/index.d.ts",
 			"default": "./dist/*/index.js"
 		},
@@ -55,7 +57,8 @@
 		"oxfmt": ">=0.64 <1",
 		"oxlint": "^1.79",
 		"oxlint-tsgolint": "^7",
-		"typescript": "^7"
+		"typescript": "^7",
+		"vite-plus": "^0.3.0"
 	},
 	"peerDependenciesMeta": {
 		"@commitlint/cli": {
@@ -68,6 +71,9 @@
 			"optional": true
 		},
 		"oxlint-tsgolint": {
+			"optional": true
+		},
+		"vite-plus": {
 			"optional": true
 		}
 	},

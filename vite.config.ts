@@ -1,22 +1,14 @@
-import oxfmt from "@kekkon-nexus/config/oxfmt/";
+import fmt from "@kekkon-nexus/config/oxfmt/";
+import base from "@kekkon-nexus/config/oxlint/";
+import vp from "@kekkon-nexus/config/oxlint/vite-plus";
 import { defineConfig } from "vite-plus";
 
 export default defineConfig({
 	fmt: {
-		...oxfmt,
+		...fmt,
 	},
 	lint: {
-		// extends: [oxlint],
-		jsPlugins: [
-			{
-				name: "vite-plus",
-				specifier: "vite-plus/oxlint-plugin",
-			},
-		],
-
-		rules: {
-			"vite-plus/prefer-vite-plus-imports": "error",
-		},
+		extends: [base, vp],
 	},
 	staged: {
 		"*": "vp check --fix --no-error-on-unmatched-pattern",
