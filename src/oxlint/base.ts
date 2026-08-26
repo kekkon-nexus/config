@@ -552,7 +552,7 @@ export default defineConfig({
 		"typescript/no-misused-spread": "error",
 		"typescript/no-mixed-enums": "error",
 		"typescript/no-namespace": "error",
-		"typescript/no-non-null-asserted-nullish-coalescing": "off",
+		"typescript/no-non-null-asserted-nullish-coalescing": "error",
 		"typescript/no-non-null-asserted-optional-chain": "error",
 		"typescript/no-non-null-assertion": "error",
 		"typescript/no-redundant-type-constituents": "error",
