@@ -7,10 +7,5 @@
 		"rootDir": "src",
 		"outDir": "dist"
 	},
-	"include": [
-		"./src/commitlint.*.ts",
-		"./src/commitlint.ts",
-		"./src/oxfmt.ts",
-		"./src/oxlint.ts"
-	]
+	"include": ["./src/**/*.ts"]
 }

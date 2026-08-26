@@ -1,5 +1,4 @@
-import oxfmt from "@kekkon-nexus/config/oxfmt";
-import oxlint from "@kekkon-nexus/config/oxlint";
+import oxfmt from "@kekkon-nexus/config/oxfmt/";
 import { defineConfig } from "vite-plus";
 
 export default defineConfig({
@@ -7,7 +6,7 @@ export default defineConfig({
 		...oxfmt,
 	},
 	lint: {
-		extends: [oxlint],
+		// extends: [oxlint],
 		jsPlugins: [
 			{
 				name: "vite-plus",

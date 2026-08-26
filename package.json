@@ -10,25 +10,17 @@
 	"repository": "kekkon-nexus/config",
 	"type": "module",
 	"exports": {
-		"./package.json": "./package.json",
-		"./commitlint": {
-			"types": "./dist/commitlint.d.ts",
-			"default": "./dist/commitlint.js"
+		"./ts": "./src/ts/tsconfig.json",
+		"./ts/*": "./src/ts/tsconfig.*.json",
+		"./*": {
+			"types": "./dist/*.d.ts",
+			"default": "./dist/*.js"
 		},
-		"./commitlint/*": {
-			"types": "./dist/commitlint.*.d.ts",
-			"default": "./dist/commitlint.*.js"
+		"./*/": {
+			"types": "./dist/*/index.d.ts",
+			"default": "./dist/*/index.js"
 		},
-		"./oxfmt": {
-			"types": "./dist/oxfmt.d.ts",
-			"default": "./dist/oxfmt.js"
-		},
-		"./oxlint": {
-			"types": "./dist/oxlint.d.ts",
-			"default": "./dist/oxlint.js"
-		},
-		"./ts": "./src/tsconfig.json",
-		"./ts/*": "./src/tsconfig.*.json"
+		"./package.json": "./package.json"
 	},
 	"publishConfig": {
 		"access": "public",
