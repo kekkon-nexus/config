@@ -355,6 +355,7 @@ export default defineConfig({
 		"jsx-a11y/scope": "error",
 		"jsx-a11y/tabindex-no-positive": "error",
 
+		// next:recommended
 		// next:core-web-vitals
 		"nextjs/google-font-display": "warn",
 		"nextjs/google-font-preconnect": "warn",
@@ -837,6 +838,7 @@ export default defineConfig({
 		"vitest/warn-todo": "off",
 
 		// vue:essential
+		// vue:strongly-recommended (warn)
 		// vue:recommended (warn)
 		"vue/component-definition-name-casing": "warn",
 		"vue/define-emits-declaration": "off",
