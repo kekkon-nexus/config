@@ -9,7 +9,6 @@ import { defineConfig } from "oxlint";
 
 const config = defineConfig({
 	extends: [base, javascript, typescript, sort, jsdoc, browser, node],
-	plugins: ["unicorn"],
 });
 
 export default config;
