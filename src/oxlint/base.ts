@@ -1,9 +1,6 @@
 import { defineConfig } from "oxlint";
 
 export default defineConfig({
-	categories: {
-		correctness: "error",
-	},
 	plugins: [],
 	rules: {
 		// eslint:recommended
@@ -45,7 +42,7 @@ export default defineConfig({
 		"no-async-promise-executor": "error",
 		"no-await-in-loop": "off",
 		"no-bitwise": "off",
-		"no-caller": "error", // differs: oxlint:correctness
+		"no-caller": "off",
 		"no-case-declarations": "error",
 		"no-class-assign": "error",
 		"no-compare-neg-zero": "error",
@@ -72,7 +69,7 @@ export default defineConfig({
 		"no-empty-pattern": "error",
 		"no-empty-static-block": "error",
 		"no-eq-null": "off",
-		"no-eval": "error", // differs: oxlint:correctness
+		"no-eval": "off",
 		"no-ex-assign": "error",
 		"no-extend-native": "off",
 		"no-extra-bind": "off",
@@ -83,13 +80,13 @@ export default defineConfig({
 		"no-global-assign": "error",
 		"no-implicit-coercion": "off",
 		"no-implicit-globals": "off",
-		"no-implied-eval": "error", // differs: oxlint:correctness
+		"no-implied-eval": "off",
 		"no-import-assign": "error",
 		"no-inline-comments": "off",
 		"no-inner-declarations": "off", // off in v9
 		"no-invalid-regexp": "error",
 		"no-irregular-whitespace": "error",
-		"no-iterator": "error", // differs: oxlint:correctness
+		"no-iterator": "off",
 		"no-label-var": "off",
 		"no-labels": "off",
 		"no-lone-blocks": "off",
@@ -145,7 +142,7 @@ export default defineConfig({
 		"no-unsafe-finally": "error",
 		"no-unsafe-negation": "error",
 		"no-unsafe-optional-chaining": "error",
-		"no-unused-expressions": "error", // differs: oxlint:correctness
+		"no-unused-expressions": "off",
 		"no-unused-labels": "error",
 		"no-unused-private-class-members": "error",
 		"no-unused-vars": "error",
@@ -158,7 +155,7 @@ export default defineConfig({
 		"no-useless-concat": "off",
 		"no-useless-constructor": "off",
 		"no-useless-escape": "error",
-		"no-useless-rename": "error", // differs: oxlint:correctness
+		"no-useless-rename": "off",
 		"no-useless-return": "off",
 		"no-var": "off",
 		"no-void": "off",
