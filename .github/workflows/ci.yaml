@@ -17,6 +17,9 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun ci
 
+      - run: bun vp check
+      - run: bun run test
+
       - run: bun run pack
       - uses: actions/upload-artifact@v7
         with:
