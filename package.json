@@ -54,10 +54,10 @@
 	},
 	"peerDependencies": {
 		"@commitlint/cli": "^21.2.2",
-		"oxfmt": ">=0.64 <1",
-		"oxlint": "^1.79",
-		"oxlint-tsgolint": "^7",
-		"typescript": "^7",
+		"oxfmt": ">=0.64.0 <1",
+		"oxlint": "^1.79.0",
+		"oxlint-tsgolint": "^7.0.2001",
+		"typescript": "^7.0.2",
 		"vite-plus": "^0.3.0"
 	},
 	"peerDependenciesMeta": {
