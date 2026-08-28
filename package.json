@@ -36,6 +36,7 @@
 		"prepare": "vp config",
 		"fmt": "vp fmt",
 		"lint": "vp lint",
+		"test": "vp test",
 		"prepack": "tsc -p tsconfig.build.json",
 		"pack": "bun pm pack",
 		"bump": "bun run scripts/bump-version.ts"
@@ -69,8 +70,8 @@
 		"oxlint": "1.79.0",
 		"oxlint-tsgolint": "^7.0.2001",
 		"typescript": "^7.0.2",
-		"typescript6": "npm:@typescript/typescript6@^6.0.2",
 		"typescript-eslint": "^8.68.0",
+		"typescript6": "npm:@typescript/typescript6@^6.0.2",
 		"vite-plus": "0.3.0"
 	},
 	"peerDependencies": {
@@ -79,7 +80,6 @@
 		"oxlint": "^1.79.0",
 		"oxlint-tsgolint": "^7.0.2001",
 		"typescript": "^7.0.2",
-		"typescript6": "npm:@typescript/typescript6@^6.0.2",
 		"vite-plus": "^0.3.0"
 	},
 	"peerDependenciesMeta": {
