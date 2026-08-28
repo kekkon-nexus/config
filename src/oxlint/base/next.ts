@@ -18,7 +18,6 @@ const config = defineConfig({
 		"nextjs/no-head-import-in-document": "error",
 		"nextjs/no-html-link-for-pages": "error",
 		"nextjs/no-img-element": "warn",
-		"nextjs/no-location-assign-relative-destination": "warn",
 		"nextjs/no-page-custom-font": "warn",
 		"nextjs/no-script-component-in-head": "error",
 		"nextjs/no-styled-jsx-in-document": "warn",
