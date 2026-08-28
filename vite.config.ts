@@ -1,5 +1,5 @@
-import fmt from "@kekkon-nexus/config/oxfmt/";
-import base from "@kekkon-nexus/config/oxlint/";
+import fmt from "@kekkon-nexus/config/oxfmt";
+import base from "@kekkon-nexus/config/oxlint";
 import vp from "@kekkon-nexus/config/oxlint/vite-plus";
 import { defineConfig } from "vite-plus";
 

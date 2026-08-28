@@ -15,15 +15,30 @@
 	"exports": {
 		"./ts": "./src/ts/tsconfig.json",
 		"./ts/*": "./src/ts/tsconfig.*.json",
-		"./*": {
-			"dev": "./src/*.ts",
-			"types": "./dist/*.d.ts",
-			"default": "./dist/*.js"
+		"./commitlint": {
+			"dev": "./src/commitlint/index.ts",
+			"types": "./dist/commitlint/index.d.ts",
+			"default": "./dist/commitlint/index.js"
 		},
-		"./*/": {
-			"dev": "./src/*/index.ts",
-			"types": "./dist/*/index.d.ts",
-			"default": "./dist/*/index.js"
+		"./commitlint/*": {
+			"dev": "./src/commitlint/*.ts",
+			"types": "./dist/commitlint/*.d.ts",
+			"default": "./dist/commitlint/*.js"
+		},
+		"./oxfmt": {
+			"dev": "./src/oxfmt/index.ts",
+			"types": "./dist/oxfmt/index.d.ts",
+			"default": "./dist/oxfmt/index.js"
+		},
+		"./oxlint": {
+			"dev": "./src/oxlint/index.ts",
+			"types": "./dist/oxlint/index.d.ts",
+			"default": "./dist/oxlint/index.js"
+		},
+		"./oxlint/*": {
+			"dev": "./src/oxlint/*.ts",
+			"types": "./dist/oxlint/*.d.ts",
+			"default": "./dist/oxlint/*.js"
 		},
 		"./package.json": "./package.json"
 	},
@@ -34,9 +49,9 @@
 	},
 	"scripts": {
 		"prepare": "vp config",
-		"fmt": "vp fmt",
-		"lint": "vp lint",
-		"test": "vp test",
+		"fmt": "NODE_OPTIONS=--conditions=dev vp fmt",
+		"lint": "NODE_OPTIONS=--conditions=dev vp lint",
+		"test": "NODE_OPTIONS=--conditions=dev vp test",
 		"prepack": "tsc -p tsconfig.build.json",
 		"pack": "bun pm pack",
 		"bump": "bun run scripts/bump-version.ts"
