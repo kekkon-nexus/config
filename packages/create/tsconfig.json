@@ -1,0 +1,15 @@
+{
+	"$schema": "https://www.schemastore.org/tsconfig",
+	"extends": [
+		"../../src/ts/tsconfig.json",
+		"../../src/ts/tsconfig.strict.json"
+	],
+	"compilerOptions": {
+		"allowImportingTsExtensions": true,
+
+		"noEmit": true,
+		"types": ["bun"],
+		"skipLibCheck": true
+	},
+	"exclude": ["./dist"]
+}

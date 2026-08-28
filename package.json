@@ -8,6 +8,9 @@
 		"Yuuki Rika <yvvki@kekkon.nexus>"
 	],
 	"repository": "kekkon-nexus/config",
+	"workspaces": [
+		"packages/*"
+	],
 	"type": "module",
 	"exports": {
 		"./ts": "./src/ts/tsconfig.json",

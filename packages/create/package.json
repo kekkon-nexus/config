@@ -1,0 +1,42 @@
+{
+	"name": "@kekkon-nexus/create-config",
+	"version": "0.260828.0",
+	"bugs": "https://github.com/kekkon-nexus/config/issues",
+	"license": "MIT",
+	"contributors": [
+		"Ryan Suhartanto <suhartanto@kekkon.nexus>",
+		"Yuuki Rika <yvvki@kekkon.nexus>"
+	],
+	"repository": "kekkon-nexus/config",
+	"type": "module",
+	"bin": {
+		"create-config": "./dist/index.js"
+	},
+	"exports": {
+		".": {
+			"dev": "./src/index.ts",
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true,
+		"registry": "https://registry.npmjs.org/"
+	},
+	"scripts": {
+		"prepack": "tsc -p tsconfig.build.json",
+		"test": "vp test"
+	},
+	"dependencies": {
+		"magic-string": "^1.2.3",
+		"oxc-parser": "^0.147.0"
+	},
+	"engines": {
+		"node": ">=24.12"
+	},
+	"devDependencies": {
+		"vite-plus": "0.3.0"
+	}
+}

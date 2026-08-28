@@ -1,0 +1,12 @@
+{
+	"$schema": "https://www.schemastore.org/tsconfig",
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noEmit": false,
+		"sourceMap": true,
+
+		"rootDir": "src",
+		"outDir": "dist"
+	},
+	"include": ["src/**/*.ts"]
+}
