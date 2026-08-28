@@ -1,6 +1,6 @@
 import { defineConfig } from "oxlint";
 
-export default defineConfig({
+const config = defineConfig({
 	plugins: [],
 	rules: {
 		// eslint:recommended
@@ -10,13 +10,13 @@ export default defineConfig({
 		"block-scoped-var": "off",
 		"capitalized-comments": "off",
 		"class-methods-use-this": "off",
-		"complexity": "off",
+		complexity: "off",
 		"constructor-super": "error",
-		"curly": "off",
+		curly: "off",
 		"default-case": "off",
 		"default-case-last": "off",
 		"default-param-last": "off",
-		"eqeqeq": "off",
+		eqeqeq: "off",
 		"for-direction": "error",
 		"func-name-matching": "off",
 		"func-names": "off",
@@ -178,7 +178,7 @@ export default defineConfig({
 		"prefer-spread": "off",
 		"prefer-template": "off",
 		"preserve-caught-error": "error",
-		"radix": "off",
+		radix: "off",
 		"require-await": "off",
 		"require-unicode-regexp": "off",
 		"require-yield": "error",
@@ -190,7 +190,7 @@ export default defineConfig({
 		"use-isnan": "error",
 		"valid-typeof": "error",
 		"vars-on-top": "off",
-		"yoda": "off",
+		yoda: "off",
 
 		// import:recommended
 		"import/consistent-type-specifier-style": "off",
@@ -885,3 +885,5 @@ export default defineConfig({
 		"vue/valid-next-tick": "error",
 	},
 });
+
+export default config;
