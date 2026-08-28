@@ -36,13 +36,13 @@ const config = defineConfig({
 		"unicorn/no-console-spaces": "error",
 		"unicorn/no-document-cookie": "error",
 		"unicorn/no-empty-file": "error",
-		"unicorn/no-hex-escape": "off", // deprecated and superseeded by prefer-unicode-code-point-escapes
+		"unicorn/no-hex-escape": "off", // superseeded by prefer-unicode-code-point-escapes
 		"unicorn/no-immediate-mutation": "error",
-		"unicorn/no-instanceof-array": "off", // deprecated and superseeded by no-instanceof-builtins
+		"unicorn/no-instanceof-array": "off", // superseeded by no-instanceof-builtins
 		"unicorn/no-instanceof-builtins": "error",
 		"unicorn/no-invalid-fetch-options": "error",
 		"unicorn/no-invalid-remove-event-listener": "error",
-		"unicorn/no-length-as-slice-end": "off", // deprecated and superseeded by no-unnecessary-slice-end
+		"unicorn/no-length-as-slice-end": "off", // superseeded by no-unnecessary-slice-end
 		"unicorn/no-lonely-if": "error",
 		"unicorn/no-magic-array-flat-depth": "error",
 		"unicorn/no-negated-condition": "error",
@@ -91,7 +91,7 @@ const config = defineConfig({
 		"unicorn/prefer-date-now": "error",
 		"unicorn/prefer-default-parameters": "error",
 		"unicorn/prefer-dom-node-append": "error",
-		"unicorn/prefer-dom-node-dataset": "off", // deprecated and superseeded by dom-node-dataset (unimplemented)
+		"unicorn/prefer-dom-node-dataset": "off", // superseeded by dom-node-dataset (unimplemented)
 		"unicorn/prefer-dom-node-remove": "error",
 		"unicorn/prefer-dom-node-text-content": "error",
 		"unicorn/prefer-event-target": "error",
