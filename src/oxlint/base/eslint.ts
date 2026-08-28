@@ -146,7 +146,7 @@ const config = defineConfig({
 		"no-unused-private-class-members": "error",
 		"no-unused-vars": "error",
 		"no-use-before-define": "off",
-		"no-useless-assignment": "off",
+		"no-useless-assignment": "error",
 		"no-useless-backreference": "error",
 		"no-useless-call": "off",
 		"no-useless-catch": "error",

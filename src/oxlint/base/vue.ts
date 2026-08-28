@@ -27,7 +27,7 @@ const config = defineConfig({
 		"vue/no-import-compiler-macros": "off",
 		"vue/no-lifecycle-after-await": "error",
 		"vue/no-multiple-slot-args": "warn",
-		"vue/no-required-prop-with-default": "off",
+		"vue/no-required-prop-with-default": "warn",
 		"vue/no-reserved-component-names": "error",
 		"vue/no-reserved-keys": "error",
 		"vue/no-reserved-props": "error",

@@ -57,7 +57,7 @@ const config = defineConfig({
 		"react/no-unsafe": "off",
 		"react/no-unstable-nested-components": "off",
 		"react/no-will-update-set-state": "off",
-		"react/only-export-components": "warn",
+		"react/only-export-components": "error",
 		"react/prefer-es6-class": "off",
 		"react/prefer-function-component": "off",
 		"react/react-in-jsx-scope": "off",

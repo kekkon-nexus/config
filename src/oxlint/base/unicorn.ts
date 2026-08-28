@@ -25,7 +25,7 @@ const config = defineConfig({
 		"unicorn/no-anonymous-default-export": "error",
 		"unicorn/no-array-callback-reference": "error",
 		"unicorn/no-array-fill-with-reference-type": "error",
-		"unicorn/no-array-for-each": "error",
+		"unicorn/no-array-for-each": "off",
 		"unicorn/no-array-method-this-argument": "error",
 		"unicorn/no-array-reduce": "error",
 		"unicorn/no-array-reverse": "error",
@@ -91,7 +91,7 @@ const config = defineConfig({
 		"unicorn/prefer-date-now": "error",
 		"unicorn/prefer-default-parameters": "error",
 		"unicorn/prefer-dom-node-append": "error",
-		"unicorn/prefer-dom-node-dataset": "error", // deprecated and superseeded by dom-node-dataset (unimplemented)
+		"unicorn/prefer-dom-node-dataset": "off", // deprecated and superseeded by dom-node-dataset (unimplemented)
 		"unicorn/prefer-dom-node-remove": "error",
 		"unicorn/prefer-dom-node-text-content": "error",
 		"unicorn/prefer-event-target": "error",

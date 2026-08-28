@@ -57,7 +57,7 @@ const config = defineConfig({
 		"typescript/no-this-alias": "error",
 		"typescript/no-unnecessary-boolean-literal-compare": "error",
 		"typescript/no-unnecessary-condition": "error",
-		"typescript/no-unnecessary-parameter-property-assignment": "error",
+		"typescript/no-unnecessary-parameter-property-assignment": "off",
 		"typescript/no-unnecessary-qualifier": "off",
 		"typescript/no-unnecessary-template-expression": "error",
 		"typescript/no-unnecessary-type-arguments": "error",
