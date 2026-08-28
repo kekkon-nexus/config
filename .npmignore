@@ -3,3 +3,5 @@ tsconfig.build.*
 /.github/
 /.vite-hooks/_/
 /scripts/
+/src/*/
+!/src/ts/
