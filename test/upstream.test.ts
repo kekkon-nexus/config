@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import Module, { createRequire } from "node:module";
-import { dirname, join } from "node:path";
+import path from "node:path";
 
 import { describe, expect, it } from "vite-plus/test";
 
@@ -18,19 +18,19 @@ loader._load = function (this: unknown, request: string, ...rest: unknown[]) {
 	);
 };
 
-type Config = {
+interface Config {
 	rules?: Record<string, unknown>;
-};
-type Preset = {
+}
+interface Preset {
 	target: string;
 	sources: Source[];
-};
-type Source = {
+}
+interface Source {
 	src: string;
 	preset: string;
 	prefix: string;
 	severity?: string;
-};
+}
 
 const levels: Record<string, string> = {
 	0: "off",
@@ -78,8 +78,8 @@ const expectedRules = async (sources: Source[], target: string) => {
 	return expected;
 };
 
-const schemaPath = join(
-	dirname(createRequire(import.meta.url).resolve("oxlint/package.json")),
+const schemaPath = path.join(
+	path.dirname(createRequire(import.meta.url).resolve("oxlint/package.json")),
 	"configuration_schema.json",
 );
 const schema = JSON.parse(await readFile(schemaPath, "utf8")) as {
@@ -303,7 +303,7 @@ describe("base", async () => {
 					([rule, base, upstream]) =>
 						`${rule}: base=${base} upstream=${upstream}`,
 				)
-				.sort();
+				.toSorted();
 
 			return {
 				name,
@@ -315,7 +315,7 @@ describe("base", async () => {
 							!implemented.has(rule) &&
 							expected[rule] !== "off",
 					)
-					.sort(),
+					.toSorted(),
 			};
 		}),
 	);
@@ -325,6 +325,7 @@ describe("base", async () => {
 			expect(drift).toEqual([]);
 		});
 
+		// oxlint-disable-next-line vitest/expect-expect, vitest/no-disabled-tests
 		it.skip.each(unimplemented)("%s", () => {});
 	});
 });

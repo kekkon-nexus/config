@@ -1,4 +1,7 @@
+import process from "node:process";
+
 import pkg from "@kekkon-nexus/config/package.json" with { type: "json" };
+import { spawn } from "bun";
 
 const [major, minor, patch = 0] = pkg.version.split(".").map(Number);
 
@@ -10,7 +13,7 @@ const next = yy * 10_000 + mm * 100 + dd;
 
 const version = [major, next, next === minor ? patch + 1 : 0].join(".");
 
-const proc = Bun.spawn(
+const proc = spawn(
 	["bun", "pm", "version", version, "--message=:bookmark: build(release): %s"],
 	{
 		stderr: "inherit",
