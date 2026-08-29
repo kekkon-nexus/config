@@ -8,9 +8,7 @@
 		"Yuuki Rika <yvvki@kekkon.nexus>"
 	],
 	"repository": "kekkon-nexus/config",
-	"bin": {
-		"create-config": "./dist/index.js"
-	},
+	"bin": "./dist/cli.js",
 	"type": "module",
 	"exports": {
 		".": {
@@ -30,6 +28,9 @@
 		"test": "vp test"
 	},
 	"dependencies": {
+		"@optique/clack": "^1.2.4",
+		"@optique/core": "^1.2.4",
+		"@optique/run": "^1.2.4",
 		"magic-string": "^1.2.3",
 		"oxc-parser": "^0.147.0"
 	},

@@ -1,15 +1,19 @@
-#!/usr/bin/env node
-import console from "node:console";
 import { readFile, writeFile } from "node:fs/promises";
-import process from "node:process";
 
 import { MagicString } from "magic-string";
-import { parseSync, Visitor } from "oxc-parser";
+import { parseSync } from "oxc-parser";
 
-export async function setDefaultExportProp(
+import { defaultExport, prop } from "./ast.ts";
+
+export interface Preset {
+	local: string;
+	from: string;
+}
+
+export async function patchExtends(
 	file: string,
-	key: string,
-	literal: string,
+	presets: readonly Preset[],
+	under?: string,
 ): Promise<void> {
 	const code = await readFile(file, "utf8");
 	// filename drives the dialect (js/ts/tsx), so no parser options are needed
@@ -18,36 +22,64 @@ export async function setDefaultExportProp(
 		throw new Error(errors.map((e) => e.message).join("\n"));
 	}
 
+	const root = defaultExport(program);
+	if (!root) throw new Error(`no default exported object in ${file}`);
+
 	const s = new MagicString(code);
-	let found = false;
 
-	new Visitor({
-		ExportDefaultDeclaration(node) {
-			if (node.declaration.type !== "ObjectExpression") return;
-			for (const prop of node.declaration.properties) {
-				if (prop.type !== "Property" || prop.computed) continue;
-				const { key: k } = prop;
-				let name;
-				if (k.type === "Identifier") name = k.name;
-				else if ("value" in k) name = String(k.value);
-				if (name !== key) continue;
-				s.overwrite(prop.value.start, prop.value.end, literal);
-				found = true;
+	const locals = presets.map((preset) => preset.local);
+	let target = root;
+
+	if (under) {
+		const nested = prop(root, under);
+		if (!nested) {
+			s.appendRight(
+				root.start + 1,
+				`${under}:{extends:[${locals.join(",")}]},`,
+			);
+		} else if (nested.value.type === "ObjectExpression") {
+			target = nested.value;
+		} else {
+			throw new Error(`${under} in ${file} is not an object literal`);
+		}
+	}
+
+	if (target !== root || !under) {
+		const list = prop(target, "extends");
+		if (!list) {
+			s.appendRight(target.start + 1, `extends:[${locals.join(",")}],`);
+		} else if (list.value.type === "ArrayExpression") {
+			const present = new Set(
+				list.value.elements.map((element) =>
+					element?.type === "Identifier" ? element.name : undefined,
+				),
+			);
+			const missing = locals.filter((local) => !present.has(local));
+			if (missing.length > 0) {
+				const separator = list.value.elements.length > 0 ? "," : "";
+				s.appendLeft(list.value.end - 1, `${separator}${missing.join(",")}`);
 			}
-		},
-	}).visit(program);
+		} else {
+			throw new Error(`extends in ${file} is not an array literal`);
+		}
+	}
 
-	if (!found) throw new Error(`${key} not found in default export of ${file}`);
+	const imported = new Set(
+		program.body
+			.filter((statement) => statement.type === "ImportDeclaration")
+			.map((statement) => statement.source.value),
+	);
+	const added = presets
+		.filter((preset) => !imported.has(preset.from))
+		.map((preset) => `import ${preset.local} from "${preset.from}";\n`)
+		.join("");
+	if (added) {
+		const last = program.body.findLast(
+			(statement) => statement.type === "ImportDeclaration",
+		);
+		if (last) s.appendLeft(last.end, `\n${added.trimEnd()}`);
+		else s.appendRight(0, added);
+	}
 
 	await writeFile(file, s.toString());
-}
-
-if (import.meta.main) {
-	const [file, key, literal] = process.argv.slice(2);
-	if (!file || !key || literal === undefined) {
-		console.error("usage: create-config <file> <key> <literal>");
-		// oxlint-disable-next-line unicorn/no-process-exit
-		process.exit(1);
-	}
-	await setDefaultExportProp(file, key, literal);
 }
