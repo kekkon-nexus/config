@@ -1,5 +1,4 @@
-import { defineConfig } from "oxfmt";
-import type { SortImportsConfig } from "oxfmt";
+import { defineConfig, type SortImportsConfig } from "oxfmt";
 
 export function sortImports({
 	customGroups,
