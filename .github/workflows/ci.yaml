@@ -17,6 +17,8 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun ci
 
+      - run: bun run prepack
+
       - run: bun vp check
       - run: bun run test
 
