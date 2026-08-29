@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { readFile, writeFile } from "node:fs/promises";
+
 import MagicString from "magic-string";
 import { parseSync, Visitor } from "oxc-parser";
 

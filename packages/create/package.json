@@ -8,10 +8,10 @@
 		"Yuuki Rika <yvvki@kekkon.nexus>"
 	],
 	"repository": "kekkon-nexus/config",
-	"type": "module",
 	"bin": {
 		"create-config": "./dist/index.js"
 	},
+	"type": "module",
 	"exports": {
 		".": {
 			"dev": "./src/index.ts",
@@ -33,10 +33,10 @@
 		"magic-string": "^1.2.3",
 		"oxc-parser": "^0.147.0"
 	},
-	"engines": {
-		"node": ">=24.12"
-	},
 	"devDependencies": {
 		"vite-plus": "0.3.0"
+	},
+	"engines": {
+		"node": ">=24.12"
 	}
 }
