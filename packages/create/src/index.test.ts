@@ -1,7 +1,9 @@
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+
 import { expect, it, onTestFinished } from "vite-plus/test";
+
 import { setDefaultExportProp } from "./index.ts";
 
 it("overwrites a default export property value", async () => {

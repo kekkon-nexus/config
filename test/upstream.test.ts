@@ -94,7 +94,7 @@ const implemented = new Set(
 );
 
 const presets: Record<string, Preset> = {
-	eslint: {
+	"eslint": {
 		target: "",
 		sources: [
 			{
@@ -104,7 +104,7 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
-	import: {
+	"import": {
 		target: "import/",
 		sources: [
 			{
@@ -114,7 +114,7 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
-	jest: {
+	"jest": {
 		target: "jest/",
 		sources: [
 			{
@@ -124,7 +124,7 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
-	jsdoc: {
+	"jsdoc": {
 		target: "jsdoc/",
 		sources: [
 			{
@@ -145,7 +145,7 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
-	next: {
+	"next": {
 		target: "nextjs/",
 		sources: [
 			{
@@ -160,7 +160,7 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
-	node: {
+	"node": {
 		target: "node/",
 		sources: [
 			{
@@ -170,7 +170,7 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
-	promise: {
+	"promise": {
 		target: "promise/",
 		sources: [
 			{
@@ -180,7 +180,7 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
-	react: {
+	"react": {
 		target: "react/",
 		sources: [
 			{
@@ -215,7 +215,7 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
-	typescript: {
+	"typescript": {
 		target: "typescript/",
 		sources: [
 			{
@@ -231,7 +231,7 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
-	unicorn: {
+	"unicorn": {
 		target: "unicorn/",
 		sources: [
 			{
@@ -241,7 +241,7 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
-	vitest: {
+	"vitest": {
 		target: "vitest/",
 		sources: [
 			{
@@ -252,7 +252,7 @@ const presets: Record<string, Preset> = {
 		],
 	},
 	// vue flat configs are cumulative, error is applied last
-	vue: {
+	"vue": {
 		target: "vue/",
 		sources: [
 			{
