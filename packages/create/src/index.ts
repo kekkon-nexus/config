@@ -1,7 +1,9 @@
 #!/usr/bin/env node
+import console from "node:console";
 import { readFile, writeFile } from "node:fs/promises";
+import process from "node:process";
 
-import MagicString from "magic-string";
+import { MagicString } from "magic-string";
 import { parseSync, Visitor } from "oxc-parser";
 
 export async function setDefaultExportProp(
@@ -25,12 +27,9 @@ export async function setDefaultExportProp(
 			for (const prop of node.declaration.properties) {
 				if (prop.type !== "Property" || prop.computed) continue;
 				const { key: k } = prop;
-				const name =
-					k.type === "Identifier"
-						? k.name
-						: "value" in k
-							? String(k.value)
-							: undefined;
+				let name;
+				if (k.type === "Identifier") name = k.name;
+				else if ("value" in k) name = String(k.value);
 				if (name !== key) continue;
 				s.overwrite(prop.value.start, prop.value.end, literal);
 				found = true;
