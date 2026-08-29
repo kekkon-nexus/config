@@ -11,6 +11,10 @@ const config = defineConfig({
 				objectLiteralTypeAssertions: "allow-as-parameter",
 			},
 		],
+		"typescript/consistent-type-imports": [
+			"warn",
+			{ fixStyle: "inline-type-imports" },
+		],
 		"typescript/no-deprecated": "warn",
 		"typescript/no-duplicate-type-constituents": "warn",
 		"typescript/no-dynamic-delete": "warn",
