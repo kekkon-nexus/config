@@ -28,7 +28,7 @@ it("appends to an existing extends array", async () => {
 	).toBe(
 		'import base from "./base.ts";\n' +
 			'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-			"const config = defineConfig({ extends: [base,oxlint] });\n" +
+			"const config = defineConfig({ extends: [base, oxlint] });\n" +
 			"export default config;\n",
 	);
 });
@@ -36,14 +36,14 @@ it("appends to an existing extends array", async () => {
 it("inserts extends when absent", async () => {
 	expect(await patch("export default defineConfig({});\n")).toBe(
 		'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-			"export default defineConfig({extends:[oxlint],});\n",
+			"export default defineConfig({\n\textends: [oxlint],\n});\n",
 	);
 });
 
 it("inserts a nested section when absent", async () => {
 	expect(await patch("export default { test: {} };\n", "lint")).toBe(
 		'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-			"export default {lint:{extends:[oxlint]}, test: {} };\n",
+			"export default {\n\tlint: { extends: [oxlint] }, test: {} };\n",
 	);
 });
 
@@ -70,7 +70,7 @@ it("matches a string literal key", async () => {
 it("ignores spread properties", async () => {
 	expect(await patch("export default { ...base };\n")).toBe(
 		'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-			"export default {extends:[oxlint], ...base };\n",
+			"export default {\n\textends: [oxlint], ...base };\n",
 	);
 });
 

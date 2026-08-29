@@ -54,3 +54,16 @@ export function defaultExport(program: Program): ObjectExpression | undefined {
 	}
 	return undefined;
 }
+
+export function importsDefineConfig(program: Program, from: string): boolean {
+	for (const statement of program.body) {
+		if (statement.type !== "ImportDeclaration") continue;
+		if (statement.source.value !== from) continue;
+		for (const specifier of statement.specifiers ?? []) {
+			if (specifier.type !== "ImportSpecifier") continue;
+			if (specifier.imported.type !== "Identifier") continue;
+			if (specifier.imported.name === "defineConfig") return true;
+		}
+	}
+	return false;
+}
