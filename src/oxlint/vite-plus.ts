@@ -1,8 +1,8 @@
-import vite from "@kekkon-nexus/config/oxlint/vite";
+import vitest from "@kekkon-nexus/config/oxlint/vitest";
 import { defineConfig } from "oxlint";
 
 const config = defineConfig({
-	extends: [vite],
+	extends: [vitest],
 	jsPlugins: [
 		{
 			name: "vite-plus",
