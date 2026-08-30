@@ -14,6 +14,13 @@ export async function editorconfig(): Promise<string> {
 	return readFile(fileURLToPath(source), "utf8");
 }
 
+export const VSCODE = ["extensions", "settings"] as const;
+
+export async function vscode(name: string): Promise<string> {
+	const source = import.meta.resolve(`@kekkon-nexus/config/vscode/${name}`);
+	return readFile(fileURLToPath(source), "utf8");
+}
+
 export function render(
 	tool: Tool,
 	presets: readonly Preset[],

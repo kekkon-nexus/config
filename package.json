@@ -13,12 +13,14 @@
 	],
 	"files": [
 		".editorconfig",
+		".vscode",
 		"dist",
 		"src/ts"
 	],
 	"type": "module",
 	"exports": {
 		"./editorconfig": "./.editorconfig",
+		"./vscode/*": "./.vscode/*.json",
 		"./ts": "./src/ts/tsconfig.json",
 		"./ts/*": "./src/ts/tsconfig.*.json",
 		"./commitlint": {

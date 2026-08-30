@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
@@ -6,7 +6,7 @@ import { run } from "@optique/run";
 import { expect, it, onTestFinished } from "vite-plus/test";
 
 import { apply, configParser, packages } from "./cli.ts";
-import { editorconfig } from "./generate.ts";
+import { editorconfig, vscode } from "./generate.ts";
 import { scopePresets } from "./presets.ts";
 
 async function project(files: Record<string, string>): Promise<string> {
@@ -36,6 +36,7 @@ it("creates both configs when nothing is configured", async () => {
 			typescript: false,
 			typeAware: false,
 			editorconfig: false,
+			vscode: false,
 		},
 	);
 
@@ -71,6 +72,7 @@ it("converts json and carries its rules over the presets", async () => {
 			typescript: false,
 			typeAware: false,
 			editorconfig: false,
+			vscode: false,
 		},
 	);
 
@@ -103,6 +105,7 @@ it("patches an existing vite-plus config", async () => {
 			typescript: false,
 			typeAware: false,
 			editorconfig: false,
+			vscode: false,
 		},
 	);
 
@@ -133,6 +136,7 @@ it("adds type module when asked, and falls back to mts when not", async () => {
 			typescript: false,
 			typeAware: false,
 			editorconfig: false,
+			vscode: false,
 		},
 	);
 	expect(await readFile(path.join(dir, "package.json"), "utf8")).toBe(
@@ -153,6 +157,7 @@ it("adds type module when asked, and falls back to mts when not", async () => {
 			typescript: false,
 			typeAware: false,
 			editorconfig: false,
+			vscode: false,
 		},
 	);
 	expect(written).toEqual([
@@ -177,6 +182,7 @@ it("refuses to clobber a bare vite config", async () => {
 				typescript: false,
 				typeAware: false,
 				editorconfig: false,
+				vscode: false,
 			},
 		),
 	).rejects.toThrow("does not import vite-plus");
@@ -200,6 +206,7 @@ it("refuses to clobber a config detection missed", async () => {
 				typescript: false,
 				typeAware: false,
 				editorconfig: false,
+				vscode: false,
 			},
 		),
 	).rejects.toThrow("EEXIST");
@@ -218,6 +225,7 @@ it("prompts for the toolchain even when one is detected", async () => {
 					typescript: () => Promise.resolve("true"),
 					typeAware: () => Promise.resolve(false),
 					editorconfig: () => Promise.resolve(false),
+					vscode: () => Promise.resolve(false),
 				},
 			),
 			{ args: [] },
@@ -230,6 +238,7 @@ it("prompts for the toolchain even when one is detected", async () => {
 		typescript: true,
 		typeAware: false,
 		editorconfig: false,
+		vscode: false,
 	});
 });
 
@@ -243,6 +252,7 @@ it("prefers command line values over prompts", async () => {
 				typescript: () => Promise.reject(new Error("prompted")),
 				typeAware: () => Promise.reject(new Error("prompted")),
 				editorconfig: () => Promise.reject(new Error("prompted")),
+				vscode: () => Promise.reject(new Error("prompted")),
 			}),
 			{
 				args: [
@@ -254,6 +264,7 @@ it("prefers command line values over prompts", async () => {
 					"strict",
 					"--type-aware",
 					"--editorconfig",
+					"--vscode",
 				],
 			},
 		),
@@ -265,6 +276,7 @@ it("prefers command line values over prompts", async () => {
 		typescript: "strict",
 		typeAware: true,
 		editorconfig: true,
+		vscode: true,
 	});
 });
 
@@ -295,6 +307,7 @@ it("runs off flags alone without a tty", async () => {
 		typescript: false,
 		typeAware: false,
 		editorconfig: false,
+		vscode: false,
 	});
 	expect(
 		await run(configParser({}, false, {}, false), {
@@ -308,6 +321,7 @@ it("runs off flags alone without a tty", async () => {
 		typescript: false,
 		typeAware: false,
 		editorconfig: false,
+		vscode: false,
 	});
 });
 
@@ -323,6 +337,7 @@ it("creates a tsconfig, with strict when asked", async () => {
 			typescript: "strict",
 			typeAware: true,
 			editorconfig: false,
+			vscode: false,
 		},
 	);
 
@@ -353,6 +368,7 @@ it("patches a tsconfig that is already there", async () => {
 			typescript: true,
 			typeAware: false,
 			editorconfig: false,
+			vscode: false,
 		},
 	);
 
@@ -373,6 +389,7 @@ it("writes an editorconfig, but never over one that is there", async () => {
 			typescript: false,
 			typeAware: false,
 			editorconfig: true,
+			vscode: false,
 		},
 	);
 
@@ -392,6 +409,7 @@ it("writes an editorconfig, but never over one that is there", async () => {
 			typescript: false,
 			typeAware: false,
 			editorconfig: true,
+			vscode: false,
 		},
 	);
 
@@ -413,6 +431,7 @@ it("turns the type-aware options on in a fresh oxlint config", async () => {
 			typescript: false,
 			typeAware: true,
 			editorconfig: false,
+			vscode: false,
 		},
 	);
 
@@ -442,6 +461,7 @@ it("turns them on in a fresh vite-plus config", async () => {
 			typescript: false,
 			typeAware: true,
 			editorconfig: false,
+			vscode: false,
 		},
 	);
 
@@ -475,12 +495,43 @@ it("adds them to an existing lint section", async () => {
 			typescript: false,
 			typeAware: true,
 			editorconfig: false,
+			vscode: false,
 		},
 	);
 
 	expect(await readFile(path.join(dir, "vite.config.ts"), "utf8")).toContain(
 		"options: { typeAware: true, typeCheck: true }",
 	);
+});
+
+it("writes both vscode files, but never over one that is there", async () => {
+	const kept = '{ "recommendations": [] }\n';
+	const dir = await project(esm);
+	await mkdir(path.join(dir, ".vscode"), { recursive: true });
+	await writeFile(path.join(dir, ".vscode", "extensions.json"), kept);
+
+	const written = await apply(
+		dir,
+		{},
+		{
+			toolchain: "oxlint",
+			scopes: [],
+			module: true,
+			typescript: false,
+			typeAware: false,
+			editorconfig: false,
+			vscode: true,
+		},
+	);
+
+	expect(written).toContain(path.join(dir, ".vscode", "settings.json"));
+	expect(written).not.toContain(path.join(dir, ".vscode", "extensions.json"));
+	expect(
+		await readFile(path.join(dir, ".vscode", "extensions.json"), "utf8"),
+	).toBe(kept);
+	expect(
+		await readFile(path.join(dir, ".vscode", "settings.json"), "utf8"),
+	).toBe(await vscode("settings"));
 });
 
 it("drops react when next already extends it", () => {

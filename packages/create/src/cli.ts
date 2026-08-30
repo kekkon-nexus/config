@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { type ChildProcess, spawn } from "node:child_process";
 import { existsSync } from "node:fs";
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { styleText } from "node:util";
@@ -15,7 +15,14 @@ import { choice } from "@optique/core/valueparser";
 import { run } from "@optique/run";
 
 import { detect, type Detected } from "./detect.ts";
-import { convert, create, editorconfig, renderVitePlus } from "./generate.ts";
+import {
+	convert,
+	create,
+	editorconfig,
+	renderVitePlus,
+	VSCODE,
+	vscode,
+} from "./generate.ts";
 import { patchExtends, patchSpread, patchTsconfig } from "./index.ts";
 import {
 	OXFMT,
@@ -47,6 +54,7 @@ export interface Answers {
 	typescript: TypeScript;
 	typeAware: boolean;
 	editorconfig: boolean;
+	vscode: boolean;
 }
 
 export function packages(toolchain: Toolchain, typeAware = false): string[] {
@@ -65,6 +73,7 @@ export interface Prompters {
 	typescript?: () => Promise<string>;
 	typeAware?: () => Promise<boolean>;
 	editorconfig?: () => Promise<boolean>;
+	vscode?: () => Promise<boolean>;
 }
 
 async function packageJson(dir: string): Promise<Record<string, unknown>> {
@@ -105,6 +114,7 @@ export function configParser(
 	);
 	const typeAwareArg = option("--type-aware");
 	const editorconfigArg = option("--editorconfig");
+	const vscodeArg = option("--vscode");
 
 	// no tty, so unanswered flags fall back instead of prompting
 	if (!tty) {
@@ -114,6 +124,7 @@ export function configParser(
 			typeAware: withDefault(typeAwareArg, false),
 			typescript: map(withDefault(typescriptArg, "false"), typescriptValue),
 			editorconfig: withDefault(editorconfigArg, false),
+			vscode: withDefault(vscodeArg, false),
 			install: withDefault(installArg, false),
 			module: withDefault(moduleArg, esm),
 		});
@@ -152,6 +163,12 @@ export function configParser(
 			message: `Add .editorconfig? ${styleText("dim", "(Used by oxfmt)")}`,
 			initialValue: true,
 			prompter: prompters.editorconfig,
+		}),
+		vscode: prompt(vscodeArg, {
+			type: "confirm",
+			message: `Add .vscode? ${styleText("dim", "(Settings and extensions)")}`,
+			initialValue: true,
+			prompter: prompters.vscode,
 		}),
 		install: prompt(installArg, {
 			type: "confirm",
@@ -207,6 +224,19 @@ export async function apply(
 		if (!existsSync(file)) {
 			await writeFile(file, await editorconfig());
 			written.push(file);
+		}
+	}
+
+	if (answers.vscode) {
+		const folder = path.join(dir, ".vscode");
+		await mkdir(folder, { recursive: true });
+		for (const name of VSCODE) {
+			const file = path.join(folder, `${name}.json`);
+			// same rule as the editorconfig, never over an existing one
+			if (!existsSync(file)) {
+				await writeFile(file, await vscode(name));
+				written.push(file);
+			}
 		}
 	}
 
