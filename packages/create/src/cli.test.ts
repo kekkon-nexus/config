@@ -69,7 +69,7 @@ it("converts json and carries its rules over the presets", async () => {
 			'import { defineConfig } from "oxlint";\n\n' +
 			"export default defineConfig({\n" +
 			'\textends: [oxlint, next, "./other.json"],\n' +
-			'\t"rules": {\n\t\t"eqeqeq": "error"\n\t},\n' +
+			'\trules: {\n\t\t"eqeqeq": "error"\n\t},\n' +
 			"});\n",
 	);
 	expect(

@@ -29,9 +29,9 @@ export function render(
 				];
 
 	for (const [key, value] of Object.entries(rest)) {
-		body.push(
-			`${JSON.stringify(key)}: ${JSON.stringify(value, undefined, "\t")},`,
-		);
+		// extends is emitted bare, so quoteProps stays consistent
+		const name = /^[A-Za-z_$][\w$]*$/.test(key) ? key : JSON.stringify(key);
+		body.push(`${name}: ${JSON.stringify(value, undefined, "\t")},`);
 	}
 
 	const indented = body.map((entry) =>
@@ -63,7 +63,7 @@ export async function convert(
 		unknown
 	>;
 	await writeFile(target, render(tool, presets, carried));
-	// the ts/js config takes priority, so the json would only be ignored
+	// the ts/js config takes priority, the json would be ignored
 	await rm(json);
 }
 
