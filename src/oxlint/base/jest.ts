@@ -4,7 +4,7 @@ const config = defineConfig({
 	rules: {
 		// jest:recommended
 		"jest/consistent-test-it": "off",
-		"jest/expect-expect": "error",
+		"jest/expect-expect": "warn",
 		"jest/max-expects": "off",
 		"jest/max-nested-describe": "off",
 		"jest/no-alias-methods": "error",
