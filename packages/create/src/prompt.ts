@@ -77,8 +77,7 @@ function lock(
 	return [...selected, item.value];
 }
 
-// the option list is re-read on every keypress, so mutating these items in the
-// getter is what makes an implied scope lock itself
+// the list is re-read on every keypress, so mutating items here locks a scope
 export function scopeOptions(chosen: Chosen): {
 	items: Item<Scope>[];
 	options: (this: Selection) => Item<Scope>[];
@@ -145,7 +144,7 @@ export function scopePrompter(
 			filter: () => true,
 			options,
 		});
-		// a cancel symbol is handled by optique, which checks it on the result
+		// optique checks the cancel symbol on the result
 		return picked as readonly string[];
 	};
 }

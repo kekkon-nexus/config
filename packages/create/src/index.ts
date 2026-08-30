@@ -38,7 +38,7 @@ async function edit(
 	mutate: (s: MagicString, root: ObjectExpression, code: string) => void,
 ): Promise<void> {
 	const code = await readFile(file, "utf8");
-	// filename drives the dialect (js/ts/tsx), so no parser options are needed
+	// filename drives the dialect, no parser options needed
 	const { program, errors } = parseSync(file, code);
 	if (errors.length > 0) {
 		throw new Error(errors.map((e) => e.message).join("\n"));
@@ -91,7 +91,7 @@ export async function patchExtends(
 			}
 		}
 
-		if (target !== root || !under) {
+		if (!under || target !== root) {
 			const list = prop(target, "extends");
 			if (!list) {
 				insert(s, code, target, `extends: [${locals.join(", ")}],`);
