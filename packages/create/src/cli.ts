@@ -8,14 +8,14 @@ import process from "node:process";
 import { prompt } from "@optique/clack";
 import { object } from "@optique/core/constructs";
 import { message } from "@optique/core/message";
-import { multiple, withDefault } from "@optique/core/modifiers";
+import { map, multiple, withDefault } from "@optique/core/modifiers";
 import { option } from "@optique/core/primitives";
 import { choice } from "@optique/core/valueparser";
 import { print, printError, run } from "@optique/run";
 
 import { detect, type Detected } from "./detect.ts";
 import { convert, create, renderVitePlus } from "./generate.ts";
-import { patchExtends, patchSpread } from "./index.ts";
+import { patchExtends, patchSpread, patchTsconfig } from "./index.ts";
 import {
 	OXFMT,
 	OXLINT,
@@ -23,6 +23,10 @@ import {
 	scopePresets,
 	SCOPES,
 	type Toolchain,
+	TS,
+	TS_STRICT,
+	type TypeScript,
+	typescriptValue,
 	VITE_PLUS,
 } from "./presets.ts";
 import {
@@ -30,6 +34,7 @@ import {
 	scopePrompter,
 	toolchainPrompter,
 	toolchainSelect,
+	TYPESCRIPT_SELECT,
 } from "./prompt.ts";
 
 export type { Toolchain } from "./presets.ts";
@@ -38,12 +43,15 @@ export interface Answers {
 	toolchain: Toolchain;
 	scopes: readonly Scope[];
 	module: boolean;
+	typescript: TypeScript;
+	typeAware: boolean;
 }
 
-export function packages(toolchain: Toolchain): string[] {
+export function packages(toolchain: Toolchain, typeAware = false): string[] {
 	return [
 		"@kekkon-nexus/config",
 		...(toolchain === "vite-plus" ? ["vite-plus"] : ["oxlint", "oxfmt"]),
+		...(typeAware ? ["oxlint-tsgolint"] : []),
 	];
 }
 
@@ -52,6 +60,8 @@ export interface Prompters {
 	scopes?: () => Promise<readonly string[]>;
 	module?: () => Promise<boolean>;
 	install?: () => Promise<boolean>;
+	typescript?: () => Promise<string>;
+	typeAware?: () => Promise<boolean>;
 }
 
 async function packageJson(dir: string): Promise<Record<string, unknown>> {
@@ -86,12 +96,19 @@ export function configParser(
 	);
 	const moduleArg = option("--module");
 	const installArg = option("--install");
+	const typescriptArg = option(
+		"--typescript",
+		choice(["false", "true", "strict"]),
+	);
+	const typeAwareArg = option("--type-aware");
 
 	// no tty, so unanswered flags fall back instead of prompting
 	if (!tty) {
 		return object({
 			toolchain: withDefault(toolchainArg, initial),
 			scopes: withDefault(scopesArg, [] as Scope[]),
+			typeAware: withDefault(typeAwareArg, false),
+			typescript: map(withDefault(typescriptArg, "false"), typescriptValue),
 			install: withDefault(installArg, false),
 			module: withDefault(moduleArg, esm),
 		});
@@ -110,6 +127,20 @@ export function configParser(
 			options: ["jest", "next", "react", "vitest", "vue"],
 			prompter: prompters.scopes ?? scopePrompter(chosen),
 		}),
+		typeAware: prompt(typeAwareArg, {
+			type: "confirm",
+			message: "Type-aware linting?",
+			initialValue: true,
+			prompter: prompters.typeAware,
+		}),
+		typescript: map(
+			prompt(typescriptArg, {
+				type: "select",
+				...TYPESCRIPT_SELECT,
+				prompter: prompters.typescript,
+			}),
+			typescriptValue,
+		),
 		install: prompt(installArg, {
 			type: "confirm",
 			message: "Install the config packages?",
@@ -141,6 +172,22 @@ export async function apply(
 		}
 	}
 
+	const written: string[] = [];
+
+	// before extension(), which picks .ts off a tsconfig.json
+	if (answers.typescript !== false) {
+		const tsconfig = path.join(dir, "tsconfig.json");
+		const tsPresets = answers.typescript === "strict" ? [TS, TS_STRICT] : [TS];
+		if (existsSync(tsconfig)) await patchTsconfig(tsconfig, tsPresets);
+		else {
+			await writeFile(
+				tsconfig,
+				`${JSON.stringify({ extends: tsPresets }, undefined, "\t")}\n`,
+			);
+		}
+		written.push(tsconfig);
+	}
+
 	const ext = extension(dir, await esmPackage(dir));
 	const scoped = scopePresets(answers.scopes);
 	// the vite-plus preset already extends vitest
@@ -155,7 +202,8 @@ export async function apply(
 		if (found.vitePlus) {
 			await patchExtends(found.vitePlus, [...presets, VITE_PLUS], "lint");
 			await patchSpread(found.vitePlus, OXFMT, "fmt");
-			return [found.vitePlus];
+			written.push(found.vitePlus);
+			return written;
 		}
 		if (found.vite) {
 			throw new Error(`${found.vite} does not import vite-plus`);
@@ -164,10 +212,10 @@ export async function apply(
 		await writeFile(file, renderVitePlus([...presets, VITE_PLUS], OXFMT), {
 			flag: "wx",
 		});
-		return [file];
+		written.push(file);
+		return written;
 	}
 
-	const written: string[] = [];
 	for (const tool of ["oxlint", "oxfmt"] as const) {
 		const current = tool === "oxlint" ? found.oxlint : found.oxfmt;
 		const toolPresets = tool === "oxlint" ? presets : [OXFMT];
@@ -207,7 +255,11 @@ if (import.meta.main) {
 		print(message`Wrote ${written.join(", ")}.`);
 
 		if (answers.install) {
-			const add = ["add", "-D", ...packages(answers.toolchain)];
+			const add = [
+				"add",
+				"-D",
+				...packages(answers.toolchain, answers.typeAware),
+			];
 			print(message`Running ${`vp ${add.join(" ")}`}.`);
 			await new Promise<void>((resolve, reject) => {
 				spawn("vp", add, { cwd: dir, stdio: "inherit" })

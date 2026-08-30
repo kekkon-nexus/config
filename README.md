@@ -42,6 +42,8 @@ Pass flags to skip the prompts:
 | `--scope jest\|next\|react\|vitest\|vue` | opt-in preset, repeatable                |
 | `--install`                              | install the packages afterwards          |
 | `--module`                               | add `"type": "module"` to `package.json` |
+| `--typescript false\|true\|strict`       | write or patch `tsconfig.json`           |
+| `--type-aware`                           | install `oxlint-tsgolint`                |
 
 Or manually:
 

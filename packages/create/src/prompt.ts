@@ -67,6 +67,16 @@ export function toolchainPrompter(
 	};
 }
 
+export const TYPESCRIPT_SELECT = {
+	message: "TypeScript:",
+	initialValue: "strict",
+	options: [
+		{ value: "strict", label: "Strict", hint: "ts and ts/strict" },
+		{ value: "true", label: "Base", hint: "ts" },
+		{ value: "false", label: "None" },
+	],
+};
+
 function lock(
 	item: Item<Scope>,
 	locked: boolean,

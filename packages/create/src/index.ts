@@ -113,6 +113,57 @@ export async function patchExtends(
 	});
 }
 
+export async function patchTsconfig(
+	file: string,
+	presets: readonly string[],
+): Promise<void> {
+	const code = await readFile(file, "utf8");
+	// jsonc is a subset of js object literals, so the ts parser reads it
+	const prefix = "export default ";
+	const wrapped = `${prefix}${code}`;
+	const { program, errors } = parseSync("tsconfig.ts", wrapped);
+	if (errors.length > 0) {
+		throw new Error(`${file}: ${errors.map((e) => e.message).join("\n")}`);
+	}
+
+	const root = defaultExport(program);
+	if (!root) throw new Error(`${file} is not an object literal`);
+
+	const s = new MagicString(wrapped);
+	const list = prop(root, "extends");
+	const quote = (entries: readonly string[]): string =>
+		entries.map((entry) => JSON.stringify(entry)).join(", ");
+
+	if (!list) {
+		insert(s, wrapped, root, `"extends": [${quote(presets)}],`);
+	} else if (list.value.type === "ArrayExpression") {
+		const present = new Set(
+			list.value.elements.map((element) =>
+				element?.type === "Literal" ? element.value : undefined,
+			),
+		);
+		const missing = presets.filter((preset) => !present.has(preset));
+		if (missing.length > 0) {
+			const separator = list.value.elements.length > 0 ? ", " : "";
+			s.appendLeft(list.value.end - 1, `${separator}${quote(missing)}`);
+		}
+	} else if (
+		list.value.type === "Literal" &&
+		typeof list.value.value === "string"
+	) {
+		const inherited = list.value.value;
+		s.overwrite(
+			list.value.start,
+			list.value.end,
+			`[${quote([inherited, ...presets.filter((preset) => preset !== inherited)])}]`,
+		);
+	} else {
+		throw new Error(`extends in ${file} is not a string or array`);
+	}
+
+	await writeFile(file, s.toString().slice(prefix.length));
+}
+
 export async function patchSpread(
 	file: string,
 	preset: Preset,

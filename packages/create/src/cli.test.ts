@@ -32,6 +32,8 @@ it("creates both configs when nothing is configured", async () => {
 			toolchain: "oxlint",
 			scopes: [],
 			module: true,
+			typescript: false,
+			typeAware: false,
 		},
 	);
 
@@ -60,7 +62,13 @@ it("converts json and carries its rules over the presets", async () => {
 	await apply(
 		dir,
 		{ oxlint: path.join(dir, ".oxlintrc.json") },
-		{ toolchain: "oxlint", scopes: ["next"], module: true },
+		{
+			toolchain: "oxlint",
+			scopes: ["next"],
+			module: true,
+			typescript: false,
+			typeAware: false,
+		},
 	);
 
 	expect(await readFile(path.join(dir, "oxlint.config.ts"), "utf8")).toBe(
@@ -85,7 +93,13 @@ it("patches an existing vite-plus config", async () => {
 	await apply(
 		dir,
 		{ vitePlus: path.join(dir, "vite.config.ts") },
-		{ toolchain: "vite-plus", scopes: [], module: true },
+		{
+			toolchain: "vite-plus",
+			scopes: [],
+			module: true,
+			typescript: false,
+			typeAware: false,
+		},
 	);
 
 	expect(await readFile(path.join(dir, "vite.config.ts"), "utf8")).toBe(
@@ -105,7 +119,17 @@ it("adds type module when asked, and falls back to mts when not", async () => {
 		"package.json": "{}\n",
 		"tsconfig.json": "{}\n",
 	});
-	await apply(dir, {}, { toolchain: "oxlint", scopes: [], module: true });
+	await apply(
+		dir,
+		{},
+		{
+			toolchain: "oxlint",
+			scopes: [],
+			module: true,
+			typescript: false,
+			typeAware: false,
+		},
+	);
 	expect(await readFile(path.join(dir, "package.json"), "utf8")).toBe(
 		'{\n\t"type": "module"\n}\n',
 	);
@@ -121,6 +145,8 @@ it("adds type module when asked, and falls back to mts when not", async () => {
 			toolchain: "oxlint",
 			scopes: [],
 			module: false,
+			typescript: false,
+			typeAware: false,
 		},
 	);
 	expect(written).toEqual([
@@ -138,7 +164,13 @@ it("refuses to clobber a bare vite config", async () => {
 		apply(
 			dir,
 			{ vite: path.join(dir, "vite.config.ts") },
-			{ toolchain: "vite-plus", scopes: [], module: true },
+			{
+				toolchain: "vite-plus",
+				scopes: [],
+				module: true,
+				typescript: false,
+				typeAware: false,
+			},
 		),
 	).rejects.toThrow("does not import vite-plus");
 	expect(await readFile(path.join(dir, "vite.config.ts"), "utf8")).toBe(source);
@@ -151,7 +183,17 @@ it("refuses to clobber a config detection missed", async () => {
 	});
 
 	await expect(
-		apply(dir, {}, { toolchain: "oxlint", scopes: [], module: true }),
+		apply(
+			dir,
+			{},
+			{
+				toolchain: "oxlint",
+				scopes: [],
+				module: true,
+				typescript: false,
+				typeAware: false,
+			},
+		),
 	).rejects.toThrow("EEXIST");
 });
 
@@ -165,6 +207,8 @@ it("prompts for the toolchain even when one is detected", async () => {
 					toolchain: () => Promise.resolve("vite-plus"),
 					scopes: () => Promise.resolve(["react"]),
 					install: () => Promise.resolve(true),
+					typescript: () => Promise.resolve("true"),
+					typeAware: () => Promise.resolve(false),
 				},
 			),
 			{ args: [] },
@@ -174,6 +218,8 @@ it("prompts for the toolchain even when one is detected", async () => {
 		scopes: ["react"],
 		install: true,
 		module: true,
+		typescript: true,
+		typeAware: false,
 	});
 });
 
@@ -184,19 +230,38 @@ it("prefers command line values over prompts", async () => {
 				toolchain: () => Promise.reject(new Error("prompted")),
 				scopes: () => Promise.reject(new Error("prompted")),
 				install: () => Promise.resolve(true),
+				typescript: () => Promise.reject(new Error("prompted")),
+				typeAware: () => Promise.reject(new Error("prompted")),
 			}),
-			{ args: ["--toolchain", "oxlint", "--scope", "vue"] },
+			{
+				args: [
+					"--toolchain",
+					"oxlint",
+					"--scope",
+					"vue",
+					"--typescript",
+					"strict",
+					"--type-aware",
+				],
+			},
 		),
 	).toEqual({
 		toolchain: "oxlint",
 		scopes: ["vue"],
 		install: true,
 		module: true,
+		typescript: "strict",
+		typeAware: true,
 	});
 });
 
 it("installs the tools the toolchain needs", () => {
 	expect(packages("vite-plus")).toEqual(["@kekkon-nexus/config", "vite-plus"]);
+	expect(packages("vite-plus", true)).toEqual([
+		"@kekkon-nexus/config",
+		"vite-plus",
+		"oxlint-tsgolint",
+	]);
 	expect(packages("oxlint")).toEqual([
 		"@kekkon-nexus/config",
 		"oxlint",
@@ -214,6 +279,8 @@ it("runs off flags alone without a tty", async () => {
 		scopes: [],
 		install: false,
 		module: true,
+		typescript: false,
+		typeAware: false,
 	});
 	expect(
 		await run(configParser({}, false, {}, false), {
@@ -224,7 +291,57 @@ it("runs off flags alone without a tty", async () => {
 		scopes: ["react"],
 		install: true,
 		module: false,
+		typescript: false,
+		typeAware: false,
 	});
+});
+
+it("creates a tsconfig, with strict when asked", async () => {
+	const dir = await project({ "package.json": '{\n\t"type": "module"\n}\n' });
+	const written = await apply(
+		dir,
+		{},
+		{
+			toolchain: "oxlint",
+			scopes: [],
+			module: true,
+			typescript: "strict",
+			typeAware: true,
+		},
+	);
+
+	expect(await readFile(path.join(dir, "tsconfig.json"), "utf8")).toBe(
+		'{\n\t"extends": [\n\t\t"@kekkon-nexus/config/ts",\n' +
+			'\t\t"@kekkon-nexus/config/ts/strict"\n\t]\n}\n',
+	);
+	// the fresh tsconfig has to land before the extension is picked
+	expect(written).toEqual([
+		path.join(dir, "tsconfig.json"),
+		path.join(dir, "oxlint.config.ts"),
+		path.join(dir, "oxfmt.config.ts"),
+	]);
+});
+
+it("patches a tsconfig that is already there", async () => {
+	const dir = await project({
+		...esm,
+		"tsconfig.json": '{\n\t"extends": ["./base.json"]\n}\n',
+	});
+	await apply(
+		dir,
+		{},
+		{
+			toolchain: "oxlint",
+			scopes: [],
+			module: true,
+			typescript: true,
+			typeAware: false,
+		},
+	);
+
+	expect(await readFile(path.join(dir, "tsconfig.json"), "utf8")).toBe(
+		'{\n\t"extends": ["./base.json", "@kekkon-nexus/config/ts"]\n}\n',
+	);
 });
 
 it("drops react when next already extends it", () => {

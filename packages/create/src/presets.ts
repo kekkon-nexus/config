@@ -15,6 +15,15 @@ export const VITE_PLUS: Preset = {
 
 export type Toolchain = "oxlint" | "vite-plus";
 
+export const TS = "@kekkon-nexus/config/ts";
+export const TS_STRICT = "@kekkon-nexus/config/ts/strict";
+
+export type TypeScript = boolean | "strict";
+
+export function typescriptValue(value: string): TypeScript {
+	return value === "strict" ? "strict" : value === "true";
+}
+
 export const SCOPES = {
 	jest: { local: "jest", from: "@kekkon-nexus/config/oxlint/jest" },
 	next: { local: "next", from: "@kekkon-nexus/config/oxlint/next" },
