@@ -1,3 +1,5 @@
+import path from "node:path";
+
 import { autocompleteMultiselect, select } from "@clack/prompts";
 
 import type { Detected } from "./detect.ts";
@@ -21,7 +23,7 @@ export interface Chosen {
 function detected(...files: (string | undefined)[]): string | undefined {
 	const names = files
 		.filter((file) => file !== undefined)
-		.map((file) => file.split("/").at(-1));
+		.map((file) => path.basename(file));
 	return names.length > 0 ? `found ${names.join(", ")}` : undefined;
 }
 
