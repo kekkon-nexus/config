@@ -155,14 +155,14 @@ it("refuses to clobber a config detection missed", async () => {
 	).rejects.toThrow("EEXIST");
 });
 
-it("prompts only for what detection cannot answer", async () => {
+it("prompts for the toolchain even when one is detected", async () => {
 	expect(
 		await run(
 			configParser(
 				{ vite: "vite.config.ts", vitePlus: "vite.config.ts" },
 				true,
 				{
-					toolchain: () => Promise.reject(new Error("prompted")),
+					toolchain: () => Promise.resolve("vite-plus"),
 					scopes: () => Promise.resolve(["react"]),
 					install: () => Promise.resolve(true),
 				},
@@ -204,8 +204,9 @@ it("installs the tools the toolchain needs", () => {
 	]);
 });
 
-it("drops presets the toolchain already covers", () => {
-	expect(scopePresets(["next", "react", "jest"], "vite-plus")).toEqual([
+it("drops react when next already extends it", () => {
+	expect(scopePresets(["next", "react", "jest"])).toEqual([
 		{ local: "next", from: "@kekkon-nexus/config/oxlint/next" },
+		{ local: "jest", from: "@kekkon-nexus/config/oxlint/jest" },
 	]);
 });

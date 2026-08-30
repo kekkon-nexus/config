@@ -28,6 +28,7 @@
 		"test": "vp test"
 	},
 	"dependencies": {
+		"@clack/prompts": "^1.7.0",
 		"@optique/clack": "^1.2.4",
 		"@optique/core": "^1.2.4",
 		"@optique/run": "^1.2.4",

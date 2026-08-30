@@ -21,10 +21,18 @@ import {
 	OXLINT,
 	type Scope,
 	scopePresets,
+	SCOPES,
+	type Toolchain,
 	VITE_PLUS,
 } from "./presets.ts";
+import {
+	type Chosen,
+	scopePrompter,
+	toolchainPrompter,
+	toolchainSelect,
+} from "./prompt.ts";
 
-export type Toolchain = "oxlint" | "vite-plus";
+export type { Toolchain } from "./presets.ts";
 
 export interface Answers {
 	toolchain: Toolchain;
@@ -68,48 +76,28 @@ export function configParser(
 	esm: boolean,
 	prompters: Prompters = {},
 ) {
-	const ox = Boolean(found.oxlint ?? found.oxfmt);
-	const both = ox && Boolean(found.vitePlus);
-	const undecided = both || !(ox || found.vitePlus);
-	const vitePlusOnly = Boolean(found.vitePlus) && !ox;
+	const chosen: Chosen = {
+		toolchain: found.vitePlus ? "vite-plus" : "oxlint",
+	};
 
 	const toolchainArg = option("--toolchain", choice(["oxlint", "vite-plus"]));
 	const scopesArg = multiple(
-		option("--scope", choice(["jest", "next", "react", "vue"])),
+		option("--scope", choice(["jest", "next", "react", "vitest", "vue"])),
 	);
 	const moduleArg = option("--module");
 
 	return object({
-		toolchain: undecided
-			? prompt(toolchainArg, {
-					type: "select",
-					message: both
-						? "Both toolchains are configured, patch:"
-						: "Toolchain:",
-					initialValue: both ? "vite-plus" : "oxlint",
-					options: [
-						{ value: "oxlint", label: "oxlint + oxfmt" },
-						{ value: "vite-plus", label: "vite-plus" },
-					],
-					prompter: prompters.toolchain,
-				})
-			: withDefault(toolchainArg, found.vitePlus ? "vite-plus" : "oxlint"),
+		toolchain: prompt(toolchainArg, {
+			type: "select",
+			...toolchainSelect(found),
+			prompter: prompters.toolchain ?? toolchainPrompter(found, chosen),
+		}),
 		scopes: prompt(scopesArg, {
 			type: "multiselect",
 			message: "Project scope:",
 			required: false,
-			options: [
-				{ value: "react", label: "React" },
-				{ value: "next", label: "Next.js", hint: "enables React" },
-				{ value: "vue", label: "Vue" },
-				{
-					value: "jest",
-					label: "Jest",
-					hint: vitePlusOnly ? "vite-plus brings vitest" : undefined,
-					disabled: vitePlusOnly,
-				},
-			],
-			prompter: prompters.scopes,
+			options: ["jest", "next", "react", "vitest", "vue"],
+			prompter: prompters.scopes ?? scopePrompter(chosen),
 		}),
 		install: prompt(option("--install"), {
 			type: "confirm",
@@ -143,7 +131,14 @@ export async function apply(
 	}
 
 	const ext = extension(dir, await esmPackage(dir));
-	const presets = [OXLINT, ...scopePresets(answers.scopes, answers.toolchain)];
+	const scoped = scopePresets(answers.scopes);
+	// the vite-plus preset already extends vitest
+	const presets = [
+		OXLINT,
+		...(answers.toolchain === "vite-plus"
+			? scoped.filter((preset) => preset !== SCOPES.vitest)
+			: scoped),
+	];
 
 	if (answers.toolchain === "vite-plus") {
 		if (found.vitePlus) {

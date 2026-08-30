@@ -13,22 +13,21 @@ export const VITE_PLUS: Preset = {
 	from: "@kekkon-nexus/config/oxlint/vite-plus",
 };
 
+export type Toolchain = "oxlint" | "vite-plus";
+
 export const SCOPES = {
 	jest: { local: "jest", from: "@kekkon-nexus/config/oxlint/jest" },
 	next: { local: "next", from: "@kekkon-nexus/config/oxlint/next" },
 	react: { local: "react", from: "@kekkon-nexus/config/oxlint/react" },
+	vitest: { local: "vitest", from: "@kekkon-nexus/config/oxlint/vitest" },
 	vue: { local: "vue", from: "@kekkon-nexus/config/oxlint/vue" },
 } satisfies Record<string, Preset>;
 
 export type Scope = keyof typeof SCOPES;
 
-export function scopePresets(
-	scopes: readonly Scope[],
-	toolchain: "oxlint" | "vite-plus",
-): Preset[] {
+export function scopePresets(scopes: readonly Scope[]): Preset[] {
 	const picked = new Set(scopes);
-	// next already extends react, vite-plus already extends vitest
+	// next already extends react
 	if (picked.has("next")) picked.delete("react");
-	if (toolchain === "vite-plus") picked.delete("jest");
 	return [...picked].map((scope) => SCOPES[scope]);
 }
