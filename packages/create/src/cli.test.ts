@@ -204,6 +204,29 @@ it("installs the tools the toolchain needs", () => {
 	]);
 });
 
+it("runs off flags alone without a tty", async () => {
+	expect(
+		await run(configParser({ vitePlus: "vite.config.ts" }, true, {}, false), {
+			args: [],
+		}),
+	).toEqual({
+		toolchain: "vite-plus",
+		scopes: [],
+		install: false,
+		module: true,
+	});
+	expect(
+		await run(configParser({}, false, {}, false), {
+			args: ["--toolchain", "oxlint", "--scope", "react", "--install"],
+		}),
+	).toEqual({
+		toolchain: "oxlint",
+		scopes: ["react"],
+		install: true,
+		module: false,
+	});
+});
+
 it("drops react when next already extends it", () => {
 	expect(scopePresets(["next", "react", "jest"])).toEqual([
 		{ local: "next", from: "@kekkon-nexus/config/oxlint/next" },

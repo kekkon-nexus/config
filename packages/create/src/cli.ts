@@ -75,16 +75,27 @@ export function configParser(
 	found: Detected,
 	esm: boolean,
 	prompters: Prompters = {},
+	tty = true,
 ) {
-	const chosen: Chosen = {
-		toolchain: found.vitePlus ? "vite-plus" : "oxlint",
-	};
+	const initial: Toolchain = found.vitePlus ? "vite-plus" : "oxlint";
+	const chosen: Chosen = { toolchain: initial };
 
 	const toolchainArg = option("--toolchain", choice(["oxlint", "vite-plus"]));
 	const scopesArg = multiple(
 		option("--scope", choice(["jest", "next", "react", "vitest", "vue"])),
 	);
 	const moduleArg = option("--module");
+	const installArg = option("--install");
+
+	// no tty, so unanswered flags fall back instead of prompting
+	if (!tty) {
+		return object({
+			toolchain: withDefault(toolchainArg, initial),
+			scopes: withDefault(scopesArg, [] as Scope[]),
+			install: withDefault(installArg, false),
+			module: withDefault(moduleArg, esm),
+		});
+	}
 
 	return object({
 		toolchain: prompt(toolchainArg, {
@@ -99,7 +110,7 @@ export function configParser(
 			options: ["jest", "next", "react", "vitest", "vue"],
 			prompter: prompters.scopes ?? scopePrompter(chosen),
 		}),
-		install: prompt(option("--install"), {
+		install: prompt(installArg, {
 			type: "confirm",
 			message: "Install the config packages?",
 			initialValue: true,
@@ -180,16 +191,18 @@ export async function apply(
 
 if (import.meta.main) {
 	const dir = process.cwd();
-	// optique renders the help page, there is nothing to prompt without a tty
-	if (!process.stdin.isTTY) {
-		await run(configParser({}, true), { help: "option", args: ["--help"] });
-	}
 
 	try {
 		const found = await detect(dir);
-		const answers = await run(configParser(found, await esmPackage(dir)), {
-			help: "option",
-		});
+		const answers = await run(
+			configParser(
+				found,
+				await esmPackage(dir),
+				{},
+				Boolean(process.stdin.isTTY),
+			),
+			{ help: "option" },
+		);
 		const written = await apply(dir, found, answers);
 		print(message`Wrote ${written.join(", ")}.`);
 
