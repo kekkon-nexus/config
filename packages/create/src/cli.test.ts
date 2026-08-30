@@ -401,6 +401,88 @@ it("writes an editorconfig, but never over one that is there", async () => {
 	);
 });
 
+it("turns the type-aware options on in a fresh oxlint config", async () => {
+	const dir = await project(esm);
+	await apply(
+		dir,
+		{},
+		{
+			toolchain: "oxlint",
+			scopes: [],
+			module: true,
+			typescript: false,
+			typeAware: true,
+			editorconfig: false,
+		},
+	);
+
+	expect(await readFile(path.join(dir, "oxlint.config.ts"), "utf8")).toBe(
+		'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
+			'import { defineConfig } from "oxlint";\n\n' +
+			"export default defineConfig({\n" +
+			"\textends: [oxlint],\n" +
+			"\toptions: {\n\t\ttypeAware: true,\n\t\ttypeCheck: true,\n\t},\n" +
+			"});\n",
+	);
+	// oxfmt has no such options
+	expect(
+		await readFile(path.join(dir, "oxfmt.config.ts"), "utf8"),
+	).not.toContain("typeAware");
+});
+
+it("turns them on in a fresh vite-plus config", async () => {
+	const dir = await project(esm);
+	await apply(
+		dir,
+		{},
+		{
+			toolchain: "vite-plus",
+			scopes: [],
+			module: true,
+			typescript: false,
+			typeAware: true,
+			editorconfig: false,
+		},
+	);
+
+	expect(await readFile(path.join(dir, "vite.config.ts"), "utf8")).toBe(
+		'import oxfmt from "@kekkon-nexus/config/oxfmt";\n' +
+			'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
+			'import vp from "@kekkon-nexus/config/oxlint/vite-plus";\n' +
+			'import { defineConfig } from "vite-plus";\n\n' +
+			"export default defineConfig({\n" +
+			"\tfmt: { ...oxfmt },\n" +
+			"\tlint: {\n" +
+			"\t\textends: [oxlint, vp],\n" +
+			"\t\toptions: {\n\t\t\ttypeAware: true,\n\t\t\ttypeCheck: true,\n\t\t},\n" +
+			"\t},\n" +
+			"});\n",
+	);
+});
+
+it("adds them to an existing lint section", async () => {
+	const source =
+		'import { defineConfig } from "vite-plus";\n\n' +
+		"export default defineConfig({\n\tlint: { extends: [] },\n});\n";
+	const dir = await project({ ...esm, "vite.config.ts": source });
+	await apply(
+		dir,
+		{ vitePlus: path.join(dir, "vite.config.ts") },
+		{
+			toolchain: "vite-plus",
+			scopes: [],
+			module: true,
+			typescript: false,
+			typeAware: true,
+			editorconfig: false,
+		},
+	);
+
+	expect(await readFile(path.join(dir, "vite.config.ts"), "utf8")).toContain(
+		"options: { typeAware: true, typeCheck: true }",
+	);
+});
+
 it("drops react when next already extends it", () => {
 	expect(scopePresets(["next", "react", "jest"])).toEqual([
 		{ local: "next", from: "@kekkon-nexus/config/oxlint/next" },

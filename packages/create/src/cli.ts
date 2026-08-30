@@ -119,6 +119,7 @@ export function configParser(
 		});
 	}
 
+	// oxlint-disable unicorn/max-nested-calls
 	return object({
 		toolchain: prompt(toolchainArg, {
 			type: "select",
@@ -167,6 +168,7 @@ export function configParser(
 					prompter: prompters.module,
 				}),
 	});
+	// oxlint-enable unicorn/max-nested-calls
 }
 
 export async function apply(
@@ -220,7 +222,12 @@ export async function apply(
 
 	if (answers.toolchain === "vite-plus") {
 		if (found.vitePlus) {
-			await patchExtends(found.vitePlus, [...presets, VITE_PLUS], "lint");
+			await patchExtends(
+				found.vitePlus,
+				[...presets, VITE_PLUS],
+				"lint",
+				answers.typeAware,
+			);
 			await patchSpread(found.vitePlus, OXFMT, "fmt");
 			written.push(found.vitePlus);
 			return written;
@@ -229,9 +236,11 @@ export async function apply(
 			throw new Error(`${found.vite} does not import vite-plus`);
 		}
 		const file = path.join(dir, `vite.config${ext}`);
-		await writeFile(file, renderVitePlus([...presets, VITE_PLUS], OXFMT), {
-			flag: "wx",
-		});
+		await writeFile(
+			file,
+			renderVitePlus([...presets, VITE_PLUS], OXFMT, answers.typeAware),
+			{ flag: "wx" },
+		);
 		written.push(file);
 		return written;
 	}
@@ -241,16 +250,19 @@ export async function apply(
 		const toolPresets = tool === "oxlint" ? presets : [OXFMT];
 		const target = path.join(dir, `${tool}.config${ext}`);
 
+		// oxfmt has no type-aware options, only oxlint does
+		const aware = tool === "oxlint" && answers.typeAware;
+
 		if (current?.endsWith(".json")) {
-			await convert(current, target, tool, toolPresets);
+			await convert(current, target, tool, toolPresets, aware);
 			written.push(target);
 		} else if (current) {
 			await (tool === "oxlint"
-				? patchExtends(current, toolPresets)
+				? patchExtends(current, toolPresets, undefined, aware)
 				: patchSpread(current, OXFMT));
 			written.push(current);
 		} else {
-			await create(target, tool, toolPresets);
+			await create(target, tool, toolPresets, aware);
 			written.push(target);
 		}
 	}
@@ -265,12 +277,7 @@ if (import.meta.main) {
 	try {
 		const found = await detect(dir);
 		const answers = await run(
-			configParser(
-				found,
-				await esmPackage(dir),
-				{},
-				Boolean(process.stdin.isTTY),
-			),
+			configParser(found, await esmPackage(dir), {}, process.stdin.isTTY),
 			{
 				help: "option",
 				// optique exits on its own for help, parse errors and a

@@ -70,12 +70,42 @@ async function edit(
 	await writeFile(file, s.toString());
 }
 
+const TYPE_AWARE = ["typeAware", "typeCheck"] as const;
+
+function patchOptions(
+	s: MagicString,
+	code: string,
+	target: ObjectExpression,
+	file: string,
+): void {
+	const options = prop(target, "options");
+	if (!options) {
+		insert(s, code, target, "options: { typeAware: true, typeCheck: true },");
+		return;
+	}
+	if (options.value.type !== "ObjectExpression") {
+		throw new Error(`options in ${file} is not an object literal`);
+	}
+
+	const object = options.value;
+	const missing = TYPE_AWARE.filter((key) => !prop(object, key));
+	// one insert, so an empty object only gets closed once
+	if (missing.length > 0) {
+		insert(s, code, object, missing.map((key) => `${key}: true,`).join(" "));
+	}
+}
+
 export async function patchExtends(
 	file: string,
 	presets: readonly Preset[],
 	under?: string,
+	typeAware = false,
 ): Promise<void> {
 	const locals = presets.map((preset) => preset.local);
+	const section = [
+		`extends: [${locals.join(", ")}]`,
+		...(typeAware ? ["options: { typeAware: true, typeCheck: true }"] : []),
+	].join(", ");
 
 	await edit(file, presets, (s, root, code) => {
 		let target = root;
@@ -83,7 +113,7 @@ export async function patchExtends(
 		if (under) {
 			const nested = prop(root, under);
 			if (!nested) {
-				insert(s, code, root, `${under}: { extends: [${locals.join(", ")}] },`);
+				insert(s, code, root, `${under}: { ${section} },`);
 			} else if (nested.value.type === "ObjectExpression") {
 				target = nested.value;
 			} else {
@@ -109,6 +139,8 @@ export async function patchExtends(
 			} else {
 				throw new Error(`extends in ${file} is not an array literal`);
 			}
+
+			if (typeAware) patchOptions(s, code, target, file);
 		}
 	});
 }
