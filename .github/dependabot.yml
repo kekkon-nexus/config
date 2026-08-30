@@ -1,0 +1,32 @@
+version: 2
+
+updates:
+  - package-ecosystem: bun
+    directory: /
+    schedule:
+      interval: daily
+    commit-message:
+      prefix: ":arrow_up: build(deps)"
+      prefix-development: ":arrow_up: build(deps-dev)"
+    groups:
+      commitlint:
+        patterns:
+          - "*commitlint*"
+          - "conventional-commits*"
+      eslint:
+        patterns:
+          - "*eslint*"
+      voidzero:
+        patterns:
+          - "ox*"
+          - "vite-plus"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ":arrow_up: ci(deps)"
+    groups:
+      actions:
+        patterns: ["*"]
