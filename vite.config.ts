@@ -9,6 +9,10 @@ export default defineConfig({
 	},
 	lint: {
 		extends: [base, vp],
+		options: {
+			typeAware: true,
+			typeCheck: true,
+		},
 	},
 	staged: {
 		"*": "vp check --fix --no-error-on-unmatched-pattern",
