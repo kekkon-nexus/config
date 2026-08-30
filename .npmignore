@@ -1,8 +1,0 @@
-tsconfig.build.*
-
-/.github/
-/.vite-hooks/_/
-/scripts/
-/test/
-/src/*/
-!/src/ts/

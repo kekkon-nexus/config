@@ -11,6 +11,10 @@
 	"workspaces": [
 		"packages/*"
 	],
+	"files": [
+		"dist",
+		"src/ts"
+	],
 	"type": "module",
 	"exports": {
 		"./ts": "./src/ts/tsconfig.json",

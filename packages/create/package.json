@@ -9,6 +9,9 @@
 	],
 	"repository": "kekkon-nexus/config",
 	"bin": "./dist/cli.js",
+	"files": [
+		"dist"
+	],
 	"type": "module",
 	"exports": {
 		".": {
