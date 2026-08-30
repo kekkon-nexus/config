@@ -59,7 +59,7 @@ const config = defineConfig({
 		"react/no-will-update-set-state": "off",
 		"react/only-export-components": "error",
 		"react/prefer-es6-class": "off",
-		"react/prefer-function-component": "off",
+		"react/prefer-function-component": "off", // oxlint-only
 		"react/react-in-jsx-scope": "off",
 		"react/require-render-return": "error",
 		"react/rules-of-hooks": "error",
@@ -78,9 +78,9 @@ const config = defineConfig({
 		"react/incompatible-library": "warn",
 		"react/invariant": "off",
 		"react/memo-dependencies": "off",
-		"react/no-clone-element": "off",
+		"react/no-clone-element": "off", // oxlint-only
 		"react/no-deriving-state-in-effects": "off",
-		"react/no-react-children": "off",
+		"react/no-react-children": "off", // oxlint-only
 		"react/preserve-manual-memoization": "error",
 		"react/purity": "error",
 		"react/refs": "error",

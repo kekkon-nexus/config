@@ -25,7 +25,7 @@ const config = defineConfig({
 		"unicorn/no-anonymous-default-export": "error",
 		"unicorn/no-array-callback-reference": "error",
 		"unicorn/no-array-fill-with-reference-type": "error",
-		"unicorn/no-array-for-each": "off",
+		"unicorn/no-array-for-each": "off", // removed upstream
 		"unicorn/no-array-method-this-argument": "error",
 		"unicorn/no-array-reduce": "error",
 		"unicorn/no-array-reverse": "error",
@@ -36,13 +36,13 @@ const config = defineConfig({
 		"unicorn/no-console-spaces": "error",
 		"unicorn/no-document-cookie": "error",
 		"unicorn/no-empty-file": "error",
-		"unicorn/no-hex-escape": "off", // superseeded by prefer-unicode-code-point-escapes
+		"unicorn/no-hex-escape": "off", // renamed to prefer-unicode-code-point-escapes
 		"unicorn/no-immediate-mutation": "error",
-		"unicorn/no-instanceof-array": "off", // superseeded by no-instanceof-builtins
+		"unicorn/no-instanceof-array": "off", // renamed to no-instanceof-builtins
 		"unicorn/no-instanceof-builtins": "error",
 		"unicorn/no-invalid-fetch-options": "error",
 		"unicorn/no-invalid-remove-event-listener": "error",
-		"unicorn/no-length-as-slice-end": "off", // superseeded by no-unnecessary-slice-end
+		"unicorn/no-length-as-slice-end": "off", // renamed to no-unnecessary-slice-end
 		"unicorn/no-lonely-if": "error",
 		"unicorn/no-magic-array-flat-depth": "error",
 		"unicorn/no-negated-condition": "error",
@@ -91,7 +91,7 @@ const config = defineConfig({
 		"unicorn/prefer-date-now": "error",
 		"unicorn/prefer-default-parameters": "error",
 		"unicorn/prefer-dom-node-append": "error",
-		"unicorn/prefer-dom-node-dataset": "off", // superseeded by dom-node-dataset (unimplemented)
+		"unicorn/prefer-dom-node-dataset": "off", // renamed to dom-node-dataset (unimplemented)
 		"unicorn/prefer-dom-node-remove": "error",
 		"unicorn/prefer-dom-node-text-content": "error",
 		"unicorn/prefer-event-target": "error",

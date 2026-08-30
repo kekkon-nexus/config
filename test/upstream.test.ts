@@ -54,19 +54,25 @@ const rename = (name: string, from: string, to: string) => {
 	return name.startsWith(from) ? to + name.slice(from.length) : undefined;
 };
 
-const expectedRules = async (sources: Source[], target: string) => {
+const upstreamOf = async (sources: Source[], target: string) => {
 	const expected: Record<string, string> = {};
+	// empty when no source exposes a rules map, which makes removal undetectable
+	const shipped = new Set<string>();
 	for (const source of sources) {
 		const mod = (await import(source.src)) as {
 			default?: unknown;
 		};
-		const config = (
-			(mod.default ?? mod) as {
-				configs: Record<string, Config | Config[]>;
-			}
-		).configs[source.preset];
+		const root = (mod.default ?? mod) as {
+			configs: Record<string, Config | Config[]>;
+			rules?: Record<string, unknown>;
+			plugin?: { rules?: Record<string, unknown> };
+		};
+		const config = root.configs[source.preset];
 		if (config === undefined) {
 			throw new Error(`${source.src} has no configs.${source.preset}`);
+		}
+		for (const rule of Object.keys(root.rules ?? root.plugin?.rules ?? {})) {
+			shipped.add(target + rule);
 		}
 		for (const [rule, value] of Object.entries(rulesOf(config))) {
 			const mapped = rename(rule, source.prefix, target);
@@ -75,7 +81,17 @@ const expectedRules = async (sources: Source[], target: string) => {
 			expected[mapped] = level === "off" ? level : (source.severity ?? level);
 		}
 	}
-	return expected;
+	return { expected, shipped };
+};
+
+const documentedRules = async (name: string) => {
+	const src = await readFile(
+		path.join(import.meta.dirname, "../src/oxlint/base", `${name}.ts`),
+		"utf8",
+	);
+	return new Set(
+		[...src.matchAll(/^\t*"([^"]+)":.*,\s*\/\//gm)].map(([, rule]) => rule),
+	);
 };
 
 const schemaPath = path.join(
@@ -285,7 +301,11 @@ describe("base", async () => {
 				};
 			};
 			const actual = mod.default.rules ?? {};
-			const expected = await expectedRules(preset.sources, preset.target);
+			const { expected, shipped } = await upstreamOf(
+				preset.sources,
+				preset.target,
+			);
+			const documented = await documentedRules(name);
 
 			const rules = new Set([
 				...Object.keys(actual),
@@ -308,6 +328,12 @@ describe("base", async () => {
 			return {
 				name,
 				drift,
+				undocumented:
+					shipped.size === 0
+						? []
+						: Object.keys(actual)
+								.filter((rule) => !shipped.has(rule) && !documented.has(rule))
+								.toSorted(),
 				unimplemented: Object.keys(expected)
 					.filter(
 						(rule) =>
@@ -320,9 +346,13 @@ describe("base", async () => {
 		}),
 	);
 
-	describe.each(results)("$name", ({ drift, unimplemented }) => {
+	describe.each(results)("$name", ({ drift, undocumented, unimplemented }) => {
 		it("mirrors upstream", () => {
 			expect(drift).toEqual([]);
+		});
+
+		it("documents rules dropped upstream", () => {
+			expect(undocumented).toEqual([]);
 		});
 
 		// oxlint-disable-next-line vitest/expect-expect, vitest/no-disabled-tests

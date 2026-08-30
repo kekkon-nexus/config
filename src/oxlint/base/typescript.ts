@@ -31,7 +31,7 @@ const config = defineConfig({
 		"typescript/no-duplicate-enum-values": "error",
 		"typescript/no-duplicate-type-constituents": "error",
 		"typescript/no-dynamic-delete": "error",
-		"typescript/no-empty-interface": "off", // superseeded by no-empty-object-type
+		"typescript/no-empty-interface": "off", // renamed to no-empty-object-type
 		"typescript/no-empty-object-type": "error",
 		"typescript/no-explicit-any": "error",
 		"typescript/no-extra-non-null-assertion": "error",
@@ -77,7 +77,7 @@ const config = defineConfig({
 		"typescript/no-unsafe-unary-minus": "error",
 		"typescript/no-useless-default-assignment": "error",
 		"typescript/no-useless-empty-export": "off",
-		"typescript/no-var-requires": "off", // superseeded by no-require-imports
+		"typescript/no-var-requires": "off", // renamed to no-require-imports
 		"typescript/no-wrapper-object-types": "error",
 		"typescript/non-nullable-type-assertion-style": "warn",
 		"typescript/only-throw-error": "error",
@@ -99,7 +99,7 @@ const config = defineConfig({
 		"typescript/prefer-regexp-exec": "warn",
 		"typescript/prefer-return-this-type": "error",
 		"typescript/prefer-string-starts-ends-with": "warn",
-		"typescript/prefer-ts-expect-error": "off", // superseeded by ban-ts-comment
+		"typescript/prefer-ts-expect-error": "off", // renamed to ban-ts-comment
 		"typescript/promise-function-async": "off",
 		"typescript/related-getter-setter-pairs": "error",
 		"typescript/require-array-sort-compare": "off",
