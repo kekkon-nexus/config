@@ -62,7 +62,7 @@ export function toolchainPrompter(
 	return async () => {
 		const picked = await select(config);
 		// the scope prompt needs the answer to lock vitest
-		if (typeof picked === "string") chosen.toolchain = picked as Toolchain;
+		if (typeof picked === "string") chosen.toolchain = picked;
 		return picked as string;
 	};
 }

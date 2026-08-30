@@ -46,7 +46,10 @@ const severity = (value: unknown) =>
 
 const rulesOf = (config: Config | Config[]): Record<string, unknown> =>
 	Array.isArray(config)
-		? Object.assign({}, ...config.map((entry) => entry.rules ?? {}))
+		? (Object.assign({}, ...config.map((entry) => entry.rules ?? {})) as Record<
+				string,
+				unknown
+			>)
 		: (config.rules ?? {});
 
 const rename = (name: string, from: string, to: string) => {

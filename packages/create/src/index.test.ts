@@ -16,7 +16,7 @@ describe("patchExtends", () => {
 		const file = path.join(dir, "config.ts");
 		await writeFile(file, source);
 		await patchExtends(file, [oxlint], under);
-		return await readFile(file, "utf8");
+		return readFile(file, "utf8");
 	}
 
 	it("appends to an existing extends array", async () => {
@@ -82,17 +82,17 @@ describe("patchExtends", () => {
 	});
 });
 
+async function patch(source: string): Promise<string> {
+	const dir = await mkdtemp(path.join(tmpdir(), "create-config-"));
+	onTestFinished(() => rm(dir, { recursive: true }));
+
+	const file = path.join(dir, "tsconfig.json");
+	await writeFile(file, source);
+	await patchTsconfig(file, ["@kekkon-nexus/config/ts"]);
+	return readFile(file, "utf8");
+}
+
 describe("patchTsconfig", () => {
-	async function patch(source: string): Promise<string> {
-		const dir = await mkdtemp(path.join(tmpdir(), "create-config-"));
-		onTestFinished(() => rm(dir, { recursive: true }));
-
-		const file = path.join(dir, "tsconfig.json");
-		await writeFile(file, source);
-		await patchTsconfig(file, ["@kekkon-nexus/config/ts"]);
-		return await readFile(file, "utf8");
-	}
-
 	it("keeps comments", async () => {
 		expect(await patch('{\n\t// keep me\n\t"compilerOptions": {}\n}\n')).toBe(
 			'{\n\t"extends": ["@kekkon-nexus/config/ts"],\n\t// keep me\n\t"compilerOptions": {}\n}\n',
