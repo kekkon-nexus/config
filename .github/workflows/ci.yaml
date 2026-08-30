@@ -53,4 +53,5 @@ jobs:
           subject-path: "*"
 
       - run: npm install -g npm@latest
-      - run: for pkg in *; do npm publish "$pkg"; done
+      - run: npm publish kekkon-nexus-config-*.tgz
+      - run: npm publish kekkon-nexus-create-config-*.tgz
