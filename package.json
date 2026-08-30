@@ -119,6 +119,13 @@
 		"conventional-commits-parser": "^7",
 		"vite": "npm:@voidzero-dev/vite-plus-core@^0.2.9"
 	},
+	"devEngines": {
+		"packageManager": {
+			"name": "bun",
+			"version": "1.4.0",
+			"onFail": "download"
+		}
+	},
 	"engines": {
 		"node": ">=24.12"
 	}
