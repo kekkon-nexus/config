@@ -4,6 +4,7 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import { isatty } from "node:tty";
 import { styleText } from "node:util";
 
 import { cancel, intro, log, note, outro, spinner } from "@clack/prompts";
@@ -307,7 +308,7 @@ if (import.meta.main) {
 	try {
 		const found = await detect(dir);
 		const answers = await run(
-			configParser(found, await esmPackage(dir), {}, process.stdin.isTTY),
+			configParser(found, await esmPackage(dir), {}, isatty(process.stdin.fd)),
 			{
 				help: "option",
 				// optique exits on its own for help, parse errors and a
