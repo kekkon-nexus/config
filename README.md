@@ -45,6 +45,10 @@ Pass flags to skip the prompts:
 | `--typescript false\|true\|strict`       | write or patch `tsconfig.json`           |
 | `--type-aware`                           | install `oxlint-tsgolint`                |
 | `--editorconfig`                         | write `.editorconfig` if absent          |
+| `--vscode`                               | write `.vscode` files if absent          |
+
+> [!WARNING]
+> `.editorconfig` and `.vscode` support is not matured yet.
 
 Or manually:
 
