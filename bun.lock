@@ -64,8 +64,6 @@
         "@optique/run": "^1.2.4",
         "magic-string": "^1.2.3",
         "oxc-parser": "^0.147.0",
-      },
-      "devDependencies": {
         "vite-plus": "0.3.0",
       },
     },
