@@ -1,17 +1,18 @@
 #!/usr/bin/env node
-import { spawn } from "node:child_process";
+import { type ChildProcess, spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import { styleText } from "node:util";
 
+import { cancel, intro, log, note, outro, spinner } from "@clack/prompts";
 import { prompt } from "@optique/clack";
 import { object } from "@optique/core/constructs";
-import { message } from "@optique/core/message";
 import { map, multiple, withDefault } from "@optique/core/modifiers";
 import { option } from "@optique/core/primitives";
 import { choice } from "@optique/core/valueparser";
-import { print, printError, run } from "@optique/run";
+import { run } from "@optique/run";
 
 import { detect, type Detected } from "./detect.ts";
 import { convert, create, editorconfig, renderVitePlus } from "./generate.ts";
@@ -147,13 +148,13 @@ export function configParser(
 		),
 		editorconfig: prompt(editorconfigArg, {
 			type: "confirm",
-			message: "Add .editorconfig? (Used by oxfmt)",
+			message: `Add .editorconfig? ${styleText("dim", "(Used by oxfmt)")}`,
 			initialValue: true,
 			prompter: prompters.editorconfig,
 		}),
 		install: prompt(installArg, {
 			type: "confirm",
-			message: "Install the config packages?",
+			message: `Install config packages? ${styleText("dim", `(Will run ${styleText("magenta", "vp add ...")})`)}`,
 			initialValue: true,
 			prompter: prompters.install,
 		}),
@@ -161,7 +162,7 @@ export function configParser(
 			? withDefault(moduleArg, true)
 			: prompt(moduleArg, {
 					type: "confirm",
-					message: 'Add "type": "module" to package.json?',
+					message: `Add ${styleText("magenta", '"type": "module"')} to package.json?`,
 					initialValue: true,
 					prompter: prompters.module,
 				}),
@@ -259,6 +260,8 @@ export async function apply(
 if (import.meta.main) {
 	const dir = process.cwd();
 
+	intro("@kekkon-nexus/create-config");
+
 	try {
 		const found = await detect(dir);
 		const answers = await run(
@@ -268,10 +271,19 @@ if (import.meta.main) {
 				{},
 				Boolean(process.stdin.isTTY),
 			),
-			{ help: "option" },
+			{
+				help: "option",
+				// optique exits on its own for help, parse errors and a
+				// cancelled prompt, so close the rails it never opened
+				onExit: (code) => {
+					if (code === 0) outro();
+					else cancel("Nothing was written.");
+					process.exit(code);
+				},
+			},
 		);
 		const written = await apply(dir, found, answers);
-		print(message`Wrote ${written.join(", ")}.`);
+		note(written.map((file) => path.relative(dir, file)).join("\n"), "Wrote");
 
 		if (answers.install) {
 			const add = [
@@ -279,21 +291,56 @@ if (import.meta.main) {
 				"-D",
 				...packages(answers.toolchain, answers.typeAware),
 			];
-			print(message`Running ${`vp ${add.join(" ")}`}.`);
-			await new Promise<void>((resolve, reject) => {
-				spawn("vp", add, { cwd: dir, stdio: "inherit" })
-					.on("error", reject)
-					.on("close", (status) =>
-						status === 0
-							? resolve()
-							: reject(new Error(`vp add exited with ${status}`)),
-					);
+			const command = `vp ${add.join(" ")}`;
+			let child: ChildProcess | undefined;
+			const spin = spinner({
+				indicator: "timer",
+				onCancel: () => {
+					child?.kill();
+					note(styleText("magenta", command), "Finish the install with");
+				},
 			});
+			spin.start(styleText("magenta", command));
+
+			// piped so the spinner owns the cursor, kept for the failure path
+			const output: string[] = [];
+			try {
+				await new Promise<void>((resolve, reject) => {
+					const spawned = spawn("vp", add, {
+						cwd: dir,
+						stdio: ["ignore", "pipe", "pipe"],
+					});
+					child = spawned;
+					spawned.stdout.on("data", (chunk: Buffer) =>
+						output.push(String(chunk)),
+					);
+					spawned.stderr.on("data", (chunk: Buffer) =>
+						output.push(String(chunk)),
+					);
+					spawned
+						.on("error", reject)
+						.on("close", (status) =>
+							status === 0
+								? resolve()
+								: reject(new Error(`vp add exited with ${status}`)),
+						);
+				});
+			} catch (error) {
+				// the cancel path already reported itself
+				if (spin.isCancelled) {
+					cancel("Installation cancelled.");
+					process.exit(1);
+				}
+				spin.error("Install failed.");
+				log.error(output.join("").trimEnd());
+				throw error;
+			}
+			spin.stop("Installed the config packages.");
 		}
+
+		outro("Done!");
 	} catch (error) {
-		printError(
-			message`${error instanceof Error ? error.message : String(error)}`,
-			{ exitCode: 1 },
-		);
+		cancel(error instanceof Error ? error.message : String(error));
+		process.exit(1);
 	}
 }
