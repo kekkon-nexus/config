@@ -5,6 +5,7 @@ import javascript from "@kekkon-nexus/config/oxlint/javascript";
 import jsdoc from "@kekkon-nexus/config/oxlint/jsdoc";
 import node from "@kekkon-nexus/config/oxlint/node";
 import typescript from "@kekkon-nexus/config/oxlint/typescript";
+import unicorn from "@kekkon-nexus/config/oxlint/unicorn";
 import { defineConfig } from "oxlint";
 
 const config = defineConfig({
@@ -12,7 +13,7 @@ const config = defineConfig({
 		correctness: "error",
 	},
 
-	extends: [base, javascript, typescript, imp, jsdoc, browser, node],
+	extends: [base, javascript, typescript, imp, unicorn, jsdoc, browser, node],
 });
 
 export default config;
