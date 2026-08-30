@@ -59,6 +59,7 @@
       "bin": "./dist/cli.js",
       "dependencies": {
         "@clack/prompts": "^1.7.0",
+        "@kekkon-nexus/config": "^2.260821.0",
         "@optique/clack": "^1.2.4",
         "@optique/core": "^1.2.4",
         "@optique/run": "^1.2.4",
@@ -70,6 +71,7 @@
   },
   "overrides": {
     "@commitlint/types": "^21.2.0",
+    "@kekkon-nexus/config": "workspace:.",
     "conventional-commits-parser": "^7",
     "vite": "npm:@voidzero-dev/vite-plus-core@^0.2.9",
   },
@@ -205,6 +207,8 @@
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.5.5", "", {}, "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og=="],
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.31", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw=="],
+
+    "@kekkon-nexus/config": ["@kekkon-nexus/config@root:", {}],
 
     "@kekkon-nexus/create-config": ["@kekkon-nexus/create-config@workspace:packages/create"],
 

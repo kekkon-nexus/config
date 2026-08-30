@@ -14,7 +14,7 @@ import { choice } from "@optique/core/valueparser";
 import { print, printError, run } from "@optique/run";
 
 import { detect, type Detected } from "./detect.ts";
-import { convert, create, renderVitePlus } from "./generate.ts";
+import { convert, create, editorconfig, renderVitePlus } from "./generate.ts";
 import { patchExtends, patchSpread, patchTsconfig } from "./index.ts";
 import {
 	OXFMT,
@@ -45,6 +45,7 @@ export interface Answers {
 	module: boolean;
 	typescript: TypeScript;
 	typeAware: boolean;
+	editorconfig: boolean;
 }
 
 export function packages(toolchain: Toolchain, typeAware = false): string[] {
@@ -62,6 +63,7 @@ export interface Prompters {
 	install?: () => Promise<boolean>;
 	typescript?: () => Promise<string>;
 	typeAware?: () => Promise<boolean>;
+	editorconfig?: () => Promise<boolean>;
 }
 
 async function packageJson(dir: string): Promise<Record<string, unknown>> {
@@ -101,6 +103,7 @@ export function configParser(
 		choice(["false", "true", "strict"]),
 	);
 	const typeAwareArg = option("--type-aware");
+	const editorconfigArg = option("--editorconfig");
 
 	// no tty, so unanswered flags fall back instead of prompting
 	if (!tty) {
@@ -109,6 +112,7 @@ export function configParser(
 			scopes: withDefault(scopesArg, [] as Scope[]),
 			typeAware: withDefault(typeAwareArg, false),
 			typescript: map(withDefault(typescriptArg, "false"), typescriptValue),
+			editorconfig: withDefault(editorconfigArg, false),
 			install: withDefault(installArg, false),
 			module: withDefault(moduleArg, esm),
 		});
@@ -141,6 +145,12 @@ export function configParser(
 			}),
 			typescriptValue,
 		),
+		editorconfig: prompt(editorconfigArg, {
+			type: "confirm",
+			message: "Add .editorconfig? (Used by oxfmt)",
+			initialValue: true,
+			prompter: prompters.editorconfig,
+		}),
 		install: prompt(installArg, {
 			type: "confirm",
 			message: "Install the config packages?",
@@ -186,6 +196,15 @@ export async function apply(
 			);
 		}
 		written.push(tsconfig);
+	}
+
+	// no ini patcher, so an existing one is left alone
+	if (answers.editorconfig) {
+		const file = path.join(dir, ".editorconfig");
+		if (!existsSync(file)) {
+			await writeFile(file, await editorconfig());
+			written.push(file);
+		}
 	}
 
 	const ext = extension(dir, await esmPackage(dir));

@@ -12,11 +12,13 @@
 		"packages/*"
 	],
 	"files": [
+		".editorconfig",
 		"dist",
 		"src/ts"
 	],
 	"type": "module",
 	"exports": {
+		"./editorconfig": "./.editorconfig",
 		"./ts": "./src/ts/tsconfig.json",
 		"./ts/*": "./src/ts/tsconfig.*.json",
 		"./commitlint": {
@@ -120,6 +122,7 @@
 	},
 	"overrides": {
 		"@commitlint/types": "^21.2.0",
+		"@kekkon-nexus/config": "workspace:.",
 		"conventional-commits-parser": "^7",
 		"vite": "npm:@voidzero-dev/vite-plus-core@^0.2.9"
 	},

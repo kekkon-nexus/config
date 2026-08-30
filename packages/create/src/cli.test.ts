@@ -6,6 +6,7 @@ import { run } from "@optique/run";
 import { expect, it, onTestFinished } from "vite-plus/test";
 
 import { apply, configParser, packages } from "./cli.ts";
+import { editorconfig } from "./generate.ts";
 import { scopePresets } from "./presets.ts";
 
 async function project(files: Record<string, string>): Promise<string> {
@@ -34,6 +35,7 @@ it("creates both configs when nothing is configured", async () => {
 			module: true,
 			typescript: false,
 			typeAware: false,
+			editorconfig: false,
 		},
 	);
 
@@ -68,6 +70,7 @@ it("converts json and carries its rules over the presets", async () => {
 			module: true,
 			typescript: false,
 			typeAware: false,
+			editorconfig: false,
 		},
 	);
 
@@ -99,6 +102,7 @@ it("patches an existing vite-plus config", async () => {
 			module: true,
 			typescript: false,
 			typeAware: false,
+			editorconfig: false,
 		},
 	);
 
@@ -128,6 +132,7 @@ it("adds type module when asked, and falls back to mts when not", async () => {
 			module: true,
 			typescript: false,
 			typeAware: false,
+			editorconfig: false,
 		},
 	);
 	expect(await readFile(path.join(dir, "package.json"), "utf8")).toBe(
@@ -147,6 +152,7 @@ it("adds type module when asked, and falls back to mts when not", async () => {
 			module: false,
 			typescript: false,
 			typeAware: false,
+			editorconfig: false,
 		},
 	);
 	expect(written).toEqual([
@@ -170,6 +176,7 @@ it("refuses to clobber a bare vite config", async () => {
 				module: true,
 				typescript: false,
 				typeAware: false,
+				editorconfig: false,
 			},
 		),
 	).rejects.toThrow("does not import vite-plus");
@@ -192,6 +199,7 @@ it("refuses to clobber a config detection missed", async () => {
 				module: true,
 				typescript: false,
 				typeAware: false,
+				editorconfig: false,
 			},
 		),
 	).rejects.toThrow("EEXIST");
@@ -209,6 +217,7 @@ it("prompts for the toolchain even when one is detected", async () => {
 					install: () => Promise.resolve(true),
 					typescript: () => Promise.resolve("true"),
 					typeAware: () => Promise.resolve(false),
+					editorconfig: () => Promise.resolve(false),
 				},
 			),
 			{ args: [] },
@@ -220,6 +229,7 @@ it("prompts for the toolchain even when one is detected", async () => {
 		module: true,
 		typescript: true,
 		typeAware: false,
+		editorconfig: false,
 	});
 });
 
@@ -232,6 +242,7 @@ it("prefers command line values over prompts", async () => {
 				install: () => Promise.resolve(true),
 				typescript: () => Promise.reject(new Error("prompted")),
 				typeAware: () => Promise.reject(new Error("prompted")),
+				editorconfig: () => Promise.reject(new Error("prompted")),
 			}),
 			{
 				args: [
@@ -242,6 +253,7 @@ it("prefers command line values over prompts", async () => {
 					"--typescript",
 					"strict",
 					"--type-aware",
+					"--editorconfig",
 				],
 			},
 		),
@@ -252,6 +264,7 @@ it("prefers command line values over prompts", async () => {
 		module: true,
 		typescript: "strict",
 		typeAware: true,
+		editorconfig: true,
 	});
 });
 
@@ -281,6 +294,7 @@ it("runs off flags alone without a tty", async () => {
 		module: true,
 		typescript: false,
 		typeAware: false,
+		editorconfig: false,
 	});
 	expect(
 		await run(configParser({}, false, {}, false), {
@@ -293,6 +307,7 @@ it("runs off flags alone without a tty", async () => {
 		module: false,
 		typescript: false,
 		typeAware: false,
+		editorconfig: false,
 	});
 });
 
@@ -307,6 +322,7 @@ it("creates a tsconfig, with strict when asked", async () => {
 			module: true,
 			typescript: "strict",
 			typeAware: true,
+			editorconfig: false,
 		},
 	);
 
@@ -336,11 +352,52 @@ it("patches a tsconfig that is already there", async () => {
 			module: true,
 			typescript: true,
 			typeAware: false,
+			editorconfig: false,
 		},
 	);
 
 	expect(await readFile(path.join(dir, "tsconfig.json"), "utf8")).toBe(
 		'{\n\t"extends": ["./base.json", "@kekkon-nexus/config/ts"]\n}\n',
+	);
+});
+
+it("writes an editorconfig, but never over one that is there", async () => {
+	const dir = await project(esm);
+	const written = await apply(
+		dir,
+		{},
+		{
+			toolchain: "oxlint",
+			scopes: [],
+			module: true,
+			typescript: false,
+			typeAware: false,
+			editorconfig: true,
+		},
+	);
+
+	expect(written[0]).toBe(path.join(dir, ".editorconfig"));
+	expect(await readFile(path.join(dir, ".editorconfig"), "utf8")).toBe(
+		await editorconfig(),
+	);
+
+	const kept = await project({ ...esm, ".editorconfig": "root = false\n" });
+	const second = await apply(
+		kept,
+		{},
+		{
+			toolchain: "oxlint",
+			scopes: [],
+			module: true,
+			typescript: false,
+			typeAware: false,
+			editorconfig: true,
+		},
+	);
+
+	expect(second).not.toContain(path.join(kept, ".editorconfig"));
+	expect(await readFile(path.join(kept, ".editorconfig"), "utf8")).toBe(
+		"root = false\n",
 	);
 });
 

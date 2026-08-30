@@ -44,6 +44,7 @@ Pass flags to skip the prompts:
 | `--module`                               | add `"type": "module"` to `package.json` |
 | `--typescript false\|true\|strict`       | write or patch `tsconfig.json`           |
 | `--type-aware`                           | install `oxlint-tsgolint`                |
+| `--editorconfig`                         | write `.editorconfig` if absent          |
 
 Or manually:
 

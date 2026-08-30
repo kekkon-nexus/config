@@ -1,8 +1,14 @@
 import { readFile, rm, writeFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 
 import type { Preset } from "./index.ts";
 
 export type Tool = "oxlint" | "oxfmt";
+
+export async function editorconfig(): Promise<string> {
+	const source = import.meta.resolve("@kekkon-nexus/config/editorconfig");
+	return await readFile(fileURLToPath(source), "utf8");
+}
 
 export function render(
 	tool: Tool,
