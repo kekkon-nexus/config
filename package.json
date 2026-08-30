@@ -126,7 +126,7 @@
 		"@commitlint/types": "^21.2.0",
 		"@kekkon-nexus/config": "workspace:.",
 		"conventional-commits-parser": "^7",
-		"vite": "npm:@voidzero-dev/vite-plus-core@^0.2.9"
+		"vite": "npm:@voidzero-dev/vite-plus-core@^0.3.0"
 	},
 	"devEngines": {
 		"packageManager": {
