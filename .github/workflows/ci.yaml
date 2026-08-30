@@ -4,9 +4,6 @@ on:
   workflow_dispatch:
   push:
 
-env:
-  PACKAGE: kekkon-nexus-*.tgz
-
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -24,9 +21,16 @@ jobs:
       - run: bun run test
 
       - run: bun run pack
+
       - uses: actions/upload-artifact@v7
         with:
-          path: ${{ env.PACKAGE }}
+          name: config
+          path: kekkon-nexus-config-*.tgz
+          archive: false
+      - uses: actions/upload-artifact@v7
+        with:
+          name: create-config
+          path: kekkon-nexus-create-config-*.tgz
           archive: false
 
   cd:
@@ -43,10 +47,10 @@ jobs:
     steps:
       - uses: actions/download-artifact@v8
         with:
-          skip-decompress: true
+          merge-multiple: true
       - uses: actions/attest@v4
         with:
-          subject-path: ${{ env.PACKAGE }}
+          subject-path: "*"
 
       - run: npm install -g npm@latest
-      - run: for pkg in ${{ env.PACKAGE }}; do npm publish "$pkg"; done
+      - run: for pkg in *; do npm publish "$pkg"; done
