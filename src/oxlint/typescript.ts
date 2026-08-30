@@ -43,6 +43,7 @@ const config = defineConfig({
 		"typescript/prefer-namespace-keyword": "warn",
 		"typescript/prefer-reduce-type-parameter": "warn",
 		"typescript/prefer-return-this-type": "warn",
+		"typescript/return-await": ["error", "error-handling-correctness-only"],
 		"typescript/require-await": "warn",
 		"typescript/triple-slash-reference": "warn",
 		"typescript/unified-signatures": "warn",
