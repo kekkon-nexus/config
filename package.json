@@ -62,7 +62,7 @@
 		"test": "NODE_OPTIONS=--conditions=dev vp test",
 		"prepack": "tsc -p tsconfig.build.json",
 		"pack": "bun pm pack && bun pm pack --cwd packages/create --destination ../..",
-		"bump": "bun pm version --message=\":bookmark: build(release): %s\""
+		"bump": "bun run scripts/bump.ts"
 	},
 	"dependencies": {
 		"@commitlint/config-conventional": "^21.2.2",
