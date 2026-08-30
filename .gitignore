@@ -3,4 +3,4 @@ node_modules/
 /dist/
 packages/*/dist/
 *.tsbuildinfo
-kekkon-nexus-config-*.tgz
+kekkon-nexus-*.tgz
