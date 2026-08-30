@@ -10,10 +10,6 @@ export default defineConfig({
 	lint: {
 		extends: [base, vp],
 	},
-	test: {
-		include: ["test/**/*.test.ts"],
-	},
-
 	staged: {
 		"*": "vp check --fix --no-error-on-unmatched-pattern",
 	},
