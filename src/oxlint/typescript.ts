@@ -15,6 +15,10 @@ const config = defineConfig({
 			"warn",
 			{ fixStyle: "inline-type-imports" },
 		],
+		"typescript/no-confusing-void-expression": [
+			"error",
+			{ ignoreArrowShorthand: true },
+		],
 		"typescript/no-deprecated": "warn",
 		"typescript/no-duplicate-type-constituents": "warn",
 		"typescript/no-dynamic-delete": "warn",
