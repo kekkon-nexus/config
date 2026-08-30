@@ -25,10 +25,6 @@ const VITE_FILES = [
 	"vite.config.mts",
 	"vite.config.js",
 	"vite.config.mjs",
-	"vitest.config.ts",
-	"vitest.config.mts",
-	"vitest.config.js",
-	"vitest.config.mjs",
 ];
 
 export interface Detected {
