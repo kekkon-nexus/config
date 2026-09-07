@@ -34,7 +34,7 @@
 		"@clack/prompts": "^1.7.0",
 		"@kekkon-nexus/config": "3.0.0",
 		"@optique/clack": "^1.2.4",
-		"@optique/core": "^1.2.4",
+		"@optique/core": "^1.2.5",
 		"@optique/run": "^1.2.4",
 		"magic-string": "^1.2.3",
 		"oxc-parser": "^0.147.0",
