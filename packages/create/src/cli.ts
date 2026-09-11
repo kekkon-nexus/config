@@ -58,11 +58,16 @@ export interface Answers {
 	vscode: boolean;
 }
 
-export function packages(toolchain: Toolchain, typeAware = false): string[] {
+export function packages(
+	toolchain: Toolchain,
+	typeAware = false,
+	typescript: TypeScript = false,
+): string[] {
 	return [
 		"@kekkon-nexus/config",
 		...(toolchain === "vite-plus" ? ["vite-plus"] : ["oxlint", "oxfmt"]),
 		...(typeAware ? ["oxlint-tsgolint"] : []),
+		...(typescript === false ? [] : ["typescript"]),
 	];
 }
 
@@ -327,7 +332,7 @@ if (import.meta.main) {
 			const add = [
 				"add",
 				"-D",
-				...packages(answers.toolchain, answers.typeAware),
+				...packages(answers.toolchain, answers.typeAware, answers.typescript),
 			];
 			const command = `vp ${add.join(" ")}`;
 			let child: ChildProcess | undefined;
