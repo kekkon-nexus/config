@@ -341,6 +341,16 @@ export async function apply(
 	return written;
 }
 
+export function leftover(
+	found: Detected,
+	toolchain: Toolchain,
+	tty: boolean,
+): string[] {
+	// without a tty nobody can confirm, so nothing is offered for deletion
+	if (!tty || toolchain !== "vite-plus") return [];
+	return [found.oxlint, found.oxfmt].filter((file) => file !== undefined);
+}
+
 if (import.meta.main) {
 	const dir = process.cwd();
 
@@ -362,13 +372,11 @@ if (import.meta.main) {
 				},
 			},
 		);
-		const leftover = [found.oxlint, found.oxfmt].filter(
-			(file) => file !== undefined,
-		);
-		const names = leftover.map((file) => path.relative(dir, file));
+		const stale = leftover(found, answers.toolchain, tty);
+		const names = stale.map((file) => path.relative(dir, file));
 		let remove = false;
 		// asked before apply, so cancelling still writes nothing
-		if (tty && answers.toolchain === "vite-plus" && leftover.length > 0) {
+		if (stale.length > 0) {
 			const picked = await confirm({
 				message: `Delete ${names.join(", ")}? ${styleText("dim", "(Replaced by vite-plus)")}`,
 				initialValue: true,
@@ -384,7 +392,7 @@ if (import.meta.main) {
 		note(written.map((file) => path.relative(dir, file)).join("\n"), "Wrote");
 
 		if (remove) {
-			await Promise.all(leftover.map((file) => rm(file)));
+			await Promise.all(stale.map((file) => rm(file)));
 			note(names.join("\n"), "Deleted");
 		}
 

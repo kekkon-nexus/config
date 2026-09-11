@@ -5,7 +5,7 @@ import path from "node:path";
 import { run } from "@optique/run";
 import { expect, it, onTestFinished } from "vite-plus/test";
 
-import { apply, configParser, packages } from "./cli.ts";
+import { apply, configParser, leftover, packages } from "./cli.ts";
 import { COMMITLINT, editorconfig, vscode } from "./generate.ts";
 import { scopePresets } from "./presets.ts";
 
@@ -591,6 +591,25 @@ it("writes both vscode files, but never over one that is there", async () => {
 	expect(
 		await readFile(path.join(dir, ".vscode", "settings.json"), "utf8"),
 	).toBe(await vscode("settings"));
+});
+
+it("offers the oxlint configs for deletion only when vite-plus replaces them", () => {
+	const found = {
+		oxlint: "oxlint.config.ts",
+		oxfmt: ".oxfmtrc.json",
+		vitePlus: "vite.config.ts",
+	};
+
+	expect(leftover(found, "vite-plus", true)).toEqual([
+		"oxlint.config.ts",
+		".oxfmtrc.json",
+	]);
+	expect(leftover({ oxfmt: ".oxfmtrc.json" }, "vite-plus", true)).toEqual([
+		".oxfmtrc.json",
+	]);
+	expect(leftover(found, "oxlint", true)).toEqual([]);
+	expect(leftover(found, "vite-plus", false)).toEqual([]);
+	expect(leftover({}, "vite-plus", true)).toEqual([]);
 });
 
 it("drops react when next already extends it", () => {
