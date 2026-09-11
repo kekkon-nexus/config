@@ -2,12 +2,17 @@ import { readFile, rm, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
 import type { Preset } from "./index.ts";
+import { ENV } from "./presets.ts";
 
 export type Tool = "oxlint" | "oxfmt";
 
 // both need oxlint-tsgolint, so they are written as a pair
 export const TYPE_AWARE =
 	"options: {\n\ttypeAware: true,\n\ttypeCheck: true,\n},";
+
+function env(value: Record<string, boolean>): string {
+	return `env: ${JSON.stringify(value, undefined, "\t")},`;
+}
 
 export async function editorconfig(): Promise<string> {
 	const source = import.meta.resolve("@kekkon-nexus/config/editorconfig");
@@ -40,7 +45,7 @@ export function render(
 		`import { defineConfig } from "${tool}";`,
 	];
 
-	const { extends: inherited, ...rest } = carried;
+	const { extends: inherited, env: overrides, ...rest } = carried;
 	const locals = presets.map((preset) => preset.local);
 	const body =
 		tool === "oxfmt"
@@ -54,7 +59,12 @@ export function render(
 					].join(", ")}],`,
 				];
 
-	if (tool === "oxlint" && typeAware) body.push(TYPE_AWARE);
+	if (tool === "oxlint") {
+		body.push(
+			env({ ...ENV, ...(overrides as Record<string, boolean> | undefined) }),
+		);
+		if (typeAware) body.push(TYPE_AWARE);
+	}
 
 	for (const [key, value] of Object.entries(rest)) {
 		// extends is emitted bare, so quoteProps stays consistent
@@ -107,18 +117,23 @@ export function renderVitePlus(
 		.map((preset) => `import ${preset.local} from "${preset.from}";`);
 	imports.push(`import { defineConfig } from "vite-plus";`);
 
-	const extend = `extends: [${lint.map((preset) => preset.local).join(", ")}],`;
-	const section = typeAware
-		? `{\n\t\t${extend}\n${TYPE_AWARE.split("\n")
-				.map((line) => `\t\t${line}`)
-				.join("\n")}\n\t}`
-		: `{ ${extend.slice(0, -1)} }`;
+	const section = [
+		`extends: [${lint.map((preset) => preset.local).join(", ")}],`,
+		env(ENV),
+		...(typeAware ? [TYPE_AWARE] : []),
+	]
+		.join("\n")
+		.split("\n")
+		.map((line) => `\t\t${line}`)
+		.join("\n");
 
 	return `${imports.join("\n")}
 
 export default defineConfig({
 	fmt: { ...${fmt.local} },
-	lint: ${section},
+	lint: {
+${section}
+	},
 });
 `;
 }

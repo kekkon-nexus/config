@@ -7,6 +7,8 @@ import { describe, expect, it, onTestFinished } from "vite-plus/test";
 import { patchExtends, patchTsconfig } from "./index.ts";
 
 const oxlint = { local: "oxlint", from: "@kekkon-nexus/config/oxlint" };
+const env =
+	'env: { "builtin": true, "shared-node-browser": true, "browser": true, "node": true }';
 
 describe("patchExtends", () => {
 	async function patch(source: string, under?: string): Promise<string> {
@@ -29,7 +31,7 @@ describe("patchExtends", () => {
 		).toBe(
 			'import base from "./base.ts";\n' +
 				'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-				"const config = defineConfig({ extends: [base, oxlint] });\n" +
+				`const config = defineConfig({\n\t${env}, extends: [base, oxlint] });\n` +
 				"export default config;\n",
 		);
 	});
@@ -37,21 +39,21 @@ describe("patchExtends", () => {
 	it("inserts extends when absent", async () => {
 		expect(await patch("export default defineConfig({});\n")).toBe(
 			'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-				"export default defineConfig({\n\textends: [oxlint],\n});\n",
+				`export default defineConfig({\n\textends: [oxlint],\n\t${env},\n});\n`,
 		);
 	});
 
 	it("inserts a nested section when absent", async () => {
 		expect(await patch("export default { test: {} };\n", "lint")).toBe(
 			'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-				"export default {\n\tlint: { extends: [oxlint] }, test: {} };\n",
+				`export default {\n\tlint: { extends: [oxlint], ${env} }, test: {} };\n`,
 		);
 	});
 
-	it("skips presets already extended", async () => {
+	it("skips presets already extended and an env already there", async () => {
 		const source =
 			'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-			"export default { extends: [oxlint] };\n";
+			"export default { extends: [oxlint], env: {} };\n";
 		expect(await patch(source)).toBe(source);
 	});
 
@@ -64,14 +66,14 @@ describe("patchExtends", () => {
 	it("matches a string literal key", async () => {
 		expect(await patch('export default { "extends": [] };\n')).toBe(
 			'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-				'export default { "extends": [oxlint] };\n',
+				`export default {\n\t${env}, "extends": [oxlint] };\n`,
 		);
 	});
 
 	it("ignores spread properties", async () => {
 		expect(await patch("export default { ...base };\n")).toBe(
 			'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-				"export default {\n\textends: [oxlint], ...base };\n",
+				`export default {\n\textends: [oxlint],\n\t${env}, ...base };\n`,
 		);
 	});
 

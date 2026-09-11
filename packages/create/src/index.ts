@@ -4,11 +4,16 @@ import { MagicString } from "magic-string";
 import { type ObjectExpression, parseSync } from "oxc-parser";
 
 import { defaultExport, prop } from "./ast.ts";
+import { ENV } from "./presets.ts";
 
 export interface Preset {
 	local: string;
 	from: string;
 }
+
+const ENV_ENTRY = `env: { ${Object.entries(ENV)
+	.map(([key, value]) => `${JSON.stringify(key)}: ${value}`)
+	.join(", ")} }`;
 
 function indentOf(code: string, offset: number): string {
 	const line = code.lastIndexOf("\n", offset) + 1;
@@ -19,7 +24,7 @@ function insert(
 	s: MagicString,
 	code: string,
 	object: ObjectExpression,
-	entry: string,
+	...entries: string[]
 ): void {
 	const [first] = object.properties;
 	const outer = indentOf(code, object.start);
@@ -28,7 +33,7 @@ function insert(
 	const inner = first && !sameLine ? indentOf(code, first.start) : `${outer}\t`;
 	s.appendRight(
 		object.start + 1,
-		`\n${inner}${entry}${first ? "" : `\n${outer}`}`,
+		`\n${inner}${entries.join(`\n${inner}`)}${first ? "" : `\n${outer}`}`,
 	);
 }
 
@@ -104,6 +109,7 @@ export async function patchExtends(
 	const locals = presets.map((preset) => preset.local);
 	const section = [
 		`extends: [${locals.join(", ")}]`,
+		ENV_ENTRY,
 		...(typeAware ? ["options: { typeAware: true, typeCheck: true }"] : []),
 	].join(", ");
 
@@ -122,9 +128,11 @@ export async function patchExtends(
 		}
 
 		if (!under || target !== root) {
+			// one insert, so an empty object only gets closed once
+			const entries: string[] = [];
 			const list = prop(target, "extends");
 			if (!list) {
-				insert(s, code, target, `extends: [${locals.join(", ")}],`);
+				entries.push(`extends: [${locals.join(", ")}],`);
 			} else if (list.value.type === "ArrayExpression") {
 				const present = new Set(
 					list.value.elements.map((element) =>
@@ -139,6 +147,9 @@ export async function patchExtends(
 			} else {
 				throw new Error(`extends in ${file} is not an array literal`);
 			}
+
+			if (!prop(target, "env")) entries.push(`${ENV_ENTRY},`);
+			if (entries.length > 0) insert(s, code, target, ...entries);
 
 			if (typeAware) patchOptions(s, code, target, file);
 		}
