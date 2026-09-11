@@ -292,6 +292,12 @@ it("installs the tools the toolchain needs", () => {
 		"oxlint",
 		"oxfmt",
 	]);
+	expect(packages("oxlint", false, "strict")).toEqual([
+		"@kekkon-nexus/config",
+		"oxlint",
+		"oxfmt",
+		"typescript",
+	]);
 });
 
 it("runs off flags alone without a tty", async () => {
