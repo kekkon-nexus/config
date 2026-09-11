@@ -63,12 +63,14 @@ export interface Answers {
 export function packages(
 	toolchain: Toolchain,
 	typeAware = false,
+	typescript: TypeScript = false,
 	commitlint = false,
 ): string[] {
 	return [
 		"@kekkon-nexus/config",
 		...(toolchain === "vite-plus" ? ["vite-plus"] : ["oxlint", "oxfmt"]),
 		...(typeAware ? ["oxlint-tsgolint"] : []),
+		...(typescript === false ? [] : ["typescript"]),
 		...(commitlint ? ["@commitlint/cli"] : []),
 	];
 }
@@ -357,7 +359,12 @@ if (import.meta.main) {
 			const add = [
 				"add",
 				"-D",
-				...packages(answers.toolchain, answers.typeAware, answers.commitlint),
+				...packages(
+					answers.toolchain,
+					answers.typeAware,
+					answers.typescript,
+					answers.commitlint,
+				),
 			];
 			const command = `vp ${add.join(" ")}`;
 			let child: ChildProcess | undefined;

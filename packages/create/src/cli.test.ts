@@ -304,7 +304,13 @@ it("installs the tools the toolchain needs", () => {
 		"oxlint",
 		"oxfmt",
 	]);
-	expect(packages("oxlint", false, true)).toEqual([
+	expect(packages("oxlint", false, "strict")).toEqual([
+		"@kekkon-nexus/config",
+		"oxlint",
+		"oxfmt",
+		"typescript",
+	]);
+	expect(packages("oxlint", false, false, true)).toEqual([
 		"@kekkon-nexus/config",
 		"oxlint",
 		"oxfmt",
