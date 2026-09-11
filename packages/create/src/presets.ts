@@ -13,6 +13,14 @@ export const VITE_PLUS: Preset = {
 	from: "@kekkon-nexus/config/oxlint/vite-plus",
 };
 
+// oxlint does not merge env through extends yet, so the config repeats it
+export const ENV = {
+	"builtin": true,
+	"shared-node-browser": true,
+	"browser": true,
+	"node": true,
+};
+
 export type Toolchain = "oxlint" | "vite-plus";
 
 export const TS = "@kekkon-nexus/config/ts";

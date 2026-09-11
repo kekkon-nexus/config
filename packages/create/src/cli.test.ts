@@ -24,6 +24,17 @@ const esm = {
 	"tsconfig.json": "{}\n",
 };
 
+const envKeys = [
+	'"builtin": true',
+	'"shared-node-browser": true',
+	'"browser": true',
+	'"node": true',
+];
+
+function env(indent: string, keys = envKeys): string {
+	return `${indent}env: {\n${keys.map((key) => `${indent}\t${key}`).join(",\n")}\n${indent}},\n`;
+}
+
 it("creates both configs when nothing is configured", async () => {
 	const dir = await project(esm);
 	const written = await apply(
@@ -46,9 +57,9 @@ it("creates both configs when nothing is configured", async () => {
 		path.join(dir, "oxfmt.config.ts"),
 	]);
 	expect(await readFile(path.join(dir, "oxlint.config.ts"), "utf8")).toBe(
-		'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-			'import { defineConfig } from "oxlint";\n\n' +
-			"export default defineConfig({\n\textends: [oxlint],\n});\n",
+		`import oxlint from "@kekkon-nexus/config/oxlint";\n` +
+			`import { defineConfig } from "oxlint";\n\n` +
+			`export default defineConfig({\n\textends: [oxlint],\n${env("\t")}});\n`,
 	);
 	expect(await readFile(path.join(dir, "oxfmt.config.ts"), "utf8")).toBe(
 		'import oxfmt from "@kekkon-nexus/config/oxfmt";\n' +
@@ -61,7 +72,7 @@ it("converts json and carries its rules over the presets", async () => {
 	const dir = await project({
 		...esm,
 		".oxlintrc.json":
-			'{ "extends": ["./other.json"], "rules": { "eqeqeq": "error" } }',
+			'{ "extends": ["./other.json"], "env": { "jest": true }, "rules": { "eqeqeq": "error" } }',
 	});
 	await apply(
 		dir,
@@ -79,13 +90,15 @@ it("converts json and carries its rules over the presets", async () => {
 	);
 
 	expect(await readFile(path.join(dir, "oxlint.config.ts"), "utf8")).toBe(
-		'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-			'import next from "@kekkon-nexus/config/oxlint/next";\n' +
-			'import { defineConfig } from "oxlint";\n\n' +
-			"export default defineConfig({\n" +
-			'\textends: [oxlint, next, "./other.json"],\n' +
-			'\trules: {\n\t\t"eqeqeq": "error"\n\t},\n' +
-			"});\n",
+		`import oxlint from "@kekkon-nexus/config/oxlint";\n` +
+			`import next from "@kekkon-nexus/config/oxlint/next";\n` +
+			`import { defineConfig } from "oxlint";\n\n` +
+			`export default defineConfig({\n` +
+			`\textends: [oxlint, next, "./other.json"],\n${env("\t", [
+				...envKeys,
+				'"jest": true',
+			])}\trules: {\n\t\t"eqeqeq": "error"\n\t},\n` +
+			`});\n`,
 	);
 	expect(
 		await readFile(path.join(dir, ".oxlintrc.json")).catch(() => "gone"),
@@ -119,7 +132,7 @@ it("patches an existing vite-plus config", async () => {
 			'import oxfmt from "@kekkon-nexus/config/oxfmt";\n\n' +
 			"export default defineConfig({\n" +
 			"\tfmt: { ...oxfmt },\n" +
-			"\tlint: { extends: [oxlint, vp] },\n" +
+			`\tlint: {\n\t\tenv: { ${envKeys.join(", ")} }, extends: [oxlint, vp] },\n` +
 			"});\n",
 	);
 });
@@ -492,12 +505,13 @@ it("turns the type-aware options on in a fresh oxlint config", async () => {
 	);
 
 	expect(await readFile(path.join(dir, "oxlint.config.ts"), "utf8")).toBe(
-		'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-			'import { defineConfig } from "oxlint";\n\n' +
-			"export default defineConfig({\n" +
-			"\textends: [oxlint],\n" +
-			"\toptions: {\n\t\ttypeAware: true,\n\t\ttypeCheck: true,\n\t},\n" +
-			"});\n",
+		`import oxlint from "@kekkon-nexus/config/oxlint";\n` +
+			`import { defineConfig } from "oxlint";\n\n` +
+			`export default defineConfig({\n` +
+			`\textends: [oxlint],\n${env(
+				"\t",
+			)}\toptions: {\n\t\ttypeAware: true,\n\t\ttypeCheck: true,\n\t},\n` +
+			`});\n`,
 	);
 	// oxfmt has no such options
 	expect(
@@ -523,17 +537,18 @@ it("turns them on in a fresh vite-plus config", async () => {
 	);
 
 	expect(await readFile(path.join(dir, "vite.config.ts"), "utf8")).toBe(
-		'import oxfmt from "@kekkon-nexus/config/oxfmt";\n' +
-			'import oxlint from "@kekkon-nexus/config/oxlint";\n' +
-			'import vp from "@kekkon-nexus/config/oxlint/vite-plus";\n' +
-			'import { defineConfig } from "vite-plus";\n\n' +
-			"export default defineConfig({\n" +
-			"\tfmt: { ...oxfmt },\n" +
-			"\tlint: {\n" +
-			"\t\textends: [oxlint, vp],\n" +
-			"\t\toptions: {\n\t\t\ttypeAware: true,\n\t\t\ttypeCheck: true,\n\t\t},\n" +
-			"\t},\n" +
-			"});\n",
+		`import oxfmt from "@kekkon-nexus/config/oxfmt";\n` +
+			`import oxlint from "@kekkon-nexus/config/oxlint";\n` +
+			`import vp from "@kekkon-nexus/config/oxlint/vite-plus";\n` +
+			`import { defineConfig } from "vite-plus";\n\n` +
+			`export default defineConfig({\n` +
+			`\tfmt: { ...oxfmt },\n` +
+			`\tlint: {\n` +
+			`\t\textends: [oxlint, vp],\n${env(
+				"\t\t",
+			)}\t\toptions: {\n\t\t\ttypeAware: true,\n\t\t\ttypeCheck: true,\n\t\t},\n` +
+			`\t},\n` +
+			`});\n`,
 	);
 });
 
