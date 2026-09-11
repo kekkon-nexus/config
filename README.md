@@ -46,6 +46,7 @@ Pass flags to skip the prompts:
 | `--type-aware`                           | install `oxlint-tsgolint`                |
 | `--editorconfig`                         | write `.editorconfig` if absent          |
 | `--vscode`                               | write `.vscode` files if absent          |
+| `--commitlint`                           | write `commitlint.config` if absent      |
 
 > [!WARNING]
 > `.editorconfig` and `.vscode` support is not matured yet.
