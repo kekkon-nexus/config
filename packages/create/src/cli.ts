@@ -1,13 +1,22 @@
 #!/usr/bin/env node
 import { type ChildProcess, spawn } from "node:child_process";
 import { existsSync } from "node:fs";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { isatty } from "node:tty";
 import { styleText } from "node:util";
 
-import { cancel, intro, log, note, outro, spinner } from "@clack/prompts";
+import {
+	cancel,
+	confirm,
+	intro,
+	isCancel,
+	log,
+	note,
+	outro,
+	spinner,
+} from "@clack/prompts";
 import { prompt } from "@optique/clack";
 import { object } from "@optique/core/constructs";
 import { map, multiple, withDefault } from "@optique/core/modifiers";
@@ -307,8 +316,9 @@ if (import.meta.main) {
 
 	try {
 		const found = await detect(dir);
+		const tty = isatty(process.stdin.fd);
 		const answers = await run(
-			configParser(found, await esmPackage(dir), {}, isatty(process.stdin.fd)),
+			configParser(found, await esmPackage(dir), {}, tty),
 			{
 				help: "option",
 				// optique exits on its own for help, parse errors and a
@@ -320,8 +330,31 @@ if (import.meta.main) {
 				},
 			},
 		);
+		const leftover = [found.oxlint, found.oxfmt].filter(
+			(file) => file !== undefined,
+		);
+		const names = leftover.map((file) => path.relative(dir, file));
+		let remove = false;
+		// asked before apply, so cancelling still writes nothing
+		if (tty && answers.toolchain === "vite-plus" && leftover.length > 0) {
+			const picked = await confirm({
+				message: `Delete ${names.join(", ")}? ${styleText("dim", "(Replaced by vite-plus)")}`,
+				initialValue: true,
+			});
+			if (isCancel(picked)) {
+				cancel("Nothing was written.");
+				process.exit(1);
+			}
+			remove = picked === true;
+		}
+
 		const written = await apply(dir, found, answers);
 		note(written.map((file) => path.relative(dir, file)).join("\n"), "Wrote");
+
+		if (remove) {
+			await Promise.all(leftover.map((file) => rm(file)));
+			note(names.join("\n"), "Deleted");
+		}
 
 		if (answers.install) {
 			const add = [
