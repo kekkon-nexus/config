@@ -16,6 +16,14 @@ export async function editorconfig(): Promise<string> {
 
 export const VSCODE = ["extensions", "settings"] as const;
 
+export const COMMITLINT = `export default {
+	extends: [
+		"@kekkon-nexus/config/commitlint",
+		"@kekkon-nexus/config/commitlint/gitmoji",
+	],
+};
+`;
+
 export async function vscode(name: string): Promise<string> {
 	const source = import.meta.resolve(`@kekkon-nexus/config/vscode/${name}`);
 	return readFile(fileURLToPath(source), "utf8");

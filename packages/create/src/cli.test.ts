@@ -6,7 +6,7 @@ import { run } from "@optique/run";
 import { expect, it, onTestFinished } from "vite-plus/test";
 
 import { apply, configParser, packages } from "./cli.ts";
-import { editorconfig, vscode } from "./generate.ts";
+import { COMMITLINT, editorconfig, vscode } from "./generate.ts";
 import { scopePresets } from "./presets.ts";
 
 async function project(files: Record<string, string>): Promise<string> {
@@ -37,6 +37,7 @@ it("creates both configs when nothing is configured", async () => {
 			typeAware: false,
 			editorconfig: false,
 			vscode: false,
+			commitlint: false,
 		},
 	);
 
@@ -73,6 +74,7 @@ it("converts json and carries its rules over the presets", async () => {
 			typeAware: false,
 			editorconfig: false,
 			vscode: false,
+			commitlint: false,
 		},
 	);
 
@@ -106,6 +108,7 @@ it("patches an existing vite-plus config", async () => {
 			typeAware: false,
 			editorconfig: false,
 			vscode: false,
+			commitlint: false,
 		},
 	);
 
@@ -137,6 +140,7 @@ it("adds type module when asked, and falls back to mts when not", async () => {
 			typeAware: false,
 			editorconfig: false,
 			vscode: false,
+			commitlint: false,
 		},
 	);
 	expect(await readFile(path.join(dir, "package.json"), "utf8")).toBe(
@@ -158,6 +162,7 @@ it("adds type module when asked, and falls back to mts when not", async () => {
 			typeAware: false,
 			editorconfig: false,
 			vscode: false,
+			commitlint: false,
 		},
 	);
 	expect(written).toEqual([
@@ -183,6 +188,7 @@ it("refuses to clobber a bare vite config", async () => {
 				typeAware: false,
 				editorconfig: false,
 				vscode: false,
+				commitlint: false,
 			},
 		),
 	).rejects.toThrow("does not import vite-plus");
@@ -207,6 +213,7 @@ it("refuses to clobber a config detection missed", async () => {
 				typeAware: false,
 				editorconfig: false,
 				vscode: false,
+				commitlint: false,
 			},
 		),
 	).rejects.toThrow("EEXIST");
@@ -226,6 +233,7 @@ it("prompts for the toolchain even when one is detected", async () => {
 					typeAware: () => Promise.resolve(false),
 					editorconfig: () => Promise.resolve(false),
 					vscode: () => Promise.resolve(false),
+					commitlint: () => Promise.resolve(false),
 				},
 			),
 			{ args: [] },
@@ -239,6 +247,7 @@ it("prompts for the toolchain even when one is detected", async () => {
 		typeAware: false,
 		editorconfig: false,
 		vscode: false,
+		commitlint: false,
 	});
 });
 
@@ -253,6 +262,7 @@ it("prefers command line values over prompts", async () => {
 				typeAware: () => Promise.reject(new Error("prompted")),
 				editorconfig: () => Promise.reject(new Error("prompted")),
 				vscode: () => Promise.reject(new Error("prompted")),
+				commitlint: () => Promise.reject(new Error("prompted")),
 			}),
 			{
 				args: [
@@ -265,6 +275,7 @@ it("prefers command line values over prompts", async () => {
 					"--type-aware",
 					"--editorconfig",
 					"--vscode",
+					"--commitlint",
 				],
 			},
 		),
@@ -277,6 +288,7 @@ it("prefers command line values over prompts", async () => {
 		typeAware: true,
 		editorconfig: true,
 		vscode: true,
+		commitlint: true,
 	});
 });
 
@@ -292,6 +304,37 @@ it("installs the tools the toolchain needs", () => {
 		"oxlint",
 		"oxfmt",
 	]);
+	expect(packages("oxlint", false, true)).toEqual([
+		"@kekkon-nexus/config",
+		"oxlint",
+		"oxfmt",
+		"@commitlint/cli",
+	]);
+});
+
+it("writes a commitlint config, but never next to one that is there", async () => {
+	const dir = await project(esm);
+	const answers = {
+		toolchain: "oxlint",
+		scopes: [],
+		module: true,
+		typescript: false,
+		typeAware: false,
+		editorconfig: false,
+		vscode: false,
+		commitlint: true,
+	} as const;
+	const written = await apply(dir, {}, answers);
+
+	expect(written).toContain(path.join(dir, "commitlint.config.ts"));
+	expect(await readFile(path.join(dir, "commitlint.config.ts"), "utf8")).toBe(
+		COMMITLINT,
+	);
+
+	const kept = await project({ ...esm, ".commitlintrc.json": "{}\n" });
+	const second = await apply(kept, {}, answers);
+
+	expect(second).not.toContain(path.join(kept, "commitlint.config.ts"));
 });
 
 it("runs off flags alone without a tty", async () => {
@@ -308,6 +351,7 @@ it("runs off flags alone without a tty", async () => {
 		typeAware: false,
 		editorconfig: false,
 		vscode: false,
+		commitlint: false,
 	});
 	expect(
 		await run(configParser({}, false, {}, false), {
@@ -322,6 +366,7 @@ it("runs off flags alone without a tty", async () => {
 		typeAware: false,
 		editorconfig: false,
 		vscode: false,
+		commitlint: false,
 	});
 });
 
@@ -338,6 +383,7 @@ it("creates a tsconfig, with strict when asked", async () => {
 			typeAware: true,
 			editorconfig: false,
 			vscode: false,
+			commitlint: false,
 		},
 	);
 
@@ -369,6 +415,7 @@ it("patches a tsconfig that is already there", async () => {
 			typeAware: false,
 			editorconfig: false,
 			vscode: false,
+			commitlint: false,
 		},
 	);
 
@@ -390,6 +437,7 @@ it("writes an editorconfig, but never over one that is there", async () => {
 			typeAware: false,
 			editorconfig: true,
 			vscode: false,
+			commitlint: false,
 		},
 	);
 
@@ -410,6 +458,7 @@ it("writes an editorconfig, but never over one that is there", async () => {
 			typeAware: false,
 			editorconfig: true,
 			vscode: false,
+			commitlint: false,
 		},
 	);
 
@@ -432,6 +481,7 @@ it("turns the type-aware options on in a fresh oxlint config", async () => {
 			typeAware: true,
 			editorconfig: false,
 			vscode: false,
+			commitlint: false,
 		},
 	);
 
@@ -462,6 +512,7 @@ it("turns them on in a fresh vite-plus config", async () => {
 			typeAware: true,
 			editorconfig: false,
 			vscode: false,
+			commitlint: false,
 		},
 	);
 
@@ -496,6 +547,7 @@ it("adds them to an existing lint section", async () => {
 			typeAware: true,
 			editorconfig: false,
 			vscode: false,
+			commitlint: false,
 		},
 	);
 
@@ -521,6 +573,7 @@ it("writes both vscode files, but never over one that is there", async () => {
 			typeAware: false,
 			editorconfig: false,
 			vscode: true,
+			commitlint: false,
 		},
 	);
 

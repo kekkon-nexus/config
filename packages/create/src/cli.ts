@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { type ChildProcess, spawn } from "node:child_process";
 import { existsSync } from "node:fs";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { isatty } from "node:tty";
@@ -17,6 +17,7 @@ import { run } from "@optique/run";
 
 import { detect, type Detected } from "./detect.ts";
 import {
+	COMMITLINT,
 	convert,
 	create,
 	editorconfig,
@@ -56,13 +57,19 @@ export interface Answers {
 	typeAware: boolean;
 	editorconfig: boolean;
 	vscode: boolean;
+	commitlint: boolean;
 }
 
-export function packages(toolchain: Toolchain, typeAware = false): string[] {
+export function packages(
+	toolchain: Toolchain,
+	typeAware = false,
+	commitlint = false,
+): string[] {
 	return [
 		"@kekkon-nexus/config",
 		...(toolchain === "vite-plus" ? ["vite-plus"] : ["oxlint", "oxfmt"]),
 		...(typeAware ? ["oxlint-tsgolint"] : []),
+		...(commitlint ? ["@commitlint/cli"] : []),
 	];
 }
 
@@ -75,6 +82,7 @@ export interface Prompters {
 	typeAware?: () => Promise<boolean>;
 	editorconfig?: () => Promise<boolean>;
 	vscode?: () => Promise<boolean>;
+	commitlint?: () => Promise<boolean>;
 }
 
 async function packageJson(dir: string): Promise<Record<string, unknown>> {
@@ -116,6 +124,7 @@ export function configParser(
 	const typeAwareArg = option("--type-aware");
 	const editorconfigArg = option("--editorconfig");
 	const vscodeArg = option("--vscode");
+	const commitlintArg = option("--commitlint");
 
 	// no tty, so unanswered flags fall back instead of prompting
 	if (!tty) {
@@ -126,6 +135,7 @@ export function configParser(
 			typescript: map(withDefault(typescriptArg, "false"), typescriptValue),
 			editorconfig: withDefault(editorconfigArg, false),
 			vscode: withDefault(vscodeArg, false),
+			commitlint: withDefault(commitlintArg, false),
 			install: withDefault(installArg, false),
 			module: withDefault(moduleArg, esm),
 		});
@@ -170,6 +180,12 @@ export function configParser(
 			message: `Add .vscode? ${styleText("dim", "(Settings and extensions)")}`,
 			initialValue: true,
 			prompter: prompters.vscode,
+		}),
+		commitlint: prompt(commitlintArg, {
+			type: "confirm",
+			message: `Add commitlint? ${styleText("dim", "(Conventional commits with gitmoji)")}`,
+			initialValue: true,
+			prompter: prompters.commitlint,
 		}),
 		install: prompt(installArg, {
 			type: "confirm",
@@ -242,6 +258,20 @@ export async function apply(
 	}
 
 	const ext = extension(dir, await esmPackage(dir));
+
+	if (answers.commitlint) {
+		// any existing config counts, not only the extension picked here
+		const present = (await readdir(dir)).some(
+			(name) =>
+				name.startsWith("commitlint.config.") ||
+				name.startsWith(".commitlintrc"),
+		);
+		if (!present) {
+			const file = path.join(dir, `commitlint.config${ext}`);
+			await writeFile(file, COMMITLINT);
+			written.push(file);
+		}
+	}
 	const scoped = scopePresets(answers.scopes);
 	// the vite-plus preset already extends vitest
 	const presets = [
@@ -327,7 +357,7 @@ if (import.meta.main) {
 			const add = [
 				"add",
 				"-D",
-				...packages(answers.toolchain, answers.typeAware),
+				...packages(answers.toolchain, answers.typeAware, answers.commitlint),
 			];
 			const command = `vp ${add.join(" ")}`;
 			let child: ChildProcess | undefined;
