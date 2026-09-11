@@ -10,6 +10,10 @@ const config = defineConfig({
 		"react/display-name": "warn",
 		"react/no-unescaped-entities": "warn",
 		"react/only-export-components": "warn",
+		"unicorn/filename-case": [
+			"warn",
+			{ cases: { camelCase: true, kebabCase: true, pascalCase: true } },
+		],
 	},
 });
 
