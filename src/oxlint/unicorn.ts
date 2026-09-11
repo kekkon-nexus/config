@@ -18,7 +18,7 @@ const config = defineConfig({
 		"unicorn/escape-case": "warn",
 		"unicorn/explicit-length-check": "warn",
 		"unicorn/explicit-timer-delay": "warn",
-		"unicorn/filename-case": "warn",
+		"unicorn/filename-case": ["warn", { cases: { kebabCase: true } }],
 		"unicorn/import-style": "warn",
 		"unicorn/max-nested-calls": "warn",
 		"unicorn/no-abusive-eslint-disable": "warn",
