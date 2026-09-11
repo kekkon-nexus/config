@@ -89,18 +89,18 @@
 		"eslint-plugin-react-refresh": "^0.5.5",
 		"eslint-plugin-unicorn": "^73.0.0",
 		"eslint-plugin-vue": "^10.10.0",
-		"oxfmt": "0.64.0",
-		"oxlint": "1.79.0",
+		"oxfmt": "0.66.0",
+		"oxlint": "1.81.0",
 		"oxlint-tsgolint": "^7.0.2001",
 		"typescript": "^7.0.2",
 		"typescript-eslint": "^8.68.0",
 		"typescript6": "npm:@typescript/typescript6@^6.0.2",
-		"vite-plus": "0.3.0"
+		"vite-plus": "^0.3.1"
 	},
 	"peerDependencies": {
 		"@commitlint/cli": "^21.2.2",
-		"oxfmt": ">=0.64.0 <1",
-		"oxlint": "^1.79.0",
+		"oxfmt": ">=0.66.0 <1",
+		"oxlint": "^1.81.0",
 		"oxlint-tsgolint": "^7.0.2001",
 		"typescript": "^7.0.2",
 		"vite-plus": "^0.3.0"
