@@ -47,7 +47,7 @@ const config = defineConfig({
 		"unicorn/no-magic-array-flat-depth": "error",
 		"unicorn/no-negated-condition": "error",
 		"unicorn/no-negation-in-equality-check": "error",
-		"unicorn/no-nested-ternary": "error",
+		"unicorn/no-nested-ternary": "off", // https://github.com/oxc-project/oxc/issues/26627
 		"unicorn/no-new-array": "error",
 		"unicorn/no-new-buffer": "error",
 		"unicorn/no-null": "error",

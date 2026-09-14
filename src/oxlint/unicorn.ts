@@ -35,7 +35,7 @@ const config = defineConfig({
 		"unicorn/no-lonely-if": "warn",
 		"unicorn/no-magic-array-flat-depth": "warn",
 		"unicorn/no-negated-condition": "warn",
-		"unicorn/no-nested-ternary": "warn",
+		"unicorn/no-nested-ternary": "off", // https://github.com/oxc-project/oxc/issues/26627
 		"unicorn/no-null": "warn",
 		"unicorn/no-object-as-default-parameter": "warn",
 		"unicorn/no-process-exit": "warn",
