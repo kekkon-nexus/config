@@ -55,11 +55,11 @@
     },
     "packages/create": {
       "name": "@kekkon-nexus/create-config",
-      "version": "3.1.1",
+      "version": "3.1.2",
       "bin": "./dist/cli.js",
       "dependencies": {
         "@clack/prompts": "^1.8.1",
-        "@kekkon-nexus/config": "3.1.1",
+        "@kekkon-nexus/config": "3.1.2",
         "@optique/clack": "^1.2.6",
         "@optique/core": "^1.2.6",
         "@optique/run": "^1.2.6",
