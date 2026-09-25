@@ -66,13 +66,13 @@
 		"bump": "bun run scripts/bump.ts"
 	},
 	"dependencies": {
-		"@commitlint/config-conventional": "^21.2.2",
-		"@commitlint/format": "^21.2.2",
+		"@commitlint/config-conventional": "^21.2.3",
+		"@commitlint/format": "^21.2.3",
 		"commitlint-config-gitmoji": "^2.3.1"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^21.2.2",
-		"@commitlint/types": "^21.2.0",
+		"@commitlint/cli": "^21.2.3",
+		"@commitlint/types": "^21.2.3",
 		"@eslint/js": "^10.0.1",
 		"@next/eslint-plugin-next": "^16.3.5",
 		"@types/bun": "latest",
@@ -99,7 +99,7 @@
 		"vite-plus": "^0.3.2"
 	},
 	"peerDependencies": {
-		"@commitlint/cli": "^21.2.2",
+		"@commitlint/cli": "^21.2.3",
 		"oxfmt": ">=0.67.0 <1",
 		"oxlint": "^1.82.0",
 		"oxlint-tsgolint": "^7.0.2001",
@@ -124,7 +124,7 @@
 		}
 	},
 	"overrides": {
-		"@commitlint/types": "^21.2.0",
+		"@commitlint/types": "^21.2.3",
 		"@kekkon-nexus/config": "workspace:.",
 		"conventional-commits-parser": "^7",
 		"vite": "npm:@voidzero-dev/vite-plus-core@^0.3.2"
