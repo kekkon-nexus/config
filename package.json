@@ -1,6 +1,6 @@
 {
 	"name": "@kekkon-nexus/config",
-	"version": "3.1.2",
+	"version": "3.2.0",
 	"description": "An opinionated config preset for TypeScript, oxlint, oxfmt and commitlint",
 	"bugs": "https://github.com/kekkon-nexus/config/issues",
 	"license": "MIT",

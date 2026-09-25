@@ -1,6 +1,6 @@
 {
 	"name": "@kekkon-nexus/create-config",
-	"version": "3.1.2",
+	"version": "3.2.0",
 	"description": "Scaffolds @kekkon-nexus/config into a project",
 	"bugs": "https://github.com/kekkon-nexus/config/issues",
 	"license": "MIT",
@@ -33,7 +33,7 @@
 	},
 	"dependencies": {
 		"@clack/prompts": "^1.8.1",
-		"@kekkon-nexus/config": "3.1.2",
+		"@kekkon-nexus/config": "3.2.0",
 		"@optique/clack": "^1.3.0",
 		"@optique/core": "^1.3.0",
 		"@optique/run": "^1.3.0",
