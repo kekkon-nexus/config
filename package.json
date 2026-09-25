@@ -76,6 +76,7 @@
 		"@eslint/js": "^10.0.1",
 		"@next/eslint-plugin-next": "^16.3.6",
 		"@types/bun": "latest",
+		"@typescript/typescript6": "^6.0.2",
 		"@vitest/eslint-plugin": "^1.6.27",
 		"eslint": "^10.11.0",
 		"eslint-plugin-import-x": "^4.17.1",
@@ -95,7 +96,6 @@
 		"oxlint-tsgolint": "7.0.2002",
 		"typescript": "^7.0.2",
 		"typescript-eslint": "^8.70.0",
-		"typescript6": "npm:@typescript/typescript6@^6.0.2",
 		"vite-plus": "1.0.0-rc.0"
 	},
 	"peerDependencies": {

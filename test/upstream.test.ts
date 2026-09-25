@@ -13,7 +13,7 @@ const load = loader._load;
 loader._load = function (this: unknown, request: string, ...rest: unknown[]) {
 	return load.call(
 		this,
-		request === "typescript" ? "typescript6" : request,
+		request === "typescript" ? "@typescript/typescript6" : request,
 		...rest,
 	);
 };
