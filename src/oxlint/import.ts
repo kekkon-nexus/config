@@ -5,6 +5,7 @@ const config = defineConfig({
 
 	rules: {
 		"import/no-duplicates": ["warn", { preferInline: true }],
+		"import/namespace": ["error", { allowComputed: true }],
 		"import/no-mutable-exports": "warn",
 	},
 });
