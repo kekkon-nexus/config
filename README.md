@@ -164,7 +164,9 @@ See [`src/oxlint`](./src/oxlint) for the rules each one sets.
 }
 ```
 
-Extend either or both.
+Extend either or both. Requires TypeScript 7+.
+
+Options TypeScript 6 already enables by default, like `strict`, are left unset.
 
 `@kekkon-nexus/config/ts` sets the following:
 
