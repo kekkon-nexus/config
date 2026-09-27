@@ -164,23 +164,38 @@ See [`src/oxlint`](./src/oxlint) for the rules each one sets.
 }
 ```
 
-Extend either or both. `ts` sets:
+Extend either or both.
 
-- `composite`
-- `module: esnext`
-- `noImplicitOverride`
-- `noUncheckedIndexedAccess`
-- `verbatimModuleSyntax`
-- `rewriteRelativeImportExtensions`
+`@kekkon-nexus/config/ts` sets the following:
 
-`ts/strict` adds:
+```jsonc
+{
+	// Environment
+	"composite": true,
+	"module": "esnext",
 
-- `erasableSyntaxOnly`
-- `noFallthroughCasesInSwitch`
-- `noImplicitReturns`
-- `noPropertyAccessFromIndexSignature`
-- `noUnusedLocals`
-- `noUnusedParameters`
+	// Strictness
+	"noImplicitOverride": true,
+	"noUncheckedIndexedAccess": true,
+
+	// Resolution
+	"verbatimModuleSyntax": true,
+	"rewriteRelativeImportExtensions": true,
+}
+```
+
+`@kekkon-nexus/config/ts/strict` adds:
+
+```jsonc
+{
+	"erasableSyntaxOnly": true,
+	"noFallthroughCasesInSwitch": true,
+	"noImplicitReturns": true,
+	"noPropertyAccessFromIndexSignature": true,
+	"noUnusedLocals": true,
+	"noUnusedParameters": true,
+}
+```
 
 ### Import Sorting
 
