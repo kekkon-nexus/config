@@ -72,11 +72,26 @@ npm i -D @kekkon-nexus/config # and other dependencies
 ```ts
 // oxlint.config.ts
 import oxlint from "@kekkon-nexus/config/oxlint";
-import react from "@kekkon-nexus/config/oxlint/react";
+// import react from "@kekkon-nexus/config/oxlint/react";
+// import next from "@kekkon-nexus/config/oxlint/next";
+// import vue from "@kekkon-nexus/config/oxlint/vue";
+// import jest from "@kekkon-nexus/config/oxlint/jest";
+// import vitest from "@kekkon-nexus/config/oxlint/vitest";
+// import vp from "@kekkon-nexus/config/oxlint/vite-plus";
 import { defineConfig } from "oxlint";
 
 export default defineConfig({
-	extends: [oxlint, react],
+	extends: [
+		oxlint,
+
+		// Not included, extend them per project
+		// react, // react, react-perf
+		// next, // nextjs, extends react
+		// vue,
+		// jest,
+		// vitest,
+		// vp, // vite-plus plugin, extends vitest
+	],
 });
 ```
 
@@ -115,8 +130,8 @@ export default defineConfig({
 | `oxlint/import`     | import hygiene                                    |
 | `oxlint/unicorn`    | modern syntax & API preferences                   |
 | `oxlint/jsdoc`      | jsdoc plugin                                      |
-| `oxlint/browser`    | browser env, `jsx-a11y` plugin                    |
-| `oxlint/node`       | node env, `node` plugin                           |
+| `oxlint/browser`    | `jsx-a11y` plugin                                 |
+| `oxlint/node`       | `node` plugin                                     |
 | `oxlint/react`      | react, react-perf                                 |
 | `oxlint/next`       | nextjs, extends `oxlint/react`                    |
 | `oxlint/vue`        | vue                                               |
@@ -126,17 +141,20 @@ export default defineConfig({
 
 `@kekkon-nexus/config/oxlint` extends the following:
 
-- `base`
-- `javascript`
-- `typescript`
-- `import`
-- `unicorn`
-- `jsdoc`
-- `browser`
-- `node`
+```ts
+extends: [
+	base, // ported upstream recommended presets
+	javascript, // core rules, eslint, oxc and promise plugins
+	typescript, // type-aware rules, needs oxlint-tsgolint
+	import, // import hygiene
+	unicorn, // modern syntax & API preferences
+	jsdoc,
+	browser, // jsx-a11y plugin
+	node,
+]
+```
 
-`oxlint/base` is the ported upstream recommended presets.  
-See [src/oxlint](./src/oxlint) for the rules each one sets.
+See [`src/oxlint`](./src/oxlint) for the rules each one sets.
 
 ### TypeScript
 
