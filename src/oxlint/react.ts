@@ -9,7 +9,7 @@ const config = defineConfig({
 		"react-perf/jsx-no-new-object-as-prop": "warn",
 		"react/display-name": "warn",
 		"react/no-unescaped-entities": "warn",
-		"react/only-export-components": "warn",
+		"react/only-export-components": ["warn", { allowCompoundComponents: true }],
 		"unicorn/filename-case": [
 			"warn",
 			{ cases: { camelCase: true, kebabCase: true, pascalCase: true } },
