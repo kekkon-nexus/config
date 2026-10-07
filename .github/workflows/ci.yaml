@@ -2,10 +2,13 @@ name: CI
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
+    branches:
+      - "**"
 
 jobs:
-  ci:
+  qc:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,26 +35,3 @@ jobs:
           name: create-config
           path: kekkon-nexus-create-config-*.tgz
           archive: false
-
-  cd:
-    needs: [ci]
-    if: startsWith(github.ref, 'refs/tags/v')
-
-    permissions:
-      id-token: write
-      attestations: write
-      artifact-metadata: write
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/download-artifact@v8
-        with:
-          merge-multiple: true
-      - uses: actions/attest@v4
-        with:
-          subject-path: "*"
-
-      - run: npm install -g npm@latest
-      - run: npm publish kekkon-nexus-config-*.tgz
-      - run: npm publish kekkon-nexus-create-config-*.tgz

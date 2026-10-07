@@ -1,0 +1,39 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - v*
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  qc:
+    uses: ./.github/workflows/ci.yaml
+
+  publish:
+    needs: [qc]
+
+    permissions:
+      id-token: write
+      attestations: write
+      artifact-metadata: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          merge-multiple: true
+      - uses: actions/attest@v4
+        with:
+          subject-path: "*"
+
+      - run: npm install -g npm@latest
+      - run: npm publish kekkon-nexus-config-*.tgz
+      - run: npm publish kekkon-nexus-create-config-*.tgz
