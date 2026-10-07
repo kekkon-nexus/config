@@ -62,7 +62,7 @@ const config = defineConfig({
 			{ checkArguments: false, checkArrowFunctionBody: false },
 		],
 		"unicorn/no-zero-fractions": "warn",
-		"unicorn/number-literal-case": "warn",
+		"unicorn/number-literal-case": "off", // https://github.com/oxc-project/oxc/issues/27398
 		"unicorn/numeric-separators-style": "warn",
 		"unicorn/prefer-add-event-listener": "warn",
 		"unicorn/prefer-array-find": "warn",
