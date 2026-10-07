@@ -38,6 +38,7 @@ const config = defineConfig({
 		"typescript/no-extraneous-class": "error",
 		"typescript/no-floating-promises": "error",
 		"typescript/no-for-in-array": "error",
+		"typescript/no-generated-empty-object-type": "error",
 		"typescript/no-implied-eval": "error",
 		"typescript/no-import-type-side-effects": "off",
 		"typescript/no-inferrable-types": "warn",

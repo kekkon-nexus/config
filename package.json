@@ -91,20 +91,20 @@
 		"eslint-plugin-react-refresh": "^0.5.7",
 		"eslint-plugin-unicorn": "^77.0.0",
 		"eslint-plugin-vue": "^10.11.1",
-		"oxfmt": "0.70.0",
-		"oxlint": "1.85.0",
+		"oxfmt": "0.72.0",
+		"oxlint": "1.87.0",
 		"oxlint-tsgolint": "7.0.2003",
 		"typescript": "^7.0.2",
 		"typescript-eslint": "^8.71.1",
-		"vite-plus": "^1.0.0"
+		"vite-plus": "^1.1.0"
 	},
 	"peerDependencies": {
 		"@commitlint/cli": "^21.2.3",
-		"oxfmt": ">=0.70.0 <1",
-		"oxlint": "^1.85.0",
+		"oxfmt": ">=0.72.0 <1",
+		"oxlint": "^1.87.0",
 		"oxlint-tsgolint": "^7.0.2003",
 		"typescript": "^7.0.2",
-		"vite-plus": "^1.0.0"
+		"vite-plus": "^1.1.0"
 	},
 	"peerDependenciesMeta": {
 		"@commitlint/cli": {
@@ -127,7 +127,7 @@
 		"@commitlint/types": "^21.2.3",
 		"@kekkon-nexus/config": "workspace:.",
 		"conventional-commits-parser": "^7",
-		"vite": "npm:@voidzero-dev/vite-plus-core@^1.0.0"
+		"vite": "npm:@voidzero-dev/vite-plus-core@^1.1.0"
 	},
 	"devEngines": {
 		"packageManager": {
