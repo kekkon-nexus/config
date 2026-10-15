@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import Module, { createRequire } from "node:module";
 import path from "node:path";
 
+import Ajv from "ajv";
 import { describe, expect, it } from "vite-plus/test";
 
 // typescript-eslint 8 rejects TS 7 and its require() sits below the module graph.
@@ -18,12 +19,11 @@ loader._load = function (this: unknown, request: string, ...rest: unknown[]) {
 	);
 };
 
+type Rules = Record<string, unknown>;
+type Value = unknown[];
+
 interface Config {
-	rules?: Record<string, unknown>;
-}
-interface Preset {
-	target: string;
-	sources: Source[];
+	rules?: Rules;
 }
 interface Source {
 	src: string;
@@ -31,86 +31,10 @@ interface Source {
 	prefix: string;
 	severity?: string;
 }
-
-const levels: Record<string, string> = {
-	0: "off",
-	1: "warn",
-	2: "error",
-	off: "off",
-	warn: "warn",
-	error: "error",
-};
-
-const severity = (value: unknown) =>
-	levels[String(Array.isArray(value) ? value[0] : value)] ?? "off";
-
-const rulesOf = (config: Config | Config[]): Record<string, unknown> =>
-	Array.isArray(config)
-		? (Object.assign({}, ...config.map((entry) => entry.rules ?? {})) as Record<
-				string,
-				unknown
-			>)
-		: (config.rules ?? {});
-
-const rename = (name: string, from: string, to: string) => {
-	if (from === "") return name.includes("/") ? undefined : name;
-	return name.startsWith(from) ? to + name.slice(from.length) : undefined;
-};
-
-const upstreamOf = async (sources: Source[], target: string) => {
-	const expected: Record<string, string> = {};
-	// empty when no source exposes a rules map, which makes removal undetectable
-	const shipped = new Set<string>();
-	for (const source of sources) {
-		const mod = (await import(source.src)) as {
-			default?: unknown;
-		};
-		const root = (mod.default ?? mod) as {
-			configs: Record<string, Config | Config[]>;
-			rules?: Record<string, unknown>;
-			plugin?: { rules?: Record<string, unknown> };
-		};
-		const config = root.configs[source.preset];
-		if (config === undefined) {
-			throw new Error(`${source.src} has no configs.${source.preset}`);
-		}
-		for (const rule of Object.keys(root.rules ?? root.plugin?.rules ?? {})) {
-			shipped.add(target + rule);
-		}
-		for (const [rule, value] of Object.entries(rulesOf(config))) {
-			const mapped = rename(rule, source.prefix, target);
-			if (mapped === undefined) continue;
-			const level = severity(value);
-			expected[mapped] = level === "off" ? level : (source.severity ?? level);
-		}
-	}
-	return { expected, shipped };
-};
-
-const documentedRules = async (name: string) => {
-	const src = await readFile(
-		path.join(import.meta.dirname, "../src/oxlint/base", `${name}.ts`),
-		"utf8",
-	);
-	return new Set(
-		[...src.matchAll(/^\t*"([^"]+)":.*,\s*\/\//gm)].map(([, rule]) => rule),
-	);
-};
-
-const schemaPath = path.join(
-	path.dirname(createRequire(import.meta.url).resolve("oxlint/package.json")),
-	"configuration_schema.json",
-);
-const schema = JSON.parse(await readFile(schemaPath, "utf8")) as {
-	definitions: {
-		DummyRuleMap: {
-			properties: Record<string, unknown>;
-		};
-	};
-};
-const implemented = new Set(
-	Object.keys(schema.definitions.DummyRuleMap.properties),
-);
+interface Preset {
+	target: string;
+	sources: Source[];
+}
 
 const presets: Record<string, Preset> = {
 	"eslint": {
@@ -295,42 +219,119 @@ const presets: Record<string, Preset> = {
 	},
 };
 
+const schemaPath = path.join(
+	path.dirname(createRequire(import.meta.url).resolve("oxlint/package.json")),
+	"configuration_schema.json",
+);
+const schema = JSON.parse(await readFile(schemaPath, "utf8")) as {
+	definitions: { DummyRuleMap: { properties: Rules } };
+};
+
+const implemented = new Set(
+	Object.keys(schema.definitions.DummyRuleMap.properties),
+);
+const validate = new Ajv({ strict: false, allErrors: true }).compile(schema);
+const supported = (rule: string, value: Value) =>
+	validate({ rules: { [rule]: value } });
+
+const levels: Record<string, string> = {
+	0: "off",
+	1: "warn",
+	2: "error",
+	off: "off",
+	warn: "warn",
+	error: "error",
+};
+
+const normalize = (value: unknown, override?: string): Value => {
+	const [level, ...options] = (Array.isArray(value) ? value : [value]) as Value;
+	const severity = levels[String(level)] ?? "off";
+	return severity === "off" ? ["off"] : [override ?? severity, ...options];
+};
+
+const rulesOf = (config: Config | Config[]): Rules =>
+	Array.isArray(config)
+		? (Object.assign({}, ...config.map((entry) => entry.rules ?? {})) as Rules)
+		: (config.rules ?? {});
+
+const rename = (name: string, from: string, to: string) => {
+	if (from === "") return name.includes("/") ? undefined : name;
+	return name.startsWith(from) ? to + name.slice(from.length) : undefined;
+};
+
+const upstreamOf = async ({ target, sources }: Preset) => {
+	const expected: Record<string, Value> = {};
+	// empty when no source exposes a rules map, which makes removal undetectable
+	const shipped = new Set<string>();
+	for (const source of sources) {
+		const mod = (await import(source.src)) as { default?: unknown };
+		const root = (mod.default ?? mod) as {
+			configs: Record<string, Config | Config[]>;
+			rules?: Rules;
+			plugin?: { rules?: Rules };
+		};
+		const config = root.configs[source.preset];
+		if (config === undefined) {
+			throw new Error(`${source.src} has no configs.${source.preset}`);
+		}
+		for (const rule of Object.keys(root.rules ?? root.plugin?.rules ?? {})) {
+			shipped.add(target + rule);
+		}
+		for (const [rule, value] of Object.entries(rulesOf(config))) {
+			const mapped = rename(rule, source.prefix, target);
+			if (mapped !== undefined)
+				expected[mapped] = normalize(value, source.severity);
+		}
+	}
+
+	const unsupported: string[] = [];
+	for (const [rule, value] of Object.entries(expected)) {
+		if (value.length > 1 && implemented.has(rule) && !supported(rule, value)) {
+			unsupported.push(`${rule}: ${JSON.stringify(value.slice(1))}`);
+			expected[rule] = value.slice(0, 1);
+		}
+	}
+	return { expected, shipped, unsupported: unsupported.toSorted() };
+};
+
+const documentedRules = async (name: string) => {
+	const src = await readFile(
+		path.join(import.meta.dirname, "../src/oxlint/base", `${name}.ts`),
+		"utf8",
+	);
+	return new Set(
+		[...src.matchAll(/^\t*"([^"]+)":.*,\s*\/\//gm)].map(([, rule]) => rule),
+	);
+};
+
 describe("base", async () => {
 	const results = await Promise.all(
 		Object.entries(presets).map(async ([name, preset]) => {
-			const mod = (await import(`../src/oxlint/base/${name}.ts`)) as {
-				default: {
-					rules?: Record<string, unknown>;
-				};
-			};
-			const actual = mod.default.rules ?? {};
-			const { expected, shipped } = await upstreamOf(
-				preset.sources,
-				preset.target,
-			);
+			const config = (
+				(await import(`../src/oxlint/base/${name}.ts`)) as {
+					default: Config;
+				}
+			).default;
+			const actual = config.rules ?? {};
+			const { expected, shipped, unsupported } = await upstreamOf(preset);
 			const documented = await documentedRules(name);
 
-			const rules = new Set([
-				...Object.keys(actual),
-				...Object.keys(expected).filter((rule) => implemented.has(rule)),
-			]);
-
-			const drift = [...rules]
-				.map((rule) => [
-					rule,
-					severity(actual[rule] ?? "off"),
-					expected[rule] ?? "off",
-				])
-				.filter(([, base, upstream]) => base !== upstream)
-				.map(
-					([rule, base, upstream]) =>
-						`${rule}: base=${base} upstream=${upstream}`,
-				)
-				.toSorted();
+			const rules = [
+				...new Set([
+					...Object.keys(actual),
+					...Object.keys(expected).filter((rule) => implemented.has(rule)),
+				]),
+			].toSorted();
 
 			return {
 				name,
-				drift,
+				errors: validate(config) ? [] : validate.errors,
+				base: Object.fromEntries(
+					rules.map((rule) => [rule, normalize(actual[rule])]),
+				),
+				upstream: Object.fromEntries(
+					rules.map((rule) => [rule, expected[rule] ?? ["off"]]),
+				),
 				undocumented:
 					shipped.size === 0
 						? []
@@ -342,23 +343,34 @@ describe("base", async () => {
 						(rule) =>
 							!(rule in actual) &&
 							!implemented.has(rule) &&
-							expected[rule] !== "off",
+							expected[rule]?.[0] !== "off",
 					)
 					.toSorted(),
+				unsupported,
 			};
 		}),
 	);
 
-	describe.each(results)("$name", ({ drift, undocumented, unimplemented }) => {
-		it("mirrors upstream", () => {
-			expect(drift).toEqual([]);
-		});
+	describe.each(results)(
+		"$name",
+		({ errors, base, upstream, undocumented, unimplemented, unsupported }) => {
+			it("is valid oxlint config", () => {
+				expect(errors).toEqual([]);
+			});
 
-		it("documents rules dropped upstream", () => {
-			expect(undocumented).toEqual([]);
-		});
+			it("mirrors upstream", () => {
+				expect(base).toEqual(upstream);
+			});
 
-		// oxlint-disable-next-line vitest/expect-expect, vitest/no-disabled-tests
-		it.skip.each(unimplemented)("%s", () => {});
-	});
+			it("documents rules dropped upstream", () => {
+				expect(undocumented).toEqual([]);
+			});
+
+			// oxlint-disable-next-line vitest/expect-expect, vitest/no-disabled-tests
+			it.skip.each(unimplemented)("%s", () => {});
+
+			// oxlint-disable-next-line vitest/expect-expect, vitest/no-disabled-tests
+			it.skip.each(unsupported)("%s", () => {});
+		},
+	);
 });
