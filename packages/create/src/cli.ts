@@ -385,7 +385,7 @@ if (import.meta.main) {
 				cancel("Nothing was written.");
 				process.exit(1);
 			}
-			remove = picked === true;
+			remove = picked;
 		}
 
 		const written = await apply(dir, found, answers);
@@ -438,7 +438,7 @@ if (import.meta.main) {
 						.on("close", (status) =>
 							status === 0
 								? resolve()
-								: reject(new Error(`vp add exited with ${status}`)),
+								: reject(new Error(`vp add exited with ${String(status)}`)),
 						);
 				});
 			} catch (error) {

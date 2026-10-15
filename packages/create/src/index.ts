@@ -12,7 +12,7 @@ export interface Preset {
 }
 
 const ENV_ENTRY = `env: { ${Object.entries(ENV)
-	.map(([key, value]) => `${JSON.stringify(key)}: ${value}`)
+	.map(([key, value]) => `${JSON.stringify(key)}: ${String(value)}`)
 	.join(", ")} }`;
 
 function indentOf(code: string, offset: number): string {
