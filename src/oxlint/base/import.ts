@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** import:recommended */
 const config = defineConfig({
 	rules: {
-		// import:recommended
 		"import/consistent-type-specifier-style": "off",
 		"import/default": "error",
 		"import/export": "error",

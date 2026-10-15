@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** jest:recommended */
 const config = defineConfig({
 	rules: {
-		// jest:recommended
 		"jest/consistent-test-it": "off",
 		"jest/expect-expect": "warn",
 		"jest/max-expects": "off",

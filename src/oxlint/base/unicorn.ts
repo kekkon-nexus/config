@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** unicorn:recommended */
 const config = defineConfig({
 	rules: {
-		// unicorn:recommended
 		"unicorn/catch-error-name": "error",
 		"unicorn/consistent-assert": "error",
 		"unicorn/consistent-date-clone": "error",

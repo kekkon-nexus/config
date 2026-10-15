@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** eslint:recommended */
 const config = defineConfig({
 	rules: {
-		// eslint:recommended
 		"accessor-pairs": "off",
 		"array-callback-return": "off",
 		"arrow-body-style": "off",

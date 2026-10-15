@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** next:recommended */
 const config = defineConfig({
 	rules: {
-		// next:recommended
 		"nextjs/google-font-display": "warn",
 		"nextjs/google-font-preconnect": "warn",
 		"nextjs/inline-script-id": "error",

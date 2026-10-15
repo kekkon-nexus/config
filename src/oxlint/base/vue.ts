@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** vue:essential */
 const config = defineConfig({
 	rules: {
-		// vue:essential
 		"vue/define-emits-declaration": "off",
 		"vue/define-props-declaration": "off",
 		"vue/define-props-destructuring": "off",

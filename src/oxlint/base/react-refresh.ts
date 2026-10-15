@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** react-refresh:recommended */
 const config = defineConfig({
 	rules: {
-		// react-refresh:recommended
 		"react/only-export-components": ["error", {}],
 	},
 });

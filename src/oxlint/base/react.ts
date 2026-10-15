@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** react:recommended */
 const config = defineConfig({
 	rules: {
-		// react:recommended
 		"react/button-has-type": "off",
 		"react/checked-requires-onchange-or-readonly": "off",
 		"react/display-name": "error",

@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** jsx-a11y:recommended */
 const config = defineConfig({
 	rules: {
-		// jsx-a11y:recommended
 		"jsx-a11y/alt-text": "error",
 		"jsx-a11y/anchor-ambiguous-text": "off",
 		"jsx-a11y/anchor-has-content": "error",

@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** vue:recommended (warn) */
 const config = defineConfig({
 	rules: {
-		// vue:recommended (warn)
 		"vue/component-definition-name-casing": "warn",
 		"vue/no-arrow-functions-in-watch": "warn",
 		"vue/no-async-in-computed-properties": "warn",

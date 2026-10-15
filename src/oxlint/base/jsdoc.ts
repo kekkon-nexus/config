@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** jsdoc:recommended (warn) */
 const config = defineConfig({
 	rules: {
-		// jsdoc:recommended (warn)
 		"jsdoc/check-access": "warn",
 		"jsdoc/check-property-names": "warn",
 		"jsdoc/check-tag-names": "warn",

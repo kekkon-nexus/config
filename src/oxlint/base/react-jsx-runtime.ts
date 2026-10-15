@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** react:jsx-runtime */
 const config = defineConfig({
 	rules: {
-		// react:jsx-runtime
 		"react/react-in-jsx-scope": "off",
 	},
 });

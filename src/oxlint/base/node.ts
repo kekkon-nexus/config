@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** n:recommended */
 const config = defineConfig({
 	rules: {
-		// n:recommended
 		"node/callback-return": "off",
 		"node/exports-style": "off",
 		"node/global-require": "off",

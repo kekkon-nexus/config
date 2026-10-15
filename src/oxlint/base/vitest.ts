@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** vitest:recommended */
 const config = defineConfig({
 	rules: {
-		// vitest:recommended
 		"vitest/consistent-each-for": "off",
 		"vitest/consistent-test-filename": "off",
 		"vitest/consistent-test-it": "off",

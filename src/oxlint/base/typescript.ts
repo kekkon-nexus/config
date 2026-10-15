@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** typescript-eslint:strict-type-checked */
 const config = defineConfig({
 	rules: {
-		// typescript-eslint:strict-type-checked
 		"typescript/await-thenable": "error",
 		"typescript/ban-ts-comment": ["error", { minimumDescriptionLength: 10 }],
 		"typescript/ban-types": "off", // deprecated in v8

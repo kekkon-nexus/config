@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** promise:recommended */
 const config = defineConfig({
 	rules: {
-		// promise:recommended
 		"promise/always-return": "error",
 		"promise/avoid-new": "off",
 		"promise/catch-or-return": "error",

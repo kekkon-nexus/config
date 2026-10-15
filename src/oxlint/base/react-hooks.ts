@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** react-hooks:recommended */
 const config = defineConfig({
 	rules: {
-		// react-hooks:recommended
 		"react/capitalized-calls": "off",
 		"react/error-boundaries": "error",
 		"react/exhaustive-deps": "warn",

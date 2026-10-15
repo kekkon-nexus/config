@@ -1,8 +1,8 @@
 import { defineConfig } from "oxlint";
 
+/** typescript-eslint:stylistic-type-checked (warn) */
 const config = defineConfig({
 	rules: {
-		// typescript-eslint:stylistic-type-checked (warn)
 		"typescript/adjacent-overload-signatures": "warn",
 		"typescript/array-type": "warn",
 		"typescript/ban-tslint-comment": "warn",
