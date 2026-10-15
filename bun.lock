@@ -60,9 +60,9 @@
       "dependencies": {
         "@clack/prompts": "^1.8.1",
         "@kekkon-nexus/config": "3.4.0",
-        "@optique/clack": "^1.3.3",
-        "@optique/core": "^1.3.3",
-        "@optique/run": "^1.3.3",
+        "@optique/clack": "^1.3.6",
+        "@optique/core": "^1.3.6",
+        "@optique/run": "^1.3.6",
         "magic-string": "^1.4.3",
         "oxc-parser": ">=0.154.0 <1",
         "vite-plus": "^1.2.0",
@@ -230,13 +230,13 @@
 
     "@nodelib/fs.walk": ["@nodelib/fs.walk@1.2.8", "", { "dependencies": { "@nodelib/fs.scandir": "2.1.5", "fastq": "^1.6.0" } }, "sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg=="],
 
-    "@optique/clack": ["@optique/clack@1.3.3", "", { "dependencies": { "@clack/prompts": "^1.6.0", "@optique/core": "1.3.3", "@optique/prompt": "1.3.3" } }, "sha512-yGewgyWtCo0+w9gs0qY5NST0MBxOLmkYncO2fg4/yGjF8I5w7ksIw/BjO0u604WwgVUAyKzNgCmcAyY+MF129Q=="],
+    "@optique/clack": ["@optique/clack@1.3.6", "", { "dependencies": { "@clack/prompts": "^1.6.0", "@optique/core": "1.3.6", "@optique/prompt": "1.3.6" } }, "sha512-iKCzQyjkLZmaVqxDTQlBG5emNmn8ON7UPKPycPnzQpj2g2Vf9b+4aq0GTBD1nrN5FGh5INmbmXh/6cH7xsefOw=="],
 
-    "@optique/core": ["@optique/core@1.3.3", "", {}, "sha512-HIb2Qi2b7v26thfVx4q+iaqV3NQCJzcpNjSi1tBN2uco35ZiGmUIu6SFEwfOxLxuk9izF5EoImHlCzLHSgIKHQ=="],
+    "@optique/core": ["@optique/core@1.3.6", "", {}, "sha512-BXVuVyxP9bg8FbyvBYrSHisnAeG3XTf1xcuUjAWgDWKfzZssMGbSrMdiv4tA+BK3+CrSo6no+uHWpiHh4HMKeg=="],
 
-    "@optique/prompt": ["@optique/prompt@1.3.3", "", { "dependencies": { "@optique/core": "1.3.3" } }, "sha512-8sCkf8tWsaGlMVH/x3+s59KmM+zCc/ws99Vt2WqMtQGiUEloDFbqPL+5Ral21DFEM6mUJuN2PDWQ7iAR+kjcDw=="],
+    "@optique/prompt": ["@optique/prompt@1.3.6", "", { "dependencies": { "@optique/core": "1.3.6" } }, "sha512-a+YNcm5gR983kOm6xcpDrvygvTcaDVklkLSonV6b+XWZJxSTykbRHqQ6Ynytt9wa414vY0hF9RFC2crwimTr/g=="],
 
-    "@optique/run": ["@optique/run@1.3.3", "", { "dependencies": { "@optique/core": "1.3.3" } }, "sha512-uUE7WhQWamm0FXEuXqrpy5xZ3ckg8KbRYKo6yr7+TdVzgEMg6Y7sKsXlAy+z1B6QO6P6D+nIHwY49aPggA3lpA=="],
+    "@optique/run": ["@optique/run@1.3.6", "", { "dependencies": { "@optique/core": "1.3.6" } }, "sha512-uxlHO8vG/5ni1V+t+jdmYqiyYYY5uOevO/6U866oBpnlOxOGn2ZWIlPpDXAU3e5GRu4VecbeXoNff18yRDGoQw=="],
 
     "@oxc-parser/binding-android-arm-eabi": ["@oxc-parser/binding-android-arm-eabi@0.154.0", "", { "os": "android", "cpu": "arm" }, "sha512-sDdEtDl7vKdCvf54j72RJbowE3jCmyRz/+oOB6IAwQxAHZ0eI+Dcj4hvVnm0b9Dy31plUkdmfds9C+/Zt895Tg=="],
 
