@@ -25,242 +25,151 @@ type Value = unknown[];
 interface Config {
 	rules?: Rules;
 }
-interface Source {
+interface Preset {
+	target: string;
 	src: string;
 	preset: string;
 	prefix: string;
 	severity?: string;
 }
-interface Preset {
-	target: string;
-	sources: Source[];
-}
 
 const presets: Record<string, Preset> = {
 	"eslint": {
 		target: "",
-		sources: [
-			{
-				src: "@eslint/js",
-				preset: "recommended",
-				prefix: "",
-			},
-		],
+		src: "@eslint/js",
+		preset: "recommended",
+		prefix: "",
 	},
 	"import": {
 		target: "import/",
-		sources: [
-			{
-				src: "eslint-plugin-import-x",
-				preset: "flat/recommended",
-				prefix: "import-x/",
-			},
-		],
+		src: "eslint-plugin-import-x",
+		preset: "flat/recommended",
+		prefix: "import-x/",
 	},
 	"jest": {
 		target: "jest/",
-		sources: [
-			{
-				src: "eslint-plugin-jest",
-				preset: "flat/recommended",
-				prefix: "jest/",
-			},
-		],
+		src: "eslint-plugin-jest",
+		preset: "flat/recommended",
+		prefix: "jest/",
 	},
 	"jsdoc": {
 		target: "jsdoc/",
-		sources: [
-			{
-				src: "eslint-plugin-jsdoc",
-				preset: "flat/recommended",
-				prefix: "jsdoc/",
-				severity: "warn",
-			},
-		],
+		src: "eslint-plugin-jsdoc",
+		preset: "flat/recommended",
+		prefix: "jsdoc/",
+		severity: "warn",
 	},
 	"jsdoc-typescript": {
 		target: "jsdoc/",
-		sources: [
-			{
-				src: "eslint-plugin-jsdoc",
-				preset: "flat/recommended-typescript",
-				prefix: "jsdoc/",
-				severity: "warn",
-			},
-		],
+		src: "eslint-plugin-jsdoc",
+		preset: "flat/recommended-typescript",
+		prefix: "jsdoc/",
+		severity: "warn",
 	},
 	"jsx-a11y": {
 		target: "jsx-a11y/",
-		sources: [
-			{
-				src: "eslint-plugin-jsx-a11y",
-				preset: "recommended",
-				prefix: "jsx-a11y/",
-			},
-		],
+		src: "eslint-plugin-jsx-a11y",
+		preset: "recommended",
+		prefix: "jsx-a11y/",
 	},
 	"next": {
 		target: "nextjs/",
-		sources: [
-			{
-				src: "@next/eslint-plugin-next",
-				preset: "recommended",
-				prefix: "@next/next/",
-			},
-		],
+		src: "@next/eslint-plugin-next",
+		preset: "recommended",
+		prefix: "@next/next/",
 	},
 	"next-core-web-vitals": {
 		target: "nextjs/",
-		sources: [
-			{
-				src: "@next/eslint-plugin-next",
-				preset: "core-web-vitals",
-				prefix: "@next/next/",
-			},
-		],
+		src: "@next/eslint-plugin-next",
+		preset: "core-web-vitals",
+		prefix: "@next/next/",
 	},
 	"node": {
 		target: "node/",
-		sources: [
-			{
-				src: "eslint-plugin-n",
-				preset: "flat/recommended",
-				prefix: "n/",
-			},
-		],
+		src: "eslint-plugin-n",
+		preset: "flat/recommended",
+		prefix: "n/",
 	},
 	"promise": {
 		target: "promise/",
-		sources: [
-			{
-				src: "eslint-plugin-promise",
-				preset: "flat/recommended",
-				prefix: "promise/",
-			},
-		],
+		src: "eslint-plugin-promise",
+		preset: "flat/recommended",
+		prefix: "promise/",
 	},
 	"react": {
 		target: "react/",
-		sources: [
-			{
-				src: "eslint-plugin-react",
-				preset: "recommended",
-				prefix: "react/",
-			},
-		],
+		src: "eslint-plugin-react",
+		preset: "recommended",
+		prefix: "react/",
 	},
 	"react-hooks": {
 		target: "react/",
-		sources: [
-			{
-				src: "eslint-plugin-react-hooks",
-				preset: "recommended",
-				prefix: "react-hooks/",
-			},
-		],
+		src: "eslint-plugin-react-hooks",
+		preset: "recommended",
+		prefix: "react-hooks/",
 	},
 	"react-jsx-runtime": {
 		target: "react/",
-		sources: [
-			{
-				src: "eslint-plugin-react",
-				preset: "jsx-runtime",
-				prefix: "react/",
-			},
-		],
+		src: "eslint-plugin-react",
+		preset: "jsx-runtime",
+		prefix: "react/",
 	},
 	"react-perf": {
 		target: "react-perf/",
-		sources: [
-			{
-				src: "eslint-plugin-react-perf",
-				preset: "recommended",
-				prefix: "react-perf/",
-			},
-		],
+		src: "eslint-plugin-react-perf",
+		preset: "recommended",
+		prefix: "react-perf/",
 	},
 	"react-refresh": {
 		target: "react/",
-		sources: [
-			{
-				src: "eslint-plugin-react-refresh",
-				preset: "recommended",
-				prefix: "react-refresh/",
-			},
-		],
+		src: "eslint-plugin-react-refresh",
+		preset: "recommended",
+		prefix: "react-refresh/",
 	},
 	"typescript": {
 		target: "typescript/",
-		sources: [
-			{
-				src: "typescript-eslint",
-				preset: "strictTypeChecked",
-				prefix: "@typescript-eslint/",
-			},
-		],
+		src: "typescript-eslint",
+		preset: "strictTypeChecked",
+		prefix: "@typescript-eslint/",
 	},
 	"typescript-stylistic": {
 		target: "typescript/",
-		sources: [
-			{
-				src: "typescript-eslint",
-				preset: "stylisticTypeChecked",
-				prefix: "@typescript-eslint/",
-				severity: "warn",
-			},
-		],
+		src: "typescript-eslint",
+		preset: "stylisticTypeChecked",
+		prefix: "@typescript-eslint/",
+		severity: "warn",
 	},
 	"unicorn": {
 		target: "unicorn/",
-		sources: [
-			{
-				src: "eslint-plugin-unicorn",
-				preset: "recommended",
-				prefix: "unicorn/",
-			},
-		],
+		src: "eslint-plugin-unicorn",
+		preset: "recommended",
+		prefix: "unicorn/",
 	},
 	"vitest": {
 		target: "vitest/",
-		sources: [
-			{
-				src: "@vitest/eslint-plugin",
-				preset: "recommended",
-				prefix: "vitest/",
-			},
-		],
+		src: "@vitest/eslint-plugin",
+		preset: "recommended",
+		prefix: "vitest/",
 	},
 	"vue": {
 		target: "vue/",
-		sources: [
-			{
-				src: "eslint-plugin-vue",
-				preset: "flat/essential",
-				prefix: "vue/",
-			},
-		],
+		src: "eslint-plugin-vue",
+		preset: "flat/essential",
+		prefix: "vue/",
 	},
 	"vue-recommended": {
 		target: "vue/",
-		sources: [
-			{
-				src: "eslint-plugin-vue",
-				preset: "flat/recommended",
-				prefix: "vue/",
-				severity: "warn",
-			},
-		],
+		src: "eslint-plugin-vue",
+		preset: "flat/recommended",
+		prefix: "vue/",
+		severity: "warn",
 	},
 	"vue-strongly-recommended": {
 		target: "vue/",
-		sources: [
-			{
-				src: "eslint-plugin-vue",
-				preset: "flat/strongly-recommended",
-				prefix: "vue/",
-				severity: "warn",
-			},
-		],
+		src: "eslint-plugin-vue",
+		preset: "flat/strongly-recommended",
+		prefix: "vue/",
+		severity: "warn",
 	},
 };
 
@@ -308,29 +217,33 @@ const rename = (name: string, from: string, to: string) => {
 	return name.startsWith(from) ? to + name.slice(from.length) : undefined;
 };
 
-const upstreamOf = async ({ target, sources }: Preset) => {
+const upstreamOf = async ({
+	target,
+	src,
+	preset,
+	prefix,
+	severity,
+}: Preset) => {
+	const mod = (await import(src)) as { default?: unknown };
+	const root = (mod.default ?? mod) as {
+		configs: Record<string, Config | Config[]>;
+		rules?: Rules;
+		plugin?: { rules?: Rules };
+	};
+	const config = root.configs[preset];
+	if (config === undefined) {
+		throw new Error(`${src} has no configs.${preset}`);
+	}
+	// empty when the plugin exposes no rules map, which makes removal undetectable
+	const shipped = new Set(
+		Object.keys(root.rules ?? root.plugin?.rules ?? {}).map(
+			(rule) => target + rule,
+		),
+	);
 	const expected: Record<string, Value> = {};
-	// empty when no source exposes a rules map, which makes removal undetectable
-	const shipped = new Set<string>();
-	for (const source of sources) {
-		const mod = (await import(source.src)) as { default?: unknown };
-		const root = (mod.default ?? mod) as {
-			configs: Record<string, Config | Config[]>;
-			rules?: Rules;
-			plugin?: { rules?: Rules };
-		};
-		const config = root.configs[source.preset];
-		if (config === undefined) {
-			throw new Error(`${source.src} has no configs.${source.preset}`);
-		}
-		for (const rule of Object.keys(root.rules ?? root.plugin?.rules ?? {})) {
-			shipped.add(target + rule);
-		}
-		for (const [rule, value] of Object.entries(rulesOf(config))) {
-			const mapped = rename(rule, source.prefix, target);
-			if (mapped !== undefined)
-				expected[mapped] = normalize(value, source.severity);
-		}
+	for (const [rule, value] of Object.entries(rulesOf(config))) {
+		const mapped = rename(rule, prefix, target);
+		if (mapped !== undefined) expected[mapped] = normalize(value, severity);
 	}
 
 	const unsupported: string[] = [];
