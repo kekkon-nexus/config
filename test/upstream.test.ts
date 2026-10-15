@@ -230,7 +230,11 @@ const schema = JSON.parse(await readFile(schemaPath, "utf8")) as {
 const implemented = new Set(
 	Object.keys(schema.definitions.DummyRuleMap.properties),
 );
-const validate = new Ajv({ strict: false, allErrors: true }).compile(schema);
+const validate = new Ajv({
+	strict: false,
+	allErrors: true,
+	validateFormats: false,
+}).compile(schema);
 const supported = (rule: string, value: Value) =>
 	validate({ rules: { [rule]: value } });
 
