@@ -3,13 +3,9 @@ import { defineConfig } from "oxlint";
 const config = defineConfig({
 	rules: {
 		// react:recommended
-		// react:jsx-runtime
-		// react-hooks:recommended
-		// react-refresh:recommended
 		"react/button-has-type": "off",
 		"react/checked-requires-onchange-or-readonly": "off",
 		"react/display-name": "error",
-		"react/exhaustive-deps": "warn",
 		"react/forbid-component-props": "off",
 		"react/forbid-dom-props": "off",
 		"react/forbid-elements": "off",
@@ -57,42 +53,14 @@ const config = defineConfig({
 		"react/no-unsafe": "off",
 		"react/no-unstable-nested-components": "off",
 		"react/no-will-update-set-state": "off",
-		"react/only-export-components": ["error", {}],
 		"react/prefer-es6-class": "off",
 		"react/prefer-function-component": "off", // oxlint-only
-		"react/react-in-jsx-scope": "off",
+		"react/react-in-jsx-scope": "error",
 		"react/require-render-return": "error",
-		"react/rules-of-hooks": "error",
 		"react/self-closing-comp": "off",
 		"react/state-in-constructor": "off",
 		"react/style-prop-object": "off",
 		"react/void-dom-elements-no-children": "off",
-
-		// babel-plugin-react-compiler
-		"react/capitalized-calls": "off",
-		"react/error-boundaries": "error",
-		"react/exhaustive-effect-dependencies": "off",
-		"react/globals": "error",
-		"react/hooks": "off",
-		"react/immutability": "error",
-		"react/incompatible-library": "warn",
-		"react/invariant": "off",
-		"react/memo-dependencies": "off",
-		"react/no-clone-element": "off", // oxlint-only
-		"react/no-deriving-state-in-effects": "off",
-		"react/no-react-children": "off", // oxlint-only
-		"react/preserve-manual-memoization": "error",
-		"react/purity": "error",
-		"react/refs": "error",
-		"react/rule-suppression": "off",
-		"react/set-state-in-effect": "error",
-		"react/set-state-in-render": "error",
-		"react/static-components": "error",
-		"react/syntax": "off",
-		"react/todo": "off",
-		"react/unsupported-syntax": "warn",
-		"react/use-memo": "error",
-		"react/void-use-memo": "off",
 	},
 });
 

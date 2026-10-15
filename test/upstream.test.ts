@@ -78,6 +78,17 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
+	"jsdoc-typescript": {
+		target: "jsdoc/",
+		sources: [
+			{
+				src: "eslint-plugin-jsdoc",
+				preset: "flat/recommended-typescript",
+				prefix: "jsdoc/",
+				severity: "warn",
+			},
+		],
+	},
 	"jsx-a11y": {
 		target: "jsx-a11y/",
 		sources: [
@@ -96,6 +107,11 @@ const presets: Record<string, Preset> = {
 				preset: "recommended",
 				prefix: "@next/next/",
 			},
+		],
+	},
+	"next-core-web-vitals": {
+		target: "nextjs/",
+		sources: [
 			{
 				src: "@next/eslint-plugin-next",
 				preset: "core-web-vitals",
@@ -131,20 +147,25 @@ const presets: Record<string, Preset> = {
 				preset: "recommended",
 				prefix: "react/",
 			},
-			{
-				src: "eslint-plugin-react",
-				preset: "jsx-runtime",
-				prefix: "react/",
-			},
+		],
+	},
+	"react-hooks": {
+		target: "react/",
+		sources: [
 			{
 				src: "eslint-plugin-react-hooks",
 				preset: "recommended",
 				prefix: "react-hooks/",
 			},
+		],
+	},
+	"react-jsx-runtime": {
+		target: "react/",
+		sources: [
 			{
-				src: "eslint-plugin-react-refresh",
-				preset: "recommended",
-				prefix: "react-refresh/",
+				src: "eslint-plugin-react",
+				preset: "jsx-runtime",
+				prefix: "react/",
 			},
 		],
 	},
@@ -158,6 +179,16 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
+	"react-refresh": {
+		target: "react/",
+		sources: [
+			{
+				src: "eslint-plugin-react-refresh",
+				preset: "recommended",
+				prefix: "react-refresh/",
+			},
+		],
+	},
 	"typescript": {
 		target: "typescript/",
 		sources: [
@@ -166,6 +197,11 @@ const presets: Record<string, Preset> = {
 				preset: "strictTypeChecked",
 				prefix: "@typescript-eslint/",
 			},
+		],
+	},
+	"typescript-stylistic": {
+		target: "typescript/",
+		sources: [
 			{
 				src: "typescript-eslint",
 				preset: "stylisticTypeChecked",
@@ -194,8 +230,17 @@ const presets: Record<string, Preset> = {
 			},
 		],
 	},
-	// vue flat configs are cumulative, error is applied last
 	"vue": {
+		target: "vue/",
+		sources: [
+			{
+				src: "eslint-plugin-vue",
+				preset: "flat/essential",
+				prefix: "vue/",
+			},
+		],
+	},
+	"vue-recommended": {
 		target: "vue/",
 		sources: [
 			{
@@ -204,16 +249,16 @@ const presets: Record<string, Preset> = {
 				prefix: "vue/",
 				severity: "warn",
 			},
+		],
+	},
+	"vue-strongly-recommended": {
+		target: "vue/",
+		sources: [
 			{
 				src: "eslint-plugin-vue",
 				preset: "flat/strongly-recommended",
 				prefix: "vue/",
 				severity: "warn",
-			},
-			{
-				src: "eslint-plugin-vue",
-				preset: "flat/essential",
-				prefix: "vue/",
 			},
 		],
 	},
