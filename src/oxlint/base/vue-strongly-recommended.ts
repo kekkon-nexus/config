@@ -1,0 +1,43 @@
+import { defineConfig } from "oxlint";
+
+const config = defineConfig({
+	rules: {
+		// vue:strongly-recommended (warn)
+		"vue/component-definition-name-casing": "warn",
+		"vue/no-arrow-functions-in-watch": "warn",
+		"vue/no-async-in-computed-properties": "warn",
+		"vue/no-computed-properties-in-data": "warn",
+		"vue/no-deprecated-data-object-declaration": "warn",
+		"vue/no-deprecated-delete-set": "warn",
+		"vue/no-deprecated-destroyed-lifecycle": "warn",
+		"vue/no-deprecated-events-api": "warn",
+		"vue/no-deprecated-model-definition": "warn",
+		"vue/no-deprecated-props-default-this": "warn",
+		"vue/no-deprecated-vue-config-keycodes": "warn",
+		"vue/no-dupe-keys": "warn",
+		"vue/no-export-in-script-setup": "warn",
+		"vue/no-expose-after-await": "warn",
+		"vue/no-lifecycle-after-await": "warn",
+		"vue/no-reserved-component-names": "warn",
+		"vue/no-reserved-keys": "warn",
+		"vue/no-reserved-props": "warn",
+		"vue/no-shared-component-data": "warn",
+		"vue/no-side-effects-in-computed-properties": "warn",
+		"vue/no-watch-after-await": "warn",
+		"vue/prefer-import-from-vue": "warn",
+		"vue/prop-name-casing": "warn",
+		"vue/require-default-prop": "warn",
+		"vue/require-prop-type-constructor": "warn",
+		"vue/require-prop-types": "warn",
+		"vue/require-render-return": "warn",
+		"vue/require-slots-as-functions": "warn",
+		"vue/return-in-computed-property": "warn",
+		"vue/return-in-emits-validator": "warn",
+		"vue/valid-define-emits": "warn",
+		"vue/valid-define-options": "warn",
+		"vue/valid-define-props": "warn",
+		"vue/valid-next-tick": "warn",
+	},
+});
+
+export default config;

@@ -3,9 +3,6 @@ import { defineConfig } from "oxlint";
 const config = defineConfig({
 	rules: {
 		// vue:essential
-		// vue:strongly-recommended (warn)
-		// vue:recommended (warn)
-		"vue/component-definition-name-casing": "warn",
 		"vue/define-emits-declaration": "off",
 		"vue/define-props-declaration": "off",
 		"vue/define-props-destructuring": "off",
@@ -26,8 +23,6 @@ const config = defineConfig({
 		"vue/no-expose-after-await": "error",
 		"vue/no-import-compiler-macros": "off",
 		"vue/no-lifecycle-after-await": "error",
-		"vue/no-multiple-slot-args": "warn",
-		"vue/no-required-prop-with-default": "warn",
 		"vue/no-reserved-component-names": "error",
 		"vue/no-reserved-keys": "error",
 		"vue/no-reserved-props": "error",
@@ -36,12 +31,9 @@ const config = defineConfig({
 		"vue/no-this-in-before-route-enter": "off",
 		"vue/no-watch-after-await": "error",
 		"vue/prefer-import-from-vue": "error",
-		"vue/prop-name-casing": "warn",
 		"vue/require-default-export": "off",
-		"vue/require-default-prop": "warn",
 		"vue/require-direct-export": "off",
 		"vue/require-prop-type-constructor": "error",
-		"vue/require-prop-types": "warn",
 		"vue/require-render-return": "error",
 		"vue/require-slots-as-functions": "error",
 		"vue/require-typed-ref": "off",
