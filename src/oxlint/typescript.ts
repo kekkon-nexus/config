@@ -46,6 +46,7 @@ const config = defineConfig({
 		"typescript/prefer-reduce-type-parameter": "warn",
 		"typescript/prefer-return-this-type": "warn",
 		"typescript/require-await": "warn",
+		"typescript/restrict-template-expressions": "error",
 		"typescript/triple-slash-reference": "warn",
 		"typescript/unified-signatures": "warn",
 	},
