@@ -90,7 +90,7 @@
 		"eslint-plugin-react-hooks": "^7.1.1",
 		"eslint-plugin-react-perf": "^3.3.3",
 		"eslint-plugin-react-refresh": "^0.5.7",
-		"eslint-plugin-unicorn": "^78.0.0",
+		"eslint-plugin-unicorn": "^79.0.0",
 		"eslint-plugin-vue": "^10.11.1",
 		"oxfmt": "0.73.0",
 		"oxlint": "1.88.0",
