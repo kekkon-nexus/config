@@ -1,8 +1,9 @@
+import reactRefreshNext from "@kekkon-nexus/config/oxlint/base/react-refresh-next";
 import react from "@kekkon-nexus/config/oxlint/react";
 import { defineConfig } from "oxlint";
 
 const config = defineConfig({
-	extends: [react],
+	extends: [react, reactRefreshNext],
 	plugins: ["nextjs"],
 });
 
