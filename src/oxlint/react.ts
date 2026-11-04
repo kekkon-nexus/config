@@ -1,3 +1,4 @@
+import reactRefreshVite from "@kekkon-nexus/config/oxlint/base/react-refresh-vite";
 import { defineConfig } from "oxlint";
 
 const config = defineConfig({
@@ -9,10 +10,19 @@ const config = defineConfig({
 		"react-perf/jsx-no-new-object-as-prop": "warn",
 		"react/display-name": "warn",
 		"react/no-unescaped-entities": "warn",
-		"react/only-export-components": ["warn", { allowCompoundComponents: true }],
+		"react/only-export-components": [
+			"warn",
+			reactRefreshVite.rules["react/only-export-components"][1],
+		],
 		"unicorn/filename-case": [
 			"warn",
-			{ cases: { camelCase: true, kebabCase: true, pascalCase: true } },
+			{
+				cases: {
+					camelCase: true,
+					kebabCase: true,
+					pascalCase: true,
+				},
+			},
 		],
 	},
 });

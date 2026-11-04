@@ -3,8 +3,15 @@ import react from "@kekkon-nexus/config/oxlint/react";
 import { defineConfig } from "oxlint";
 
 const config = defineConfig({
-	extends: [react, reactRefreshNext],
+	extends: [react],
 	plugins: ["nextjs"],
+
+	rules: {
+		"react/only-export-components": [
+			"warn",
+			reactRefreshNext.rules["react/only-export-components"][1],
+		],
+	},
 });
 
 export default config;
