@@ -126,6 +126,12 @@ const presets: Record<string, Preset> = {
 		preset: "recommended",
 		prefix: "react-refresh/",
 	},
+	"react-refresh-next": {
+		target: "react/",
+		src: "eslint-plugin-react-refresh",
+		preset: "next",
+		prefix: "react-refresh/",
+	},
 	"typescript": {
 		target: "typescript/",
 		src: "typescript-eslint",
