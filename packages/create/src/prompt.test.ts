@@ -33,7 +33,7 @@ it("leaves jest selectable under vite-plus, with a hint", () => {
 
 	options.call(state);
 
-	expect(items[4]).toMatchObject({
+	expect(items[5]).toMatchObject({
 		value: "jest",
 		disabled: false,
 		hint: "vitest comes with vite-plus",
@@ -47,7 +47,7 @@ it("locks vitest on under vite-plus", () => {
 	options.call(state);
 
 	expect(state.selectedValues).toEqual(["vitest"]);
-	expect(items[3]).toMatchObject({
+	expect(items[4]).toMatchObject({
 		value: "vitest",
 		disabled: true,
 		hint: "comes with vite-plus",
@@ -69,4 +69,18 @@ it("hints which configs were detected", () => {
 			vitePlus: "/p/vite.config.ts",
 		}).message,
 	).toBe("Both toolchains are configured, patch:");
+});
+
+it("locks vue on once nuxt is picked", () => {
+	const { items, options } = scopeOptions({ toolchain: "oxlint" });
+	const state = { selectedValues: ["nuxt"] as Scope[] };
+
+	options.call(state);
+
+	expect(state.selectedValues).toEqual(["nuxt", "vue"]);
+	expect(items[2]).toMatchObject({
+		value: "vue",
+		disabled: true,
+		hint: "required by Nuxt",
+	});
 });

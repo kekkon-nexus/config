@@ -99,6 +99,7 @@ export function scopeOptions(chosen: Chosen): {
 		label: "React",
 		disabled: false,
 	};
+	const vue: Item<Scope> = { value: "vue", label: "Vue", disabled: false };
 	const vitest: Item<Scope> = {
 		value: "vitest",
 		label: "Vitest",
@@ -113,7 +114,13 @@ export function scopeOptions(chosen: Chosen): {
 			hint: "includes React",
 			disabled: false,
 		},
-		{ value: "vue", label: "Vue", disabled: false },
+		vue,
+		{
+			value: "nuxt",
+			label: "Nuxt",
+			hint: "includes Vue",
+			disabled: false,
+		},
 		vitest,
 		jest,
 	];
@@ -126,6 +133,12 @@ export function scopeOptions(chosen: Chosen): {
 				react,
 				selected.includes("next"),
 				"required by Next.js",
+				selected,
+			);
+			selected = lock(
+				vue,
+				selected.includes("nuxt"),
+				"required by Nuxt",
 				selected,
 			);
 			selected = lock(

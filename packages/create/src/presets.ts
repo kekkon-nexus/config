@@ -35,6 +35,7 @@ export function typescriptValue(value: string): TypeScript {
 export const SCOPES = {
 	jest: { local: "jest", from: "@kekkon-nexus/config/oxlint/jest" },
 	next: { local: "next", from: "@kekkon-nexus/config/oxlint/next" },
+	nuxt: { local: "nuxt", from: "@kekkon-nexus/config/oxlint/nuxt" },
 	react: { local: "react", from: "@kekkon-nexus/config/oxlint/react" },
 	vitest: { local: "vitest", from: "@kekkon-nexus/config/oxlint/vitest" },
 	vue: { local: "vue", from: "@kekkon-nexus/config/oxlint/vue" },
@@ -44,7 +45,8 @@ export type Scope = keyof typeof SCOPES;
 
 export function scopePresets(scopes: readonly Scope[]): Preset[] {
 	const picked = new Set(scopes);
-	// next already extends react
+	// next extends react, nuxt extends vue
 	if (picked.has("next")) picked.delete("react");
+	if (picked.has("nuxt")) picked.delete("vue");
 	return [...picked].map((scope) => SCOPES[scope]);
 }

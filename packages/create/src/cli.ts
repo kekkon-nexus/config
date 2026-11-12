@@ -124,7 +124,10 @@ export function configParser(
 
 	const toolchainArg = option("--toolchain", choice(["oxlint", "vite-plus"]));
 	const scopesArg = multiple(
-		option("--scope", choice(["jest", "next", "react", "vitest", "vue"])),
+		option(
+			"--scope",
+			choice(["jest", "next", "nuxt", "react", "vitest", "vue"]),
+		),
 	);
 	const moduleArg = option("--module");
 	const installArg = option("--install");
@@ -163,7 +166,7 @@ export function configParser(
 			type: "multiselect",
 			message: "Project scope:",
 			required: false,
-			options: ["jest", "next", "react", "vitest", "vue"],
+			options: ["jest", "next", "nuxt", "react", "vitest", "vue"],
 			prompter: prompters.scopes ?? scopePrompter(chosen),
 		}),
 		typeAware: prompt(typeAwareArg, {
