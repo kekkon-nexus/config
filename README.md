@@ -146,17 +146,17 @@ export default defineConfig({
 
 ```ts
 extends: [
-	base, // ported upstream recommended presets
 	javascript, // core rules, eslint, oxc and promise plugins
+	jsdoc,
 	typescript, // type-aware rules, needs oxlint-tsgolint
 	import, // import hygiene
 	unicorn, // modern syntax & API preferences
-	jsdoc,
 	browser, // jsx-a11y plugin
 	node,
 ]
 ```
 
+Each preset extends its ported upstream presets from [`src/oxlint/base`](./src/oxlint/base).
 See [`src/oxlint`](./src/oxlint) for the rules each one sets.
 
 ### TypeScript

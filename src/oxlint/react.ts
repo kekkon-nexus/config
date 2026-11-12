@@ -1,7 +1,13 @@
+import reactBase from "@kekkon-nexus/config/oxlint/base/react";
+import reactHooks from "@kekkon-nexus/config/oxlint/base/react-hooks";
+import reactJsxRuntime from "@kekkon-nexus/config/oxlint/base/react-jsx-runtime";
+import reactPerf from "@kekkon-nexus/config/oxlint/base/react-perf";
+import reactRefresh from "@kekkon-nexus/config/oxlint/base/react-refresh";
 import reactRefreshVite from "@kekkon-nexus/config/oxlint/base/react-refresh-vite";
 import { defineConfig } from "oxlint";
 
 const config = defineConfig({
+	extends: [reactBase, reactJsxRuntime, reactHooks, reactRefresh, reactPerf],
 	plugins: ["react", "react-perf"],
 
 	rules: {

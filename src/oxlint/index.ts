@@ -1,4 +1,3 @@
-import base from "@kekkon-nexus/config/oxlint/base";
 import browser from "@kekkon-nexus/config/oxlint/browser";
 import imp from "@kekkon-nexus/config/oxlint/import";
 import javascript from "@kekkon-nexus/config/oxlint/javascript";
@@ -13,7 +12,7 @@ const config = defineConfig({
 		correctness: "error",
 	},
 
-	extends: [base, javascript, typescript, imp, unicorn, jsdoc, browser, node],
+	extends: [javascript, jsdoc, typescript, imp, unicorn, browser, node],
 });
 
 export default config;

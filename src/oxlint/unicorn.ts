@@ -1,6 +1,8 @@
+import unicornBase from "@kekkon-nexus/config/oxlint/base/unicorn";
 import { defineConfig } from "oxlint";
 
 const config = defineConfig({
+	extends: [unicornBase],
 	plugins: ["unicorn"],
 
 	rules: {

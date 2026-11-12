@@ -1,6 +1,9 @@
+import eslintBase from "@kekkon-nexus/config/oxlint/base/eslint";
+import promiseBase from "@kekkon-nexus/config/oxlint/base/promise";
 import { defineConfig } from "oxlint";
 
 const config = defineConfig({
+	extends: [eslintBase, promiseBase],
 	env: {
 		"builtin": true,
 		"shared-node-browser": true,

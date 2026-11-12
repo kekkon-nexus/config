@@ -1,10 +1,12 @@
 import jsdocTypescript from "@kekkon-nexus/config/oxlint/base/jsdoc-typescript";
+import typescriptBase from "@kekkon-nexus/config/oxlint/base/typescript";
+import typescriptStylistic from "@kekkon-nexus/config/oxlint/base/typescript-stylistic";
 import { defineConfig } from "oxlint";
 
 const config = defineConfig({
 	plugins: ["typescript"],
 
-	extends: [jsdocTypescript],
+	extends: [typescriptBase, typescriptStylistic, jsdocTypescript],
 	rules: {
 		"typescript/consistent-type-assertions": [
 			"warn",

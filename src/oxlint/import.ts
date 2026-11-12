@@ -1,6 +1,8 @@
+import importBase from "@kekkon-nexus/config/oxlint/base/import";
 import { defineConfig } from "oxlint";
 
 const config = defineConfig({
+	extends: [importBase],
 	plugins: ["import"],
 
 	rules: {

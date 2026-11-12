@@ -1,6 +1,8 @@
+import vitestBase from "@kekkon-nexus/config/oxlint/base/vitest";
 import { defineConfig } from "oxlint";
 
 const config = defineConfig({
+	extends: [vitestBase],
 	plugins: ["vitest"],
 
 	rules: {

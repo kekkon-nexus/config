@@ -1,6 +1,8 @@
+import jestBase from "@kekkon-nexus/config/oxlint/base/jest";
 import { defineConfig } from "oxlint";
 
 const config = defineConfig({
+	extends: [jestBase],
 	plugins: ["jest"],
 
 	rules: {
