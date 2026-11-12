@@ -75,6 +75,7 @@ import oxlint from "@kekkon-nexus/config/oxlint";
 // import react from "@kekkon-nexus/config/oxlint/react";
 // import next from "@kekkon-nexus/config/oxlint/next";
 // import vue from "@kekkon-nexus/config/oxlint/vue";
+// import nuxt from "@kekkon-nexus/config/oxlint/nuxt";
 // import jest from "@kekkon-nexus/config/oxlint/jest";
 // import vitest from "@kekkon-nexus/config/oxlint/vitest";
 // import vp from "@kekkon-nexus/config/oxlint/vite-plus";
@@ -88,6 +89,7 @@ export default defineConfig({
 		// react, // react, react-perf
 		// next, // nextjs, extends react
 		// vue,
+		// nuxt, // nuxt plugin, extends vue
 		// jest,
 		// vitest,
 		// vp, // vite-plus plugin, extends vitest
@@ -135,6 +137,7 @@ export default defineConfig({
 | `oxlint/react`      | react, react-perf                                 |
 | `oxlint/next`       | nextjs, extends `oxlint/react`                    |
 | `oxlint/vue`        | vue                                               |
+| `oxlint/nuxt`       | nuxt plugin, extends `oxlint/vue`                 |
 | `oxlint/jest`       | jest                                              |
 | `oxlint/vitest`     | vitest                                            |
 | `oxlint/vite-plus`  | vite-plus plugin, extends `oxlint/vitest`         |

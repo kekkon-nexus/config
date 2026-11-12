@@ -6,6 +6,8 @@ import jsxA11y from "@kekkon-nexus/config/oxlint/base/jsx-a11y";
 import next from "@kekkon-nexus/config/oxlint/base/next";
 import nextCoreWebVitals from "@kekkon-nexus/config/oxlint/base/next-core-web-vitals";
 import node from "@kekkon-nexus/config/oxlint/base/node";
+import nuxt from "@kekkon-nexus/config/oxlint/base/nuxt";
+import nuxtStylistic from "@kekkon-nexus/config/oxlint/base/nuxt-stylistic";
 import promise from "@kekkon-nexus/config/oxlint/base/promise";
 import react from "@kekkon-nexus/config/oxlint/base/react";
 import reactHooks from "@kekkon-nexus/config/oxlint/base/react-hooks";
@@ -31,6 +33,9 @@ const config = defineConfig({
 		next,
 		nextCoreWebVitals,
 		node,
+		// cumulative like vue, error is applied last
+		nuxtStylistic,
+		nuxt,
 		promise,
 		react,
 		reactJsxRuntime,

@@ -31,6 +31,7 @@ interface Preset {
 	preset: string;
 	prefix: string;
 	severity?: string;
+	options?: unknown;
 }
 
 const presets: Record<string, Preset> = {
@@ -89,6 +90,20 @@ const presets: Record<string, Preset> = {
 		src: "eslint-plugin-n",
 		preset: "flat/recommended",
 		prefix: "n/",
+	},
+	"nuxt": {
+		target: "nuxt/",
+		src: "@nuxt/eslint-config",
+		preset: "createConfigForNuxt",
+		prefix: "nuxt/",
+	},
+	"nuxt-stylistic": {
+		target: "nuxt/",
+		src: "@nuxt/eslint-config",
+		preset: "createConfigForNuxt",
+		prefix: "nuxt/",
+		severity: "warn",
+		options: { features: { nuxt: { sortConfigKeys: true } } },
 	},
 	"promise": {
 		target: "promise/",
@@ -235,14 +250,24 @@ const upstreamOf = async ({
 	preset,
 	prefix,
 	severity,
+	options,
 }: Preset) => {
-	const mod = (await import(src)) as { default?: unknown };
+	const mod = (await import(src)) as {
+		default?: unknown;
+		[name: string]: unknown;
+	};
 	const root = (mod.default ?? mod) as {
-		configs: Record<string, Config | Config[]>;
+		configs?: Record<string, Config | Config[]>;
 		rules?: Rules;
 		plugin?: { rules?: Rules };
 	};
-	const config = root.configs[preset];
+	// a preset is a config entry or a factory export
+	const found = (root.configs?.[preset] ?? mod[preset]) as
+		| Config
+		| Config[]
+		| ((options: unknown) => Promise<Config[]>)
+		| undefined;
+	const config = typeof found === "function" ? await found(options) : found;
 	if (config === undefined) {
 		throw new Error(`${src} has no configs.${preset}`);
 	}
