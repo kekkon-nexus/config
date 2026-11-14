@@ -74,6 +74,7 @@ export function packages(
 	typeAware = false,
 	typescript: TypeScript = false,
 	commitlint = false,
+	scopes: readonly Scope[] = [],
 ): string[] {
 	return [
 		"@kekkon-nexus/config",
@@ -81,6 +82,10 @@ export function packages(
 		...(typeAware ? ["oxlint-tsgolint"] : []),
 		...(typescript === false ? [] : ["typescript"]),
 		...(commitlint ? ["@commitlint/cli"] : []),
+		...(scopes.includes("nuxt") ? ["@nuxt/eslint-plugin"] : []),
+		...(scopes.includes("tailwind")
+			? ["eslint-plugin-better-tailwindcss"]
+			: []),
 	];
 }
 
@@ -408,6 +413,7 @@ if (import.meta.main) {
 					answers.typeAware,
 					answers.typescript,
 					answers.commitlint,
+					answers.scopes,
 				),
 			];
 			const command = `vp ${add.join(" ")}`;

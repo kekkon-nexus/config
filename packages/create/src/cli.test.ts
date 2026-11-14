@@ -329,6 +329,15 @@ it("installs the tools the toolchain needs", () => {
 		"oxfmt",
 		"@commitlint/cli",
 	]);
+	expect(packages("oxlint", false, false, false, ["nuxt", "tailwind"])).toEqual(
+		[
+			"@kekkon-nexus/config",
+			"oxlint",
+			"oxfmt",
+			"@nuxt/eslint-plugin",
+			"eslint-plugin-better-tailwindcss",
+		],
+	);
 });
 
 it("writes a commitlint config, but never next to one that is there", async () => {
