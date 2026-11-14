@@ -249,14 +249,10 @@ const rename = (name: string, from: string, to: string) => {
 	return name.startsWith(from) ? to + name.slice(from.length) : undefined;
 };
 
-const upstreamOf = async ({
-	target,
-	src,
-	preset,
-	prefix,
-	severity,
-	options,
-}: Preset) => {
+const upstreamOf = async (
+	{ target, src, preset, prefix, severity, options }: Preset,
+	inherited: Rules,
+) => {
 	const mod = (await import(src)) as {
 		default?: unknown;
 		[name: string]: unknown;
@@ -285,7 +281,12 @@ const upstreamOf = async ({
 	const expected: Record<string, Value> = {};
 	for (const [rule, value] of Object.entries(rulesOf(config))) {
 		const mapped = rename(rule, prefix, target);
-		if (mapped !== undefined) expected[mapped] = normalize(value, severity);
+		// the override is for the base's own rules, extended ones keep upstream
+		if (mapped !== undefined)
+			expected[mapped] = normalize(
+				value,
+				mapped in inherited ? undefined : severity,
+			);
 	}
 
 	const unsupported: string[] = [];
@@ -326,7 +327,10 @@ describe("base", async () => {
 			const actual = rulesWithExtends(config);
 			// the schema is for .oxlintrc.json, where extends holds paths
 			const { extends: _, ...own } = config;
-			const { expected, shipped, unsupported } = await upstreamOf(preset);
+			const { expected, shipped, unsupported } = await upstreamOf(
+				preset,
+				rulesWithExtends({ extends: config.extends }),
+			);
 			const documented = await documentedRules(name);
 
 			const rules = [
