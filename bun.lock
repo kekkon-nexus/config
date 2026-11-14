@@ -64,11 +64,11 @@
     },
     "packages/create": {
       "name": "@kekkon-nexus/create-config",
-      "version": "4.1.0",
+      "version": "4.2.0",
       "bin": "./dist/cli.js",
       "dependencies": {
         "@clack/prompts": "catalog:create",
-        "@kekkon-nexus/config": "4.1.0",
+        "@kekkon-nexus/config": "4.2.0",
         "@optique/clack": "catalog:create",
         "@optique/core": "catalog:create",
         "@optique/run": "catalog:create",
