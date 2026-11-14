@@ -166,6 +166,12 @@ const presets: Record<string, Preset> = {
 		prefix: "@typescript-eslint/",
 		severity: "warn",
 	},
+	"tailwind": {
+		target: "better-tailwindcss/",
+		src: "eslint-plugin-better-tailwindcss",
+		preset: "recommended",
+		prefix: "better-tailwindcss/",
+	},
 	"unicorn": {
 		target: "unicorn/",
 		src: "eslint-plugin-unicorn",

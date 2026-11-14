@@ -14,7 +14,7 @@ An opinionated config preset for TypeScript, oxlint, oxfmt and commitlint.
 - Lint and format with oxlint and oxfmt
 - Error on correctness, warn on style
 - Carries the recommended presets of upstream ESLint plugins
-- Opt-in layers for React, Next.js, Vue, Jest and Vitest
+- Opt-in layers for React, Next.js, Vue, Nuxt, Tailwind CSS, Jest and Vitest
 - Import sorting in oxfmt you can extend using `sortImports`
 - Standalone, or using [Vite+](https://viteplus.dev/)
 - Scaffolds in a single script
@@ -79,6 +79,7 @@ import oxlint from "@kekkon-nexus/config/oxlint";
 // import jest from "@kekkon-nexus/config/oxlint/jest";
 // import vitest from "@kekkon-nexus/config/oxlint/vitest";
 // import vp from "@kekkon-nexus/config/oxlint/vite-plus";
+// import tailwind from "@kekkon-nexus/config/oxlint/tailwind";
 import { defineConfig } from "oxlint";
 
 export default defineConfig({
@@ -93,7 +94,11 @@ export default defineConfig({
 		// jest,
 		// vitest,
 		// vp, // vite-plus plugin, extends vitest
+		// tailwind, // better-tailwindcss plugin
 	],
+
+	// needed by the tailwind preset
+	// settings: { "better-tailwindcss": { entryPoint: "src/app.css" } },
 });
 ```
 
@@ -141,6 +146,7 @@ export default defineConfig({
 | `oxlint/jest`       | jest                                              |
 | `oxlint/vitest`     | vitest                                            |
 | `oxlint/vite-plus`  | vite-plus plugin, extends `oxlint/vitest`         |
+| `oxlint/tailwind`   | better-tailwindcss plugin                         |
 
 `@kekkon-nexus/config/oxlint` extends the following:
 
