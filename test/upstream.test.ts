@@ -23,6 +23,7 @@ type Rules = Record<string, unknown>;
 type Value = unknown[];
 
 interface Config {
+	extends?: Config[];
 	rules?: Rules;
 }
 interface Preset {
@@ -195,14 +196,12 @@ const presets: Record<string, Preset> = {
 		src: "eslint-plugin-vue",
 		preset: "flat/recommended",
 		prefix: "vue/",
-		severity: "warn",
 	},
 	"vue-strongly-recommended": {
 		target: "vue/",
 		src: "eslint-plugin-vue",
 		preset: "flat/strongly-recommended",
 		prefix: "vue/",
-		severity: "warn",
 	},
 };
 
@@ -299,6 +298,13 @@ const upstreamOf = async ({
 	return { expected, shipped, unsupported: unsupported.toSorted() };
 };
 
+const rulesWithExtends = ({ extends: bases = [], rules = {} }: Config): Rules =>
+	Object.assign(
+		{},
+		...bases.map((base) => rulesWithExtends(base)),
+		rules,
+	) as Rules;
+
 const documentedRules = async (name: string) => {
 	const src = await readFile(
 		path.join(import.meta.dirname, "../src/oxlint/base", `${name}.ts`),
@@ -317,7 +323,9 @@ describe("base", async () => {
 					default: Config;
 				}
 			).default;
-			const actual = config.rules ?? {};
+			const actual = rulesWithExtends(config);
+			// the schema is for .oxlintrc.json, where extends holds paths
+			const { extends: _, ...own } = config;
 			const { expected, shipped, unsupported } = await upstreamOf(preset);
 			const documented = await documentedRules(name);
 
@@ -330,7 +338,7 @@ describe("base", async () => {
 
 			return {
 				name,
-				errors: validate(config) ? [] : validate.errors,
+				errors: validate(own) ? [] : validate.errors,
 				base: Object.fromEntries(
 					rules.map((rule) => [rule, normalize(actual[rule])]),
 				),
