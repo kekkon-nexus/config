@@ -37,6 +37,7 @@ export const SCOPES = {
 	next: { local: "next", from: "@kekkon-nexus/config/oxlint/next" },
 	nuxt: { local: "nuxt", from: "@kekkon-nexus/config/oxlint/nuxt" },
 	react: { local: "react", from: "@kekkon-nexus/config/oxlint/react" },
+	tailwind: { local: "tailwind", from: "@kekkon-nexus/config/oxlint/tailwind" },
 	vitest: { local: "vitest", from: "@kekkon-nexus/config/oxlint/vitest" },
 	vue: { local: "vue", from: "@kekkon-nexus/config/oxlint/vue" },
 } satisfies Record<string, Preset>;

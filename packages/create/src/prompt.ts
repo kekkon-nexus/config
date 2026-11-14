@@ -123,6 +123,7 @@ export function scopeOptions(chosen: Chosen): {
 		},
 		vitest,
 		jest,
+		{ value: "tailwind", label: "Tailwind CSS", disabled: false },
 	];
 
 	return {

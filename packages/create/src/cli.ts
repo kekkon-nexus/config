@@ -126,7 +126,7 @@ export function configParser(
 	const scopesArg = multiple(
 		option(
 			"--scope",
-			choice(["jest", "next", "nuxt", "react", "vitest", "vue"]),
+			choice(["jest", "next", "nuxt", "react", "tailwind", "vitest", "vue"]),
 		),
 	);
 	const moduleArg = option("--module");
@@ -166,7 +166,7 @@ export function configParser(
 			type: "multiselect",
 			message: "Project scope:",
 			required: false,
-			options: ["jest", "next", "nuxt", "react", "vitest", "vue"],
+			options: ["jest", "next", "nuxt", "react", "tailwind", "vitest", "vue"],
 			prompter: prompters.scopes ?? scopePrompter(chosen),
 		}),
 		typeAware: prompt(typeAwareArg, {

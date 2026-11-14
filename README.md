@@ -36,20 +36,27 @@ Requires:
 
 Pass flags to skip the prompts:
 
-| Flag                                           |                                          |
-| ---------------------------------------------- | ---------------------------------------- |
-| `--toolchain oxlint\|vite-plus`                | toolchain to configure                   |
-| `--scope jest\|next\|nuxt\|react\|vitest\|vue` | opt-in preset, repeatable                |
-| `--install`                                    | install the packages afterwards          |
-| `--module`                                     | add `"type": "module"` to `package.json` |
-| `--typescript false\|true\|strict`             | write or patch `tsconfig.json`           |
-| `--type-aware`                                 | install `oxlint-tsgolint`                |
-| `--editorconfig`                               | write `.editorconfig` if absent          |
-| `--vscode`                                     | write `.vscode` files if absent          |
-| `--commitlint`                                 | write `commitlint.config` if absent      |
+| Flag                                                     |                                          |
+| -------------------------------------------------------- | ---------------------------------------- |
+| `--toolchain oxlint\|vite-plus`                          | toolchain to configure                   |
+| `--scope jest\|next\|nuxt\|react\|tailwind\|vitest\|vue` | opt-in preset, repeatable                |
+| `--install`                                              | install the packages afterwards          |
+| `--module`                                               | add `"type": "module"` to `package.json` |
+| `--typescript false\|true\|strict`                       | write or patch `tsconfig.json`           |
+| `--type-aware`                                           | install `oxlint-tsgolint`                |
+| `--editorconfig`                                         | write `.editorconfig` if absent          |
+| `--vscode`                                               | write `.vscode` files if absent          |
+| `--commitlint`                                           | write `commitlint.config` if absent      |
 
 > [!WARNING]
 > `.editorconfig` and `.vscode` support is not matured yet.
+
+> [!NOTE]
+> The `tailwind` scope does not set the Tailwind CSS entry point. Add
+> `settings: { "better-tailwindcss": { entryPoint: "src/app.css" } }` to the
+> oxlint config, pointing at the CSS file that imports `tailwindcss`.
+> More info on
+> [`entryPoint`](https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/settings/settings.md#entrypoint).
 
 Or manually:
 
