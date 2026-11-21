@@ -11,7 +11,6 @@
 	"repository": "kekkon-nexus/config",
 	"workspaces": {
 		"packages": [
-			".",
 			"packages/*"
 		],
 		"catalog": {
@@ -118,8 +117,7 @@
 		"test": "NODE_OPTIONS=--conditions=dev vp test",
 		"prepack": "tsrs -p tsconfig.build.json",
 		"pack": "bun pm pack && bun pm pack --cwd packages/create --destination ../..",
-		"bump": "bun pm version --message \":bookmark: build(release): %s\"",
-		"bump:all": "bun run --filter '*' bump"
+		"bump": "bun run scripts/bump.ts"
 	},
 	"dependencies": {
 		"@commitlint/config-conventional": "catalog:prod",

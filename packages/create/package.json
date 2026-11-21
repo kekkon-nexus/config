@@ -29,8 +29,7 @@
 	},
 	"scripts": {
 		"prepack": "tsrs -p tsconfig.build.json",
-		"test": "vp test",
-		"bump": "bun pm version --message \":bookmark: build(release): %s\""
+		"test": "vp test"
 	},
 	"dependencies": {
 		"@clack/prompts": "catalog:create",
