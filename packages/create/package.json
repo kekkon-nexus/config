@@ -28,7 +28,7 @@
 		"registry": "https://registry.npmjs.org/"
 	},
 	"scripts": {
-		"prepack": "tsc -p tsconfig.build.json",
+		"prepack": "tsrs -p tsconfig.build.json",
 		"test": "vp test"
 	},
 	"dependencies": {

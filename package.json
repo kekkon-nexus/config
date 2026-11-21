@@ -20,7 +20,6 @@
 			"oxfmt": "0.78.0",
 			"oxlint": "1.93.0",
 			"tsrs": "7.1.0-beta.tsrs2",
-			"typescript": "^7.0.2",
 			"vite-plus": "^1.6.0"
 		},
 		"catalogs": {
@@ -115,7 +114,7 @@
 		"fmt": "NODE_OPTIONS=--conditions=dev vp fmt",
 		"lint": "NODE_OPTIONS=--conditions=dev vp lint",
 		"test": "NODE_OPTIONS=--conditions=dev vp test",
-		"prepack": "tsc -p tsconfig.build.json",
+		"prepack": "tsrs -p tsconfig.build.json",
 		"pack": "bun pm pack && bun pm pack --cwd packages/create --destination ../..",
 		"bump": "bun run scripts/bump.ts"
 	},
@@ -153,7 +152,6 @@
 		"oxlint": "catalog:",
 		"tailwindcss": "catalog:upstream",
 		"tsrs": "catalog:",
-		"typescript": "catalog:",
 		"typescript-eslint": "catalog:upstream",
 		"vite-plus": "catalog:"
 	},
@@ -164,7 +162,6 @@
 		"oxfmt": ">=0.78.0 <1",
 		"oxlint": "^1.93.0",
 		"tsrs": "^7.1.0-beta.tsrs2",
-		"typescript": "^7.0.2",
 		"vite-plus": "^1.6.0"
 	},
 	"peerDependenciesMeta": {
