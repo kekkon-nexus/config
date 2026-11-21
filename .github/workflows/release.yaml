@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: major, minor, patch or an exact version
+        type: string
+        required: true
+
+jobs:
+  release:
+    permissions:
+      contents: write
+      actions: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - run: bun run bump "$VERSION"
+        env:
+          VERSION: ${{ inputs.version }}
+      - run: git push --follow-tags
+
+      # tags pushed with GITHUB_TOKEN do not trigger workflows, dispatch is the exception
+      - run: gh workflow run publish.yaml --ref "$(git describe --tags --abbrev=0)"
+        env:
+          GH_TOKEN: ${{ github.token }}
