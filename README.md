@@ -32,7 +32,7 @@ new configs or patching the existing ones.
 Requires:
 
 - Node.js >= 24.12
-- TypeScript 7
+- TypeScript 7, through [`tsrs`](https://github.com/oxc-project/tsrs)
 
 Pass flags to skip the prompts:
 
@@ -181,6 +181,9 @@ See [`src/oxlint`](./src/oxlint) for the rules each one sets.
 ```
 
 Extend either or both. Requires TypeScript 7+.
+
+`tsrs`, a Rust port of the TypeScript 7 compiler, replaces `typescript` here.
+Run `tsrs` wherever you would run `tsc`. vite-plus bundles it.
 
 Options TypeScript 6 already enables by default, like `strict`, are left unset.
 
