@@ -17,8 +17,8 @@
 			"@commitlint/cli": "^21.2.4",
 			"@commitlint/types": "^21.2.3",
 			"@types/bun": "latest",
-			"oxfmt": "0.78.0",
-			"oxlint": "1.93.0",
+			"oxfmt": "0.79.0",
+			"oxlint": "1.94.0",
 			"tsrs": "7.1.0-beta.tsrs2",
 			"vite-plus": "^1.6.0"
 		},
