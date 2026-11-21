@@ -1,6 +1,6 @@
 {
 	"name": "@kekkon-nexus/create-config",
-	"version": "4.2.0",
+	"version": "4.3.0",
 	"description": "Scaffolds @kekkon-nexus/config into a project",
 	"bugs": "https://github.com/kekkon-nexus/config/issues",
 	"license": "MIT",
