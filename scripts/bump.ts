@@ -10,6 +10,6 @@ const root = await $`bun pm version ${input} --no-git-tag-version`.text();
 const version = root.trimEnd().slice(1); // remove v and trailing newlines
 
 await $`bun pm pkg set version=${version} --cwd packages/create`;
-await $`bun install`;
+await $`bun install --ignore-scripts`;
 await $`git commit -am ${`:bookmark: build(release): ${version}`}`;
 await $`git tag -m ${`:bookmark: build(release): ${version}`} v${version}`;
