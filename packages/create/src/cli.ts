@@ -79,7 +79,7 @@ export function packages(
 	return [
 		"@kekkon-nexus/config",
 		...(toolchain === "vite-plus" ? ["vite-plus"] : ["oxlint", "oxfmt"]),
-		...(typeAware ? ["oxlint-tsgolint"] : []),
+		...(typeAware && toolchain === "oxlint" ? ["tsrs"] : []),
 		...(typescript === false ? [] : ["typescript"]),
 		...(commitlint ? ["@commitlint/cli"] : []),
 		...(scopes.includes("nuxt") ? ["@nuxt/eslint-plugin"] : []),

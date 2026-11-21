@@ -43,7 +43,7 @@ Pass flags to skip the prompts:
 | `--install`                                              | install the packages afterwards          |
 | `--module`                                               | add `"type": "module"` to `package.json` |
 | `--typescript false\|true\|strict`                       | write or patch `tsconfig.json`           |
-| `--type-aware`                                           | install `oxlint-tsgolint`                |
+| `--type-aware`                                           | install `tsrs`                           |
 | `--editorconfig`                                         | write `.editorconfig` if absent          |
 | `--vscode`                                               | write `.vscode` files if absent          |
 | `--commitlint`                                           | write `commitlint.config` if absent      |
@@ -70,7 +70,7 @@ npm i -D @kekkon-nexus/config # and other dependencies
 | ------------------ | ------------------- |
 | Formatting         | `oxfmt`             |
 | Linting            | `oxlint`            |
-| Type-aware linting | `oxlint-tsgolint`   |
+| Type-aware linting | `tsrs`              |
 | Unified toolchain  | `vite-plus`         |
 | Commit linting     | `@commitlint/cli`   |
 
@@ -140,7 +140,7 @@ export default defineConfig({
 | ------------------- | ------------------------------------------------- |
 | `oxlint`            | the default set                                   |
 | `oxlint/javascript` | core rules, `eslint`, `oxc` and `promise` plugins |
-| `oxlint/typescript` | type-aware rules, needs `oxlint-tsgolint`         |
+| `oxlint/typescript` | type-aware rules, needs `tsrs`                    |
 | `oxlint/import`     | import hygiene                                    |
 | `oxlint/unicorn`    | modern syntax & API preferences                   |
 | `oxlint/jsdoc`      | jsdoc plugin                                      |
@@ -161,7 +161,7 @@ export default defineConfig({
 extends: [
 	javascript, // core rules, eslint, oxc and promise plugins
 	jsdoc,
-	typescript, // type-aware rules, needs oxlint-tsgolint
+	typescript, // type-aware rules, needs tsrs
 	import, // import hygiene
 	unicorn, // modern syntax & API preferences
 	browser, // jsx-a11y plugin

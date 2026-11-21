@@ -6,7 +6,7 @@ import { ENV } from "./presets.ts";
 
 export type Tool = "oxlint" | "oxfmt";
 
-// both need oxlint-tsgolint, so they are written as a pair
+// both need tsrs, so they are written as a pair
 export const TYPE_AWARE =
 	"options: {\n\ttypeAware: true,\n\ttypeCheck: true,\n},";
 

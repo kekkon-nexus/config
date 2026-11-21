@@ -19,7 +19,7 @@
 			"@types/bun": "latest",
 			"oxfmt": "0.78.0",
 			"oxlint": "1.93.0",
-			"oxlint-tsgolint": "7.0.2006",
+			"tsrs": "7.1.0-beta.tsrs2",
 			"typescript": "^7.0.2",
 			"vite-plus": "^1.6.0"
 		},
@@ -151,8 +151,8 @@
 		"eslint-plugin-vue": "catalog:upstream",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",
-		"oxlint-tsgolint": "catalog:",
 		"tailwindcss": "catalog:upstream",
+		"tsrs": "catalog:",
 		"typescript": "catalog:",
 		"typescript-eslint": "catalog:upstream",
 		"vite-plus": "catalog:"
@@ -163,7 +163,7 @@
 		"eslint-plugin-better-tailwindcss": "^4.11.0",
 		"oxfmt": ">=0.78.0 <1",
 		"oxlint": "^1.93.0",
-		"oxlint-tsgolint": "^7.0.2006",
+		"tsrs": "^7.1.0-beta.tsrs2",
 		"typescript": "^7.0.2",
 		"vite-plus": "^1.6.0"
 	},
@@ -183,7 +183,7 @@
 		"oxlint": {
 			"optional": true
 		},
-		"oxlint-tsgolint": {
+		"tsrs": {
 			"optional": true
 		},
 		"vite-plus": {

@@ -310,7 +310,12 @@ it("installs the tools the toolchain needs", () => {
 	expect(packages("vite-plus", true)).toEqual([
 		"@kekkon-nexus/config",
 		"vite-plus",
-		"oxlint-tsgolint",
+	]);
+	expect(packages("oxlint", true)).toEqual([
+		"@kekkon-nexus/config",
+		"oxlint",
+		"oxfmt",
+		"tsrs",
 	]);
 	expect(packages("oxlint")).toEqual([
 		"@kekkon-nexus/config",
