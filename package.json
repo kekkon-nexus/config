@@ -20,6 +20,7 @@
 			"oxfmt": "0.79.0",
 			"oxlint": "1.94.0",
 			"tsrs": "7.1.0-beta.tsrs2",
+			"vite": "npm:@voidzero-dev/vite-plus-core@^8.3.8000",
 			"vite-plus": "^1.7.0"
 		},
 		"catalogs": {
@@ -191,7 +192,7 @@
 		"@commitlint/types": "^21.2.3",
 		"@kekkon-nexus/config": "workspace:.",
 		"conventional-commits-parser": "^7",
-		"vite": "npm:@voidzero-dev/vite-plus-core@^8.3.8000"
+		"vite": "catalog:"
 	},
 	"devEngines": {
 		"packageManager": {
