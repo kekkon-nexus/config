@@ -33,7 +33,7 @@
 	},
 	"dependencies": {
 		"@clack/prompts": "catalog:create",
-		"@kekkon-nexus/config": "4.2.0",
+		"@kekkon-nexus/config": "workspace:*",
 		"@optique/clack": "catalog:create",
 		"@optique/core": "catalog:create",
 		"@optique/run": "catalog:create",

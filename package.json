@@ -190,14 +190,13 @@
 	},
 	"overrides": {
 		"@commitlint/types": "^21.2.3",
-		"@kekkon-nexus/config": "workspace:.",
 		"conventional-commits-parser": "^7",
 		"vite": "catalog:"
 	},
 	"devEngines": {
 		"packageManager": {
 			"name": "bun",
-			"version": ">=1.4.0",
+			"version": ">=1.4.4",
 			"onFail": "download"
 		}
 	},
